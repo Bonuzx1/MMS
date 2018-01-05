@@ -468,8 +468,8 @@ a:hover {
   border-radius: 7px;
   border-color: #3511ab;     }
   .panel .panel-heading {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px; }
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px; }
 
 .chart {
   padding: 15px; }

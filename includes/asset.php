@@ -31,7 +31,7 @@
               <tr>
                   <td><?php echo $row['assetid']?></td><td><?php echo $row['name']; ?></td>
                   <td><?php echo ($row['status'] == 1) ? "Available" : "Not Available"; ?></td>
-                  <td><?php echo $row2['departmentname'] ?></td><td><?php echo $row3['locationname'] ?></td><td><button class="btn-primary" disabled="disabled">Edit</button> | <a href="javascript:delset('<?php echo $row['assetid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger" ">Delete</button></a></td>
+                  <td><?php echo $row2['departmentname'] ?></td><td><?php echo $row3['locationname'] ?></td><td><a href="index.php?asset=new&id=<?php echo $row['assetid']?>&from=asset"><button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['assetid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger" ">Delete</button></a></td>
 </tr> 
 
                                     <?php } } else { ?>

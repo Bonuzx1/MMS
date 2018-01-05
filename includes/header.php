@@ -25,7 +25,10 @@ $sho = "";
     <link rel="stylesheet" type="text/css" href="assets/lib/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="assets/lib/css/dataTables.bootstrap.css">
     <link rel="stylesheet" type="text/css" href="assets/lib/css/select2.min.css">
-    
+    <link rel="stylesheet" type="text/css" href="assets/css/fullcalendar.min.css">
+<!--    <link rel="stylesheet" type="text/css" href="assets/css/fullcalendar.print.min.css">-->
+
+
     <!-- CSS App -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <link rel="stylesheet" type="text/css" href="assets/css/themes/flat-blue.css">

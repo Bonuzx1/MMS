@@ -47,7 +47,7 @@ if (isset($_POST['Save'])) {
 <div class="panel panel-primary">
         <!-- Default panel contents -->
         <div class="panel-heading">
-            <div class="panel-title"> Department <?php echo $_GET['dept']." Succesfully";
+            <div class="panel-title"> Department <?php echo $_GET['dept'];
              ?></div>
         </div>
 

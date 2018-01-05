@@ -9,7 +9,15 @@
   // Database connection object
   private $pdo;
   // Create a PDO object and connect to the database
-  public function __construct($dbName, $dbHost, $dbUser, $dbPass) {
+
+      /**
+       * DatabaseClass constructor.
+       * @param $dbName
+       * @param $dbHost
+       * @param $dbUser
+       * @param $dbPass
+       */
+      public function __construct($dbName, $dbHost, $dbUser, $dbPass) {
   try {
 	  parent::__construct();
   // Instantiate the PDO object
@@ -109,7 +117,13 @@
   public function lastInsertId() {
   return $this->pdo->lastInsertId();
   }
-  public function updatetable($sql)
+
+      /**
+       * @param $sql
+       * @param array $data
+       * @return int
+       */
+      public function updatetabl($sql)
   {
     $stmt = $this->pdo->prepare($sql);
     $stmt->execute();
@@ -250,6 +264,22 @@ public function selectsearch($sql)
     }
     
 }
+
+      /**
+       * @return PDO
+       */
+      public function getPdo ()
+      {
+          return $this->pdo;
+      }
+
+      /**
+       * @param PDO $pdo
+       */
+      public function setPdo(PDO $pdo)
+      {
+          $this->pdo = $pdo;
+      }
 
   } 
   ?>

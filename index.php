@@ -84,6 +84,10 @@ elseif (isset($_GET['asset'])) {
     include 'includes/customer.php';
 }elseif (isset($_GET['dept'])) {
     include 'includes/dept.php';
+}elseif (isset($_GET['supply'])) {
+    include 'includes/supply.php';
+}elseif (isset($_GET['order'])) {
+    include 'includes/workorder.php';
 }
                    
 include('includes/footer.php');

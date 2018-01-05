@@ -8,7 +8,7 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
                 </span>
             </div>
         </footer>
-        <div>
+
                   <!-- Javascript assets/libs -->
             
             <script type="text/javascript" src="assets/lib/js/bootstrap.min.js"></script>
@@ -21,7 +21,13 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
             <script type="text/javascript" src="assets/lib/js/ace/ace.js"></script>
             <script type="text/javascript" src="assets/lib/js/ace/mode-html.js"></script>
             <script type="text/javascript" src="assets/lib/js/ace/theme-github.js"></script>
-            <script type="text/javascript" src="assets/lib/js/scrit.js"></script>
+            <script type="text/javascript" src="assets/js/theme-chooser.js"></script>
+            <script type="text/javascript" src="assets/js/moment.min.js"></script>
+            <script type="text/javascript" src="assets/js/fullcalendar.min.js"></script>
+            <script type="text/javascript" src="assets/js/gcal.min.js"></script>
+            <script type="text/javascript" src="assets/js/locale.min.js"></script>
+            <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="assets/lib/js/script.js"></script>
             <!-- Javascript -->
             <!--<script type="text/javascript" src="js/app.js"></script>
             <script type="text/javascript" src="js/index.js"></script>-->
