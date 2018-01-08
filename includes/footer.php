@@ -11,7 +11,7 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
 
                   <!-- Javascript assets/libs -->
             
-            <script type="text/javascript" src="assets/lib/js/bootstrap.min.js"></script>
+
             <script type="text/javascript" src="assets/lib/js/Chart.min.js"></script>
             <script type="text/javascript" src="assets/lib/js/bootstrap-switch.min.js"></script>
             <script type="text/javascript" src="assets/lib/js/jquery.matchHeight-min.js"></script>
@@ -28,6 +28,7 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
             <script type="text/javascript" src="assets/js/locale.min.js"></script>
             <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
             <script type="text/javascript" src="assets/lib/js/script.js"></script>
+       <script type="text/javascript" src="assets/lib/js/bootstrap.min.js"></script>
             <!-- Javascript -->
             <!--<script type="text/javascript" src="js/app.js"></script>
             <script type="text/javascript" src="js/index.js"></script>-->

@@ -6,173 +6,231 @@
  * Time: 4:52 PM
  */
 
-$sql = "SELECT * FROM schedule ";
-$events = $user->populatewith('schedule', 'iscanceled', '0');
 ?>
-<div class="container-fluid">
-    <div class="side-body padding-top">
+<div class="container">
+    <div class="side-body   padding-top">
         <div class="row">
-            <div class="col-lg-4"> <!-- for the filling of form -->
+            <div class="col-lg-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h1 class="panel-title">Schedule or whatever </h1>
+                        <h4 class="panel-title">Calendar</h4>
                     </div>
                     <div class="panel-body">
-                        <form class="form form-horizontal">
-                            <div class="form-group col-lg-10">
-                                <label class="control-label">Asset</label>
-                                <input class="form-control" name="assetid" type="text" required />
-                            </div>
-                            <div class="form-group col-lg-10">
-                                <label class="control-label">Staff</label>
-                                <input aria-label="slkf" class="form-control" name="staffid" type="text" required />
-                            </div>
-                            <div class="form-group col-lg-10">
-                                <label class="control-label">Frequency</label>
-                                <input class="form-control" name="frequencytype" type="text" required />
-                            </div>
-                            <div class="form-group col-lg-10">
-                                <label class="control-label">Start Date</label>
-                                <input class="form-control" name="startdate" type="date" required />
-                            </div>
-                            <div class="form-group col-lg-10">
-                                <label class="control-label">Due Date</label>
-                                <input class="form-control" name="enddate" type="date" required />
-                            </div>
-                        </form>
+                        <div id="calendar"></div>
                     </div>
+
+                </div>
+            </div></div>
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" method="POST" action="process/addSchedule.php">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Assign name</label>
+                                <div class="col-sm-10">
+                                    <select name="staff" class="form-control" id="staff">
+                                        <option value="">Choose</option>
+                                        <?php
+                                        $all = $user->populatewith('staff', 'isdeleted', '0');
+                                        foreach ($all as $item) { ?>
+                                            <option value="<?php echo $item['staffid']?>"><?php echo $item['name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Asset</label>
+                                <div class="col-sm-10">
+                                    <select name="assetname" class="form-control" id="color">
+                                        <option value="">Choose</option>
+                                        <?php
+                                        $all = $user->populatewith('assets', 'isdeleted', '0');
+                                        foreach ($all as $item) { ?>
+                                            <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Priority</label>
+                                <div class="col-sm-10">
+                                    <select name="priority" class="form-control" id="priority">
+                                        <option value="">Choose</option>
+                                        <option style="color:#FF0000;" value="1">High</option>
+                                        <option style="color:#FFD700;" value="2">Medium</option>
+                                        <option style="color:#008000;" value="3">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Schedule Frequency</label>
+                                <div class="col-sm-10">
+                                    <select name="ftype" class="form-control" id="color">
+                                        <option value="">Choose</option>
+                                        <option value="1">Daily</option>
+                                        <option value="2">Weekly</option>
+                                        <option value="3">Monthly</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Maintenace Type</label>
+                                <div class="col-sm-10">
+                                    <select name="mtype" class="form-control" id="color">
+                                        <option value="">Choose</option>
+                                        <option value="1">Preventive</option>
+                                        <option value="2">Corrective</option>
+                                        <option value="3">Damage</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="start" class="col-sm-2 control-label">Start date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="start" class="form-control" id="start" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="end" class="col-sm-2 control-label">End date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="end" class="form-control" id="end" readonly>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        <!-- thats all for adding -->
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-horizontal" method="POST" action="addEvent.php">
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Add Event</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">Title</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="title" class="form-control" id="title" placeholder="Title">
+        <!-- Modal -->
+        <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" method="POST" action="process/editSchedule.php">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Edit Event</h4>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="color" class="col-sm-2 control-label">Color</label>
-                        <div class="col-sm-10">
-                            <select name="color" class="form-control" id="color">
-                                <option value="">Choose</option>
-                                <option style="color:#0071c5;" value="#0071c5">&#9724; Dark blue</option>
-                                <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquoise</option>
-                                <option style="color:#008000;" value="#008000">&#9724; Green</option>
-                                <option style="color:#FFD700;" value="#FFD700">&#9724; Yellow</option>
-                                <option style="color:#FF8C00;" value="#FF8C00">&#9724; Orange</option>
-                                <option style="color:#FF0000;" value="#FF0000">&#9724; Red</option>
-                                <option style="color:#000;" value="#000">&#9724; Black</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="start" class="col-sm-2 control-label">Start date</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="start" class="form-control" id="start" readonly>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="end" class="col-sm-2 control-label">End date</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="end" class="form-control" id="end" readonly>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!--another modal-->
-
-<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-horizontal" method="POST" action="editEventTitle.php">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Edit Event</h4>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="title" class="col-sm-2 control-label">Title</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="title" class="form-control" id="title" placeholder="Title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="color" class="col-sm-2 control-label">Color</label>
-                        <div class="col-sm-10">
-                            <select name="color" class="form-control" id="color">
-                                <option value="">Choose</option>
-                                <option style="color:#0071c5;" value="#0071c5">&#9724; Dark blue</option>
-                                <option style="color:#40E0D0;" value="#40E0D0">&#9724; Turquoise</option>
-                                <option style="color:#008000;" value="#008000">&#9724; Green</option>
-                                <option style="color:#FFD700;" value="#FFD700">&#9724; Yellow</option>
-                                <option style="color:#FF8C00;" value="#FF8C00">&#9724; Orange</option>
-                                <option style="color:#FF0000;" value="#FF0000">&#9724; Red</option>
-                                <option style="color:#000;" value="#000">&#9724; Black</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label class="text-danger"><input type="checkbox"  name="delete"> Delete event</label>
+                        <div class="modal-body">
+                            <input hidden name="scheduleid" id="id" />
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Assigned Staff</label>
+                                <div class="col-sm-10">
+                                    <select name="staff" class="form-control" id="staff" >
+                                        <?php
+                                        $all = $user->populatewith('staff', 'isdeleted', '0');
+                                        foreach ($all as $item) { ?>
+                                            <option value="<?php echo $item['staffid']?>"><?php echo $item['name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Asset</label>
+                                <div class="col-sm-10">
+                                    <select name="assetname" class="form-control" id="title" disabled>
+                                        <?php
+                                        $all = $user->populatewith('assets', 'isdeleted', '0');
+                                        foreach ($all as $item) { ?>
+                                            <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Priority</label>
+                                <div class="col-sm-10">
+                                    <select name="priority" class="form-control" id="priority">
+                                        <option value="">Choose</option>
+                                        <option style="color:#FF0000;" value="1">High</option>
+                                        <option style="color:#FFD700;" value="2">Medium</option>
+                                        <option style="color:#008000;" value="3">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Schedule Frequency</label>
+                                <div class="col-sm-10">
+                                    <select name="ftype" class="form-control" id="ftype">
+                                        <option value="">Choose</option>
+                                        <option value="1">Daily</option>
+                                        <option value="2">Weekly</option>
+                                        <option value="3">Monthly</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Maintenace Type</label>
+                                <div class="col-sm-10">
+                                    <select name="mtype" class="form-control" id="mtype">
+                                        <option value="">Choose</option>
+                                        <option value="1">Preventive</option>
+                                        <option value="2">Corrective</option>
+                                        <option value="3">Damage</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="start" class="col-sm-2 control-label">Start date</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="start" class="form-control" id="start" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="end" class="col-sm-2 control-label">End date</label>
+                                <div class="col-sm-10">
+                                    <input type="datetime-local" name="end" class="form-control" id="end">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <div class="checkbox">
+                                        <label class="text-danger">
+                                            <input type="checkbox" name="delete"> Delete event</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" class="form-control" id="id">
+
+
                         </div>
-                    </div>
-
-                    <input type="hidden" name="id" class="form-control" id="id">
-
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
+            </div>
         </div>
+        <!-- thats all for editing -->
     </div>
 </div>
 
@@ -184,136 +242,38 @@ $events = $user->populatewith('schedule', 'iscanceled', '0');
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-
-
-    $(document).ready(function() {
-
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month,basicWeek,basicDay'
-            },
-            defaultDate: '2018-01-01',
+<script type="text/javascript">
+    $(document).ready(function () {
+        var calendar = $('#calendar').fullCalendar({
             editable: true,
-            eventLimit: true, // allow "more" link when too many events
+            header: {
+                left: 'prev,next,today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay',
+            },
+            events: 'process/showevents.php',
             selectable: true,
+            eventLimit: true,
             selectHelper: true,
-            select: function(start, end) {
+            eventRender: function(event, element) {
+
+                element.bind('dblclick', function() {
+                    // content: event.description
+
+
+                    $('#ModalEdit #id').val(event.id);
+
+                    $('#ModalEdit').modal('show');
+                    // ended
+                });
+            },
+            select: function (start, end) {
 
                 $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
                 $('#ModalAdd #end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
                 $('#ModalAdd').modal('show');
-            },
-            eventRender: function(event, element) {
-                element.bind('dblclick', function() {
-                    $('#ModalEdit #scheduleid').val(event.scheduleid);
-                    $('#ModalEdit #id').val(event.id);
-                    $('#ModalEdit #id').val(event.id);
-                    $('#ModalEdit #title').val(event.title);
-                    $('#ModalEdit #color').val(event.color);
-                    $('#ModalEdit').modal('show');
-                });
-            },
-            eventDrop: function(event, delta, revertFunc) { // si changement de position
-
-                edit(event);
-
-            },
-            eventResize: function(event,dayDelta,minuteDelta,revertFunc) { // si changement de longueur
-
-                edit(event);
-
-            },
-            events: [
-                <?php foreach($events as $event):
-
-                $start = explode(" ", $event['start']);
-                $end = explode(" ", $event['end']);
-                if($start[1] == '00:00:00'){
-                    $start = $start[0];
-                }else{
-                    $start = $event['start'];
-                }
-                if($end[1] == '00:00:00'){
-                    $end = $end[0];
-                }else{
-                    $end = $event['end'];
-                }
-                ?>
-                {
-                    id: '<?php echo $event['id']; ?>',
-                    title: '<?php echo $event['title']; ?>',
-                    start: '<?php echo $start; ?>',
-                    end: '<?php echo $end; ?>',
-                    color: '<?php echo $event['color']; ?>',
-                },
-                <?php endforeach; ?>
-            ]
+            }
         });
 
-        function edit(event){
-            start = event.start.format('YYYY-MM-DD HH:mm:ss');
-            if(event.end){
-                end = event.end.format('YYYY-MM-DD HH:mm:ss');
-            }else{
-                end = start;
-            }
-
-            id =  event.id;
-
-            Event = [];
-            Event[0] = id;
-            Event[1] = start;
-            Event[2] = end;
-
-            $.ajax({
-                url: 'editEventDate.php',
-                type: "POST",
-                data: {Event:Event},
-                success: function(rep) {
-                    if(rep == 'OK'){
-                        alert('Saved');
-                    }else{
-                        alert('Could not be saved. try again.');
-                    }
-                }
-            });
-        }
-
     });
-
-
 </script>
