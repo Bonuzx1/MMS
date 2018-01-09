@@ -8,7 +8,7 @@
 //$sql = "SELECT * FROM schedule ";
 include '../includes/config.php';
 $data = array();
-$sql = "SELECT * FROM schedule ORDER BY scheduleid";
+$sql = "SELECT * FROM schedule WHERE iscanceled = '0' ORDER BY scheduleid";
 $allresult = $user->selectsearch($sql);
 foreach ($allresult as $row ) {
     $assetid = $row['assetid'];
@@ -16,13 +16,14 @@ foreach ($allresult as $row ) {
     $data[] = array(
         'id'        =>  $row['scheduleid'],
         'title' =>  $row2['name'],
-        'titleid' =>  $assetid,
+        'titleid' =>  $row['assetid'],
         'frequency' => $row['frequencytype'],
         'staffid' => $row['staffid'],
         'maintenance' => $row['maintenancetype'],
         'type'  =>  $row['prioritytype'],
         'start'     =>  $row['startdate'],
-        'end'       =>  $row['enddate']
+        'end'       =>  $row['enddate'],
+        'color' => $row['color']
     );
 
 

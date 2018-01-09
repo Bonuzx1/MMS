@@ -127,7 +127,7 @@ if (isset($_POST['Save'])) {
             <div class="col-lg-12">
                 <div class="form-group">
                 <label>Available?</label>
-                <select required name="available" selected ="" value"" class="form-control">
+                <select required name="available" id="avail" class="form-control">
                     <option value=""></option>
                     
                     <option value="1">Yes</option>
@@ -167,7 +167,11 @@ if (isset($_POST['Save'])) {
     </div>
 </div>
 </div>
+
 <script type="text/javascript">
+    $(document).ready(function () {
+        $("#avail").val('<?php if (isset($_GET["id"])) echo $row["isfunctional"]?>');
+    });
       function delset(id, title)
   {
     if (confirm("Are you sure you want to delete '" + title + "'"))

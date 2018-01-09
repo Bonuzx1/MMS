@@ -126,8 +126,8 @@
       public function updatetabl($sql)
   {
     $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->rowCount();
+    if ($stmt->execute())
+        return 'OK';
   }
   
   public function howmanyin($table, $condition, $conditionvalue)

@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
     
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">New Asset</h4>
+            <h4 class="panel-title"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?>Asset</h4>
         </div>
          <h3 style="color:green" align="center"><b> <?php echo $msg ?></b> </h3>
                    
@@ -245,11 +245,11 @@ if (isset($_POST['submit'])) {
 
             $("#assettype").change(function () {
                 var val = $(this).val();
-                if (val === 2) {
+                if (val == 2) {
                     $("#department").attr('disabled', "disabled");
                     $("#location").attr('disabled', "disabled");
 
-                } else if (val === 1) {
+                } else if (val == 1) {
                     $("#department").removeAttr('disabled');
                     $("#location").removeAttr('disabled');
                 } else {

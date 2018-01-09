@@ -6,7 +6,7 @@ $row = $user->showone('staff','staffid',$id);
 <div class="container-fluid">
 <div class="side-body">
 		<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-10">
 				<div class="card">
 								<div class="card-header">
 
@@ -18,48 +18,46 @@ $row = $user->showone('staff','staffid',$id);
                                     
                                               <div class="card">
                                 <div class="card-body">
-                                                    <form action="process/editStaff.php" method="post">
+                                                    <form action="process/editStaff.php" class="form-horizontal" method="post">
                                                         <div class="form-group">
-                                                            <label class="col-sm-2">Name: </label>
+                                                            <label class="col-sm-1 control-label">Name: </label>
+                                                            <div class="col-sm-12">
                                                             <input type="text" class="form-control" name="name" placeholder="name" value="<?php echo $row['name'] ?>"/>
+                                                            </div>
+                                                            </div>
+                                                        <div class="form-group">
+                                                            <label class="col-sm-2 ">Date of Birth: </label>
+                                                            <div class='col-sm-12' id='datetimepicker10'>
+                                                            <input type='date' value="<?php echo $row['dob']?>" class="form-control" />
+                                                        </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2">Date of Birth: </label>
-                                                            <div class='input-group date' id='datetimepicker10'>
-                        <input type='date' class="form-control" />
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
+                                                            <label class="col-sm-1 control-label">Contact: </label>
+                                                            <div class="col-sm-12">
+                                                            <input class="form-control" value="<?php echo $row['contact'] ?>" type="tel" name="number" placeholder="Contact" />
+                                                        </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2">Contact: </label>
-                                                            <input value="<?php echo $row['contact'] ?>" type="tel" name="number" placeholder="Contact" />
+                                                            <label class="col-sm-1 control-label">Email: </label>
+                                                            <div class="col-sm-12">
+                                                            <input class="form-control" value="<?php echo $row['email']; ?>" type="email" name="email" placeholder="Email" />
+                                                        </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-2">Email: </label>
-                                                            <input value="<?php echo $row['email']; ?>" type="email" name="email" placeholder="Email" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2">status: </label>
-                                                            <select name="active">
+                                                            <label class="col-sm-1 control-label">status: </label>
+                                                            <div class="col-sm-12">
+                                                            <select class="form-control" id="status" name="active">
                                                                 <option value=""> </option>
                                                                 <option value="1">Active</option>
                                                                 <option value="0">Not Active</option>
                                                                 </select>
+                                                        </div>
 
                                                     </div>
-                                                    <div class="well well-sm panel-footer">
-        <ul class="list-group">
-    <div class="row">
-  <div class="col-lg-4">
-     <button class="btn btn-success" type="submit" name="submit">Submit</button> 
-   
-  </div>
-
-  </div>
-</ul>
-        </div><!--well-->
+                                                        <div class="panel-footer">
+     <button class="btn btn-success" type="submit" name="submit">Submit</button>
+      <a href="index.php?staff" class="btn btn-info">Cancel</a>
+                                                        </div><!--panel footer-->
                                 </form>
                             </div>
                         </div>
@@ -81,10 +79,9 @@ $row = $user->showone('staff','staffid',$id);
                                 
                             
  <script>
- function close() {
-var doc = document.getElementById("edit");
- doc.close();
-  }
+ $(document).ready(function () {
+     $("#status").val('<?php echo $row['active']?>');
+ })
                                                            
   </script>
 <script type="text/javascript">

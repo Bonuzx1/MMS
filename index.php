@@ -88,6 +88,8 @@ elseif (isset($_GET['asset'])) {
     include 'includes/supply.php';
 }elseif (isset($_GET['order'])) {
     include 'includes/workorder.php';
+}elseif (isset($_GET['info'])) {
+    include 'includes/scheduleinfo.php';
 }
                    
 include('includes/footer.php');

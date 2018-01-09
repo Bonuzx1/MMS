@@ -55,14 +55,12 @@
 </div>
     
             
-            <div class="col-lg-12 panel-footer" >
-            <div class="form-group" >
-            <div class="well well-lg" >
+            <div class="panel-footer" >
+
             <button class="btn btn-success" type="button" name="save">Save</button> &nbsp;
             <a href="" class="btn btn-info">Cancel</a>
                 
-            </div>
-        </div>
+
             </div>
             </form>
         </div>

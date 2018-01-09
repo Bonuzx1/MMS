@@ -34,6 +34,8 @@ $sho = "";
     <link rel="stylesheet" type="text/css" href="assets/css/themes/flat-blue.css">
 
     <script type="text/javascript" src="assets/lib/js/jquery.min.js"></script>
+    <link type="text/css" href="assets/css/jquery-ui.css" />
+    <link type="text/css" href="assets/css/jquery-ui.theme.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/css/bootstrap-switch.min.css">
 
 </head>

@@ -86,10 +86,10 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" type="email" name="email" required>
                                         </div>
                 
-                                       
+                                       <div class="panel-footer">
                                         <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                         <a href="index.php?staff" class="btn btn-info">Cancel</a>
-                
+                                       </div>
                                     </form>
                                 </div>
                             </div>

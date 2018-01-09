@@ -1,5 +1,9 @@
               <!-- Main Content -->
-              <?php $num_rows = $user->howmanyin('staff', 'isdeleted','0') ?>
+              <?php
+              $num_rows1 = $user->howmanyin('staff', 'isdeleted','0');
+              $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
+              $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
+              ?>
             <div class="container-fluid">
                 <div class="side-body padding-top">
                     <div class="row">
@@ -9,7 +13,7 @@
                                     <div class="card-body">
                                         <i class="icon fa fa-user fa-4x"></i>
                                         <div class="content">
-                                            <div class="title"><?php echo $num_rows;?></div>
+                                            <div class="title"><?php echo $num_rows1;?></div>
                                             <div class="sub-title">Staff</div>
                                         </div>
                                         <div class="clear-both"></div>
@@ -38,7 +42,7 @@
                                     <div class="card-body">
                                         <i class="icon fa fa-tags fa-4x"></i>
                                         <div class="content">
-                                            <div class="title">280</div>
+                                            <div class="title"><?php echo $num_rows2;?></div>
                                             <div class="sub-title">Work Orders</div>
                                         </div>
                                         <div class="clear-both"></div>
@@ -52,8 +56,8 @@
                                     <div class="card-body">
                                         <i class="icon fa fa-cubes fa-4x"></i>
                                         <div class="content">
-                                            <div class="title">16</div>
-                                            <div class="sub-title">Supplies</div>
+                                            <div class="title"><?php echo $num_rows3;?></div>
+                                            <div class="sub-title">Assests</div>
                                         </div>
                                         <div class="clear-both"></div>
                                     </div>

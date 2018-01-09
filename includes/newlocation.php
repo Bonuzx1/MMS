@@ -97,17 +97,15 @@
 </div>
             </div>
     
-            
-            <div class="col-lg-12" >
-            <div class="form-group" >
-            <div class="well well-lg" >
+           <div class="clearfix"></div>
+            <div class="panel-footer" >
+
             <button class="btn btn-success" type="submit" name="<?php if(isset($_GET['id'])){ echo 'saveedit'; }else{echo 'Save'; } ?>">Save</button> &nbsp;
             
             <a href="index.php?location" class="btn btn-info">Cancel</a>
                 
             </div>
-        </div>
-            </div>
+
             </form>
         </div>
     </div>

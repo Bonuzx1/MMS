@@ -150,7 +150,7 @@ if (isset($_POST['Save'])) {
             <div class="col-lg-12">
                 <div class="form-group">
                 <label>Location</label>
-                <select required name="locationid" selected ="" value"" class="form-control">
+                <select required name="locationid" id="locationedit" class="form-control">
                     <option value=""></option>
                     <?php
                     $fullrow = $user->populatewith('location', 'isavailable', '1');
@@ -195,6 +195,7 @@ if (isset($_POST['Save'])) {
 </div>
 </div>
 <script type="text/javascript">
+
       function delset(id, title)
   {
     if (confirm("Are you sure you want to delete '" + title + "'"))
@@ -202,7 +203,9 @@ if (isset($_POST['Save'])) {
       window.location.href = 'index.php?customer=del&id=' + id;
     }
   }
-
+$(document).ready(function () {
+    $("#locationedit").val('<?php if (isset($_GET["id"])) echo $row["locationid"]?>');
+});
 
 
   
