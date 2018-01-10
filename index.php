@@ -46,6 +46,7 @@ elseif (isset($_GET['remove-staff'])) {
 }
 elseif (isset($_GET['delete-staff'])) {
     $id = $_GET['delete-staff'];
+    $result = $user->updateone('staff','active','0','staffid',$id);
     $result = $user->updateone('staff','isdeleted','1','staffid',$id);
     if($result)
     {

@@ -3,6 +3,7 @@
               $num_rows1 = $user->howmanyin('staff', 'isdeleted','0');
               $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
               $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
+              $num_rows4 = $user->howmanyin('request', 'isapproved','1');
               ?>
             <div class="container-fluid">
                 <div class="side-body padding-top">
@@ -28,7 +29,7 @@
                                     <div class="card-body">
                                         <i class="icon fa fa-comments fa-4x"></i>
                                         <div class="content">
-                                            <div class="title">23</div>
+                                            <div class="title"><?php echo $num_rows4;?></div>
                                             <div class="sub-title">Notifications</div>
                                         </div>
                                         <div class="clear-both"></div>

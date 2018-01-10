@@ -7,8 +7,17 @@
  */
 include '../includes/config.php';
 if (isset($_POST['staff'])) {
+
+    if ($_POST['end']==""){
+        $end = $_POST['customend'];
+    }else{
+        $end = $_POST['end'];
+    }
+
+
     $start = $_POST['start'];
-    $end = $_POST['end'];
+
+
 
     $color = '';
     if ( $_POST['priority'] == '1'){
@@ -35,12 +44,13 @@ if (isset($_POST['staff'])) {
         for ($i = 0; $i<$numberoftime; $i++)
         {
             $end = $start;
-            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :start, :end, :color) ";
+            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, cost, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :cost, :start, :end, :color) ";
             $param = array(':assetname' => $_POST['assetname'],
                 ':priority' => $_POST['priority'],
                 ':frequency' => $_POST['ftype'],
                 ':staff' => $_POST['staff'],
                 ':type' => $_POST['mtype'],
+                ':cost' => $_POST['cost'],
                 ':start' => $start,
                 ':end' => $end,
                 ':color' => $color);
@@ -65,12 +75,13 @@ if (isset($_POST['staff'])) {
         for ($i = 0; $i<$numberoftime; $i++)
         {
             $end = $start;
-            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :start, :end, :color) ";
+            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, cost, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :cost, :start, :end, :color) ";
             $param = array(':assetname' => $_POST['assetname'],
                 ':priority' => $_POST['priority'],
                 ':frequency' => $_POST['ftype'],
                 ':staff' => $_POST['staff'],
                 ':type' => $_POST['mtype'],
+                ':cost' => $_POST['cost'],
                 ':start' => $start,
                 ':end' => $end,
                 ':color' => $color);
@@ -94,12 +105,13 @@ if (isset($_POST['staff'])) {
         for ($i = 0; $i<$numberoftime; $i++)
         {
             $end = $start;
-            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :start, :end, :color) ";
+            $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, cost, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :cost, :start, :end, :color) ";
             $param = array(':assetname' => $_POST['assetname'],
                 ':priority' => $_POST['priority'],
                 ':frequency' => $_POST['ftype'],
                 ':staff' => $_POST['staff'],
                 ':type' => $_POST['mtype'],
+                ':cost' => $_POST['cost'],
                 ':start' => $start,
                 ':end' => $end,
                 ':color' => $color);
@@ -112,12 +124,13 @@ if (isset($_POST['staff'])) {
         header('Location: '.$_SERVER['HTTP_REFERER']);
     }else{
         echo $color;
-        $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :start, :end, :color) ";
+        $sql = "INSERT INTO schedule(assetid, frequencytype, staffid, prioritytype, maintenancetype, cost, startdate, enddate, color) VALUES(:assetname, :frequency, :staff, :priority, :type, :cost, :start, :end, :color) ";
         $param = array(':assetname' => $_POST['assetname'],
             ':priority' => $_POST['priority'],
             ':frequency' => $_POST['ftype'],
             ':staff' => $_POST['staff'],
             ':type' => $_POST['mtype'],
+            ':cost' => $_POST['cost'],
             ':start' => $start,
             ':end' => $end,
             ':color' => $color);

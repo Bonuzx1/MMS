@@ -108,7 +108,7 @@ if (isset($_POST['Save'])) {
 
         <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">New Department</h4>
+            <h4 class="panel-title"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?>Department</h4>
             <h5 class="panel-title"><?php echo $msg; ?></h5>
         </div>
         <div class="panel-body">
@@ -151,7 +151,7 @@ if (isset($_POST['Save'])) {
             <div class="form-group" >
             <div class="well well-lg" >
             <button class="btn btn-success" type="submit" name="<?php if(isset($_GET['id'])){ echo 'saveedit'; }else{echo 'Save'; } ?>">Save</button> &nbsp;
-            <a href="" class="btn btn-info">Cancel</a>
+            <a href="index.php?dept" class="btn btn-info">Cancel</a>
                 
             </div>
         </div>

@@ -51,7 +51,7 @@
                                 <select name="staff" class="form-control" id="staff">
                                     <option value="">Choose</option>
                                     <?php
-                                    $all = $user->populatewith('staff', 'isdeleted', '0');
+                                    $all = $user->populatewith('staff', 'active', '1');
                                     foreach ($all as $item) { ?>
                                         <option value="<?php echo $item['staffid']?>"><?php echo $item['name']?></option>
                                     <?php } ?>
@@ -64,7 +64,7 @@
                                 <select name="assetname" class="form-control" id="color">
                                     <option value="">Choose</option>
                                     <?php
-                                    $all = $user->populatewith('assets', 'isdeleted', '0');
+                                    $all = $user->populatewith('assets', 'status', '0');
                                     foreach ($all as $item) { ?>
                                         <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
                                     <?php } ?>
@@ -106,6 +106,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Maintenance Cost</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="cost" id="cost"  class="form-control" min="0" step="any"  placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label for="start" class="col-sm-2 control-label">Start date</label>
                             <div class="col-sm-10">
                                 <input type="text" name="start" class="form-control" id="start" readonly>
@@ -113,8 +119,12 @@
                         </div>
                         <div class="form-group">
                             <label for="end" class="col-sm-2 control-label">End date</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-3">
                                 <input type="text" name="end" class="form-control" id="end" readonly>
+                            </div>
+                            <label for="end" class="col-sm-3 control-label">Custom End </label>
+                            <div class="col-sm-4">
+                                <input type="date" name="customend" class="form-control" id="customend">
                             </div>
                         </div>
 
@@ -149,7 +159,7 @@
                             <div class="col-sm-10">
                                 <select name="staff" class="form-control" id="staffedit" >
                                     <?php
-                                    $all = $user->populatewith('staff', 'isdeleted', '0');
+                                    $all = $user->populatewith('staff', 'active', '1');
                                     foreach ($all as $item) { ?>
                                         <option value="<?php echo $item['staffid']?>"><?php echo $item['name']?></option>
                                     <?php } ?>
@@ -185,6 +195,7 @@
                             <div class="col-sm-10">
                                 <select name="ftype" class="form-control" id="ftypeedit">
                                     <option value="">Choose</option>
+                                    <option value="0">Once</option>
                                     <option value="1">Daily</option>
                                     <option value="2">Weekly</option>
                                     <option value="3">Monthly</option>
@@ -192,7 +203,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="color" class="col-sm-2 control-label">Maintenace Type</label>
+                            <label for="color" class="col-sm-2 control-label">Maintenance Type</label>
                             <div class="col-sm-10">
                                 <select name="mtype" class="form-control" id="mtypeedit">
                                     <option value="">Choose</option>
@@ -200,6 +211,12 @@
                                     <option value="2">Corrective</option>
                                     <option value="3">Damage</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Maintenance Cost</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="cost" id="costedit"  class="form-control" min="0" step="any"  placeholder="0.00">
                             </div>
                         </div>
 <!--                        <div class="form-group">-->
@@ -214,14 +231,6 @@
 <!--                                <input type="text" name="end" class="form-control" id="end">-->
 <!--                            </div>-->
 <!--                        </div>-->
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <div class="checkbox">
-                                    <label class="text-danger">
-                                        <input type="checkbox" id="delete" name="delete"> Delete event</label>
-                                </div>
-                            </div>
-                        </div>
 
                         <input type="hidden" name="id" class="form-control" id="id">
 
@@ -236,26 +245,22 @@
         </div>
     </div>
     <!-- thats all for editing -->
+
     </div>
     </div>
-
-
-
-
-
-
-
-
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#customend").change(function () {
+            $("#end").val("");
+        });
 
         var calendar = $('#calendar').fullCalendar({
             editable: true,
             header: {
-                left: 'prev,next,today',
+                left: 'month',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay',
+                right: 'prev,next,today',
             },
             events: 'process/showevents.php',
             selectable: true,
@@ -271,13 +276,19 @@
                     $('#ModalEdit #titleedit').val(event.titleid);
                     $('#ModalEdit #mtypeedit').val(event.maintenance);
                     $('#ModalEdit #ftypeedit').val(event.frequency);
+                    $('#ModalEdit #costedit').val(event.cost);
                     $('#ModalEdit #priorityedit').val(event.type);
                     $('#ModalEdit').modal('show');
                     // ended
                 });
+                element.on('contextmenu', function () {
+                    if(confirm('do you want delete?'+event.id+", "+event.titleid)){
+                        del(event.id);
+                    }
+                })
             },
             eventMouseover: function(calEvent, jsEvent) {
-                var tooltip = '<div class="tooltipevent" style="width:100px;height:100px;background:#ccc;position:absolute;z-index:10001;">' + calEvent.title +'<br>'+calEvent.type+ '</div>';
+                var tooltip = '<div class="tooltipevent" style="width:200px;height:100px;background:#ccc;position:absolute;z-index:10001;"> <b>Asset Name:</b> ' + calEvent.title +'<br><b>Assigned to: </b>'+calEvent.staff+'<br><b>Cost: </b>GHC '+calEvent.cost+'<br>'+ +'</div>';
                 var $tooltip = $(tooltip).appendTo('body');
 
                 $(this).mouseover(function(e) {
@@ -318,14 +329,6 @@
             },
         });
         $("#edit-event").click(function () {
-            var d;
-
-            if ($("#delete").is('checked'))
-            {
-                d='1';
-            }else {
-                d='2';
-            }
 
             Event = [];
             Event[0] = $("#id").val();
@@ -333,15 +336,21 @@
             Event[2] = $("#priorityedit").val();
             Event[3] = $("#ftypeedit").val();
             Event[4] = $("#mtypeedit").val();
-            Event[5] = d;
+            Event[6] = $("#costedit").val();
 
-            alert(Event);
+            //alert(Event);
             $.ajax({
                 url: 'process/editSchedule.php',
                 type: 'POST',
                 data: {Event:Event},
-                success: function () {
-                    $("#calendar").fullCalendar('refetchEvents');
+                success: function (data) {
+                    if ($.trim(data))
+                    {
+                        alert('saved sucessfully');
+                        $("#calendar").fullCalendar('refetchEvents');
+                    }else {
+                        alert('not saved');
+                    }
                 }
             });
         });
@@ -364,8 +373,36 @@
                 url: 'process/editSchedule.php',
                 type: "POST",
                 data: {vent:vent},
-                success: function() {
-                    $("#calendar").fullCalendar('refetchEvents');
+                success: function(data) {
+                    if ($.trim(data))
+                    {
+                        alert('Saved Sucessfully');
+                        $("#calendar").fullCalendar('refetchEvents');
+                    }else {
+                        alert('not saved');
+                    }
+                }
+            });
+        };
+        function del(value) {
+            Event = [];
+            Event[0] = value;
+            console.log(Event);
+            $.ajax({
+                url: 'process/deleteSchedule.php',
+                type: 'POST',
+                data: {Event:Event},
+                success: function (data) {
+                    if ($.trim(data))
+                    {
+                        alert('Deleted Suceesfully');
+                        $("#calendar").fullCalendar('refetchEvents');
+                    }else {
+                        alert('not deleted');
+                    }
+                },
+                error: function (data) {
+                    alert("Error "+data);
                 }
             });
         }

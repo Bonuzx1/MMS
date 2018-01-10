@@ -47,7 +47,7 @@
     
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h4 class="panel-title">New Location</h4>
+            <h4 class="panel-title"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?>Location</h4>
             <h4 class="panel-title"><?php echo $msg ?></h4>
         </div>
         <div class="panel-body">

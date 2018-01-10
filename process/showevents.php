@@ -12,7 +12,9 @@ $sql = "SELECT * FROM schedule WHERE iscanceled = '0' ORDER BY scheduleid";
 $allresult = $user->selectsearch($sql);
 foreach ($allresult as $row ) {
     $assetid = $row['assetid'];
+    $staffid = $row['staffid'];
     $row2 = $user->showone('assets', 'assetid', $assetid);
+    $row3 = $user->showone('staff', 'staffid', $staffid);
     $data[] = array(
         'id'        =>  $row['scheduleid'],
         'title' =>  $row2['name'],
@@ -21,9 +23,11 @@ foreach ($allresult as $row ) {
         'staffid' => $row['staffid'],
         'maintenance' => $row['maintenancetype'],
         'type'  =>  $row['prioritytype'],
+        'cost'  =>  $row['cost'],
         'start'     =>  $row['startdate'],
         'end'       =>  $row['enddate'],
-        'color' => $row['color']
+        'color' => $row['color'],
+        'staff' => $row3['name']
     );
 
 

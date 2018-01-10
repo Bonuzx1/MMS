@@ -40,7 +40,7 @@ $sho = "";
 
 </head>
 
-<body class="flat-blue">
+<body class="flat-blue" oncontextmenu="return false">
  
 <div class="app-container">
         <div class="row content-container">

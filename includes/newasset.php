@@ -106,13 +106,13 @@ if (isset($_POST['submit'])) {
   <div class="side-body padding-top">
     <div class="row">
     	<div class="col-lg-10">
-    
+
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h4 class="panel-title"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?>Asset</h4>
         </div>
          <h3 style="color:green" align="center"><b> <?php echo $msg ?></b> </h3>
-                   
+
         <div class="panel-body">
         <div class="row">
             <form class="form-vertical" action="" method="post">
@@ -153,8 +153,8 @@ if (isset($_POST['submit'])) {
             <div class="col-lg-12">
             <div class="form-group">
             	<label for="" class="control-label ">Status</label> &nbsp;&nbsp;
-                <label class="radio-inline"><input type="radio" id="Available" value="1" name="status">Available</label>
-				<label class="radio-inline"><input type="radio" value="0" name="status">Not Available</label>
+                <label class="radio-inline"><input type="radio" id="status1" value="1" name="status">Available</label>
+				<label class="radio-inline"><input type="radio" id="status" value="0" name="status">Not Available</label>
 				</div>
         </div>
 
@@ -175,7 +175,7 @@ if (isset($_POST['submit'])) {
             <div class="col-lg-12">
                 <div class="form-group">
                 <label>Supplier</label>
-                <select required name="supplier" class="form-control">
+                <select required name="supplier" id="supplier" class="form-control">
                     <option value=""></option>
                     <?php
                     $fullrow = $user->populatewith('supplier', 'inpartnership', '1');
@@ -206,7 +206,7 @@ if (isset($_POST['submit'])) {
             <!-- <div class="well well-sm" > -->
             <button class="btn btn-success" type="submit" name="<?php if (isset($_GET['id'])){ echo 'saveedit';} else{echo 'submit'; } ?>">Submit</button> &nbsp;
             <a href="index.php?asset" class="btn btn-info">Cancel</a>
-                
+
             <!-- </div> -->
         <!-- </div> -->
             <!-- </div> -->
@@ -221,6 +221,16 @@ if (isset($_POST['submit'])) {
 </div>
 <script>
     $(document).ready(function () {
+        $("#department").val("<?php if (isset($_GET['id'])) echo $deptid; ?>");
+
+        var x = 1;
+        if (x == <?php if (isset($_GET['id'])){  if ($status == 1) echo '1'; else {
+            echo "2";} };?>){
+            $("#status1").attr('checked', true);
+        }else {
+            $("#status").attr('checked', true);
+        }
+
        // alert("<?php if(isset($_GET['from'])) echo $_GET['from'];?>");
         if (window.location.search.indexOf("from=<?php if(isset($_GET['from'])) { if($_GET['from']=='supply'){
                 echo "supply";} else{

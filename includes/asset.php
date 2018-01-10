@@ -21,7 +21,7 @@
           <tbody id="table1">
             <?php
             $count = $user->howmanyinone('assets');
-                    $fetch = $user->populatewith('assets', 'status', '1');
+                    $fetch = $user->populatewith('assets', 'isdeleted', '0');
                     if($count>1){
                                             foreach($fetch as $row) { 
                                               $depid = $row['departmentid'];
@@ -92,16 +92,23 @@
     <?php
 
     if (($_GET["asset"]=='del')&&(isset($_GET['id']))) {
-          $stmt = 'UPDATE assets SET status = :value WHERE assetid = :assetid' ;
-          $param = array(':value' => '0', ':assetid' => $_GET['id']);
-          if ($user->update($stmt, $param)) {
-              header('Location: index.php?asset=deleted');
-              exit;
-          }else{
+
+
+        $user->updateone('schedule', 'iscanceled', '1', 'assetid', $_GET['id']);
+
+
+        $stmt = 'UPDATE assets SET status = :value, isdeleted = :one WHERE assetid = :assetid';
+        $param = array(':value' => '1', ':one' => '1', ':assetid' => $_GET['id']);
+        if ($user->update($stmt, $param)) {
+            header('Location: index.php?asset=deleted');
+            exit;
+        } else {
             header('Location: index.php?asset=notdeleted');
-          }
-          
+        }
     }
+
+          
+
     ?>
     <script type="text/javascript">
     $(document).ready(function(){
