@@ -1,7 +1,7 @@
  <?php if($_GET['location']==''||($_GET['location']=="edited")||($_GET['location']=="deleted")||($_GET['location']=="notdeleted")){ ?>
   <div class="side-body padding-top">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
 
         <div class="panel panel-primary">
         <!-- Default panel contents -->
@@ -10,9 +10,9 @@
         </div>
   <div class="panel-body">
         <!-- Table -->
-        <table class="table">
+        <table class="table datatable">
           <thead>
-              <th>Location No</th><th>Location Name</th><th>Status</th>
+              <th>Location No</th><th>Location Name</th><th>Status</th><th>Option</th>
           </thead>
           <tbody>
             <?php
@@ -24,7 +24,7 @@
                                            ?>
               <tr>
                   <td><?php echo $row['locationid']?></td><td><?php echo $row['locationname']; ?></td>
-                  <td><?php echo ($row['isinuse'] == 1) ? "used" : "Not Used"; ?><td><a href="index.php?location=new&id=<?php echo $row['locationid']?>"><button class="btn-primary">Edit</button> | <a href="javascript:delset('<?php echo $row['locationid'];?>','<?php echo $row['locationname'];?>')"><button class="btn-danger" ">Delete</button></a></td>
+                  <td><?php echo ($row['isinuse'] == 1) ? "used" : "Not Used"; ?><td><a href="index.php?location=new&id=<?php echo $row['locationid']?>"><button class="btn-primary">Edit</button> | <a href="javascript:delset('<?php echo $row['locationid'];?>','<?php echo $row['locationname'];?>')"><button class="btn-danger">Delete</button></a></td>
 </tr> 
 
                                     <?php } } else { ?>
@@ -37,18 +37,8 @@
         
 
 </div><!--body-->
-<div class="well well-sm panel-footer">
-        <ul class="list-group">
+<div class="panel-footer">
     <div class="row">
-    <div class="col-lg-4">
-        
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search</button>
-      </span>
-      </div><!-- /input-group -->
-  </div><!--/.col-lg-4-->
   <div class="col-lg-4">
     <a href="index.php?location=new">
   <button class="btn btn-primary" type="submit">New Location</button>
@@ -56,7 +46,6 @@
   </div>
 
   </div>
-</ul>
         </div><!--well-->
         </div><!--panel-->
         

@@ -42,7 +42,7 @@ if (isset($_POST['Save'])) {
 <div class="container-fluid">
   <div class="side-body padding-top">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <?php if($_GET['dept']==''||($_GET['dept']=="deleted")||($_GET['dept']=="not deleted")||($_GET['dept']=="edited")){ ?>
 <div class="panel panel-primary">
         <!-- Default panel contents -->
@@ -53,10 +53,10 @@ if (isset($_POST['Save'])) {
 
       <div class="panel-body">
         <!-- Table -->
-        <table class="table">
+        <table class="table datatable">
           <thead>
-              <th>dept No</th><th>Name</th>
-          </thead>
+              <th>dept No</th><th>Name</th><th>Option</th>        
+              </thead>
           <tbody>
             <?php
             $count = $user->howmanyinone('department');
@@ -65,7 +65,7 @@ if (isset($_POST['Save'])) {
                                             foreach($fetch as $row) { ?>
               <tr>
                   <td><?php echo $row['departmentid']?></td><td><?php echo $row['departmentname']; ?></td>
-                  <td><a href="index.php?dept=new&id=<?php echo $row['departmentid']?>"><button class="btn-primary" >Edit</button></a> | <a href="javascript:delset('<?php echo $row['departmentid'];?>','<?php echo $row['departmentname'];?>')"><button class="btn-danger" ">Delete</button></a></td>
+                  <td><a href="index.php?dept=new&id=<?php echo $row['departmentid']?>"><button class="btn-primary" >Edit</button></a> | <a href="javascript:delset('<?php echo $row['departmentid'];?>','<?php echo $row['departmentname'];?>')"><button class="btn-danger">Delete</button></a></td>
 </tr> 
 
                                     <?php } } else { ?>
@@ -82,26 +82,17 @@ if (isset($_POST['Save'])) {
         
 
 </div><!--body-->
-<div class="well well-sm panel-footer">
-        <ul class="list-group">
+<div class="panel-footer">
+     
     <div class="row">
-    <div class="col-lg-4">
-        
-    <div class="input-group">
-      <input type="text" class="form-control" name="srchtxt" id="searchtext" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" id="search1" type="button">Search</button>
-      </span>
-      </div><!-- /input-group -->
-  </div><!--/.col-lg-4-->
   <div class="col-lg-4">
     <a href="index.php?dept=new">
   <button class="btn btn-primary" type="submit">New dept</button>
   </a>
-  </div>
+  
 
   </div>
-</ul>
+
         </div><!--well-->
         </div><!--panel-->
 <?php } elseif($_GET['dept']=="new") { ?>

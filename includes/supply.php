@@ -2,21 +2,21 @@
     <div class="container-fluid">
         <div class="side-body padding-top">
             <div class="row">
-                <div class="col-lg-10">
+                <div class="col-lg-12">
 
                     <div class="panel panel-primary">
                         <!-- Default panel contents -->
                         <div class="panel-heading">
-                            <div class="panel-title"> supply <?php if ($_GET['supply']=="deleted") {
+                            <div class="panel-title"> Supply <?php if ($_GET['supply']=="deleted") {
                                     echo "Deleted Succesfully";
                                 } ?></div>
                         </div>
 
                         <div class="panel-body">
                             <!-- Table -->
-                            <table class="table">
+                            <table class="table datatable">
                                 <thead>
-                                <th>supply No</th><th>Name</th><th>Status</th><th>Category</th><th>Location</th><th></th>
+                                <th>supply No</th><th>Name</th><th>Status</th><th>Option</th>
                                 </thead>
                                 <tbody id="table1">
                                 <?php
@@ -30,7 +30,7 @@
                                         <tr>
                                             <td><?php echo $row['supplyid']?></td><td><?php echo $row['name']; ?></td>
                                             <td><?php echo ($row['status'] == 1) ? "Available" : "Not Available"; ?></td>
-                                            <td><a href="index.php?asset=new&id=<?php echo $row['supplyid']?>&from=supply"><button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['supplyid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger" ">Delete</button></a></td>
+                                            <td><a href="index.php?asset=new&id=<?php echo $row['supplyid']?>&from=supply"><button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['supplyid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger">Delete</button></a></td>
                                         </tr>
 
                                     <?php } } else { ?>
@@ -48,18 +48,8 @@
 
                         </div><!--body-->
 
-                        <div class="well well-sm panel-footer">
-                            <ul class="list-group">
+                        <div class="panel-footer">
                                 <div class="row">
-                                    <div class="col-lg-4">
-
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="searchquery" placeholder="Search for...">
-                                            <span class="input-group-btn">
-        <button class="btn btn-primary" name="searchbutton" type="button">Search</button>
-      </span>
-                                        </div><!-- /input-group -->
-                                    </div><!--/.col-lg-4-->
                                     <div class="col-lg-4">
                                         <a href="index.php?supply=new">
                                             <button class="btn btn-primary" type="submit">New supply</button>
@@ -67,7 +57,7 @@
                                     </div>
 
                                 </div>
-                            </ul>
+                        
                         </div><!--well-->
 
                     </div><!--panel-->

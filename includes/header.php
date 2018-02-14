@@ -40,8 +40,8 @@ $sho = "";
 
 </head>
 
-<body class="flat-blue" oncontextmenu="return false">
- 
+<body class="flat-blue">
+<!-- <body class="flat-blue" oncontextmenu="return false"> -->
 <div class="app-container">
         <div class="row content-container">
             <nav class="navbar navbar-default navbar-fixed-top navbar-top">
@@ -136,3 +136,4 @@ $sho = "";
                     </div>
                     </nav>
             </div>
+

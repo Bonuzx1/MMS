@@ -49,7 +49,7 @@ if (isset($_POST['Save'])) {
 <div class="container-fluid">
   <div class="side-body padding-top">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <?php if($_GET['customer']==''||($_GET['customer']=="deleted")||($_GET['customer']=="not deleted")||($_GET['customer']=="edited")){ ?>
 <div class="panel panel-primary">
         <!-- Default panel contents -->
@@ -60,9 +60,9 @@ if (isset($_POST['Save'])) {
 
       <div class="panel-body">
         <!-- Table -->
-        <table class="table">
+        <table class="table datatable">
           <thead>
-              <th>customer No</th><th>Name</th><th>Location</th><th>Phone Number</th><th>Email</th>
+              <th>customer No</th><th>Name</th><th>Location</th><th>Phone Number</th><th>Email</th><th>Option</th>
           </thead>
           <tbody>
             <?php
@@ -78,7 +78,7 @@ if (isset($_POST['Save'])) {
                   <td><?php echo $row['email']; ?></td>
                   <td><a href="index.php?customer=new&id=<?php echo $row['customerid']?>">
                     <button class="btn-primary" >Edit</button>
-                    </a> | <a href="javascript:delset('<?php echo $row['customerid'];?>','<?php echo $row['customername'];?>')">    <button class="btn-danger" ">Delete</button>
+                    </a> | <a href="javascript:delset('<?php echo $row['customerid'];?>','<?php echo $row['customername'];?>')">    <button class="btn-danger ">Delete</button>
                    </a>
                   </td>
 </tr> 
@@ -97,18 +97,9 @@ if (isset($_POST['Save'])) {
         
 
 </div><!--body-->
-<div class="well well-sm panel-footer">
-        <ul class="list-group">
+<div class="panel-footer">
+       
     <div class="row">
-    <div class="col-lg-4">
-        
-    <div class="input-group">
-      <input type="text" class="form-control" name="srchtxt" id="searchtext" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" id="search1" type="button">Search</button>
-      </span>
-      </div><!-- /input-group -->
-  </div><!--/.col-lg-4-->
   <div class="col-lg-4">
     <a href="index.php?customer=new">
   <button class="btn btn-primary" type="submit"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?> Customer</button>
@@ -116,7 +107,7 @@ if (isset($_POST['Save'])) {
   </div>
 
   </div>
-</ul>
+
         </div><!--well-->
         </div><!--panel-->
 <?php } elseif($_GET['customer']=="new") { ?>

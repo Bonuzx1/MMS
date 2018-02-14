@@ -4,7 +4,7 @@
           <div class="container-fluid">
   <div class="side-body padding-top">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
         <div class="panel panel-primary">
         
         <div class="panel-heading">
@@ -14,7 +14,8 @@
            </div>
        
 
-      <div class="panel-body"><table class="table">
+      <div class="panel-body">
+          <table class="table datatable">
                                         <thead>
                                             <tr>
                                                 <th>StaffID</th>
@@ -71,32 +72,23 @@
                                     </table>
                                                                         
         </div>
-           <div class="well well-sm panel-footer">
-        <ul class="list-group">
+           <div class="panel-footer">
     <div class="row">
     <div class="col-lg-4">
-        
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn btn-primary" type="button">Search</button>
-      </span>
-      </div><!-- /input-group -->
-  </div>
-  <div class="col-lg-4">
     <a href="index.php?staff=new">
   <button class="btn btn-primary" type="submit">New Staff</button>
   </a>
   </div>
 
   </div>
-</ul>
                                     </div>
-                                    </div>
-                                    </div>
+                                    
                                      
 
-          </div>
+        
+            </div>
+            </div>
+            </div>
             </div>
                                 
                                     <?php }

@@ -4,7 +4,10 @@
               $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
               $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
               $num_rows4 = $user->howmanyin('request', 'isapproved','1');
+
+          
               ?>
+         
             <div class="container-fluid">
                 <div class="side-body padding-top">
                     <div class="row">
@@ -66,60 +69,94 @@
                             </a>
                         </div>
                     </div>
-        
-                    <style type="text/css">
-	.ui-datepicker-calendar {
-		display: none;
-        
-       
-	}
-</style>
-
-<!-- fullCalendar 2.2.5-->
-    <link rel="stylesheet" href="assets/plugins/fullcalendar/fullcalendar.min.css">
-    <link rel="stylesheet" href="assets/plugins/fullcalendar/fullcalendar.print.css" media="print">
-                   
-                    <div class="col-md-8">
-		<div class="panel panel-default">
-			<div class="panel-heading"> <i class="glyphicon glyphicon-calendar"></i> Calendar</div>
-			<div class="panel-body">
-				<div id="calendar"></div>
-			</div>	
-		</div>
-		
-	</div>
-
-	
-</div> <!--/row-->
-<!-- fullCalendar 2.2.5 -->
-<script src="assets/plugins/moment/moment.min.js"></script>
-<script src="assets/plugins/fullcalendar/fullcalendar.min.js"></script>
-
-
-<script type="text/javascript">
-	$(function () {
-			// top bar active
-	$('#navDashboard').addClass('active');
-
-      //Date for the calendar events (dummy data)
-      var date = new Date();
-      var d = date.getDate(),
-      m = date.getMonth(),
-      y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: '',
-          center: 'title'
-        },
-        buttonText: {
-          today: 'today',
-          month: 'month'          
-        }        
-      });
-
-
-    });
-</script>
+                    <div class="col-lg-6">
+                     <div class="card card-success">
+                                <div class="card-header">
+                                    <div class="title">
+                                        <p class="text-center">Work Orders Due</p>
+                                    </div>
+                                    <div class="pull-right card-action">
+                                        <div class="btn-group" role="group">
+                                            <!-- <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalListExample"><i class="fa fa-code"></i></button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php  
+                                    $sql = "SELECT * FROM schedule ORDER BY prioritytype,enddate asc";
+                                    $param = array(
+                                        ':startdate' => 'startdate'
+                                    );
+                                    $all = $user->select($sql, $param);
+                                    foreach ($all as $row ) { 
+                                        $row2 = $user->showone('assets', 'assetid', $row['assetid']);
+                                        ?>
+                                    <li class="list-group-item"><?php echo $row2['name']?></li>
+                                    <?php } ?>
+                                     
+                                 </div>
+                                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                     <div class="card card-success">
+                                <div class="card-header">
+                                    <div class="title">
+                                        <p class="text-center">Work Orders Due</p>
+                                    </div>
+                                    <div class="pull-right card-action">
+                                        <div class="btn-group" role="group">
+                                            <!-- <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modalListExample"><i class="fa fa-code"></i></button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <?php  
+                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) FROM schedule GROUP BY assetid";
+                                    $param = array(
+                                        ':startdate' => 'startdate'
+                                    );
+                                    $all = $user->select($sql, $param);
+                                    foreach ($all as $row ) { 
+                                        $row2 = $user->showone('assets', 'assetid', $row['assetid']);
+                                        $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
+                                        $price = ($row['SUM(cost)']);
+                                        $totp = NULL;
 
 
+                                        
+                                        
+                                        
+                                        ?>
+                                    <li class="list-group-item"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. $price ?> </li>
+                                    <?php } ?>
+                                     
+                                 </div>
+                         <div class="modal fade" id="showstatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                             <div class="modal-dialog" role="document" id="me">
+
+                             </div>
+                         </div>
+                                    </div>
+                    </div>
+<!--after notification-->
+                    <div class="modal fade" id="endmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Too much spent?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="control-label">Place this item on lease</div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No! Cancel</button>
+                                    <button type="button" class="btn btn-primary">Yes, Proceed to Sales</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    </div>
+                                </div>

@@ -14,7 +14,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span>
-                <h4 class="panel-title">Calendar</span>
+                <h4 class="panel-title">Add/Edit Maintenance Schedule</span>
 
             </div>
             <div class="panel-body">
