@@ -38,9 +38,21 @@ $sho = "";
     <link type="text/css" href="assets/css/jquery-ui.theme.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/css/bootstrap-switch.min.css">
 
+
+
 </head>
 
-<body class="flat-blue">
+<body class="flat-blue" onload="checkinput()">
+<script>
+    function checkinput() {
+        $( "input[type=text]" ).keypress(function(e) {
+            var key = e.keyCode;
+            if (key >= 48 && key <= 57) {
+                e.preventDefault();
+            }
+        });
+    }
+</script>
 <!-- <body class="flat-blue" oncontextmenu="return false"> -->
 <div class="app-container">
         <div class="row content-container">

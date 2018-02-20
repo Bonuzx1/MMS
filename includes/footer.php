@@ -31,35 +31,47 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
             <script type="text/javascript" src="assets/js/app.js"></script>
             <!-- <script type="text/javascript" src="js/index.js"></script>-->
        <script>
-           if (!window.Notification) {
-               alert("Not Supported");
-           }else{
-               Notification.requestPermission(function(e) {
-                   if (e==='denied') {
-                       alert("you denied the request. Goto your notification settings in the browser to enable it!");
-                   }else{
-                       $.get("process/assetstatus.php", function(data) {
-                           frmdb = JSON.parse(data);
+           $(document).ready(function () {
+               if (!window.Notification) {
+                   alert("Not Supported");
+               }else{
+                   Notification.requestPermission(function(e) {
+                       if (e==='denied') {
+                           alert("you denied the request. Goto your notification settings in the browser to enable it!");
+                       }else{
+                           $.get("process/assetstatus.php", function(data) {
+                               frmdb = JSON.parse(data);
 
-                           var newfrmdb;
-                           for (let index = 0; index < frmdb.length; index++) {
-                               newfrmdb = frmdb[index];
-                               var notify;
-                               notify = new Notification(newfrmdb.assetname, {
-                                   'body':newfrmdb.description,
-                               });
-                               notify.onclick = function() {
-                                   $("#endmodal").modal('show');
-                               };
-                               $.post("process/completenotification.php", { id : newfrmdb.scheduleid });
-                           }
+                               var newfrmdb;
+                               for (let index = 0; index < frmdb.length; index++) {
+                                   newfrmdb = frmdb[index];
+                                   var notify;
+                                   notify = new Notification(newfrmdb.assetname, {
+                                       'body':newfrmdb.description,
+                                   });
+                                   notify.onclick = function() {
+                                       $("#endmodal").modal('show');
+                                   };
+                                   $.post("process/completenotification.php", { id : newfrmdb.scheduleid });
+                               }
 
 
-                       })
+                           })
 
-                   }
-               })
-           }
+                       }
+                   })
+               }
+
+
+           });
+
+
+       </script>
+       <script>
+           $(document).ready(function () {
+
+
+           })
        </script>
 </body>
 

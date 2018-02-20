@@ -36,4 +36,3 @@ function __autoload($class){
 	}
 }
 $user = new DatabaseClass($dbname, $dbhost, $dbuser, $pass);
-

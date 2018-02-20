@@ -1,6 +1,6 @@
 <?php
 include '../includes/config.php';
-session_start();
+
 $id = $_SESSION['id'];
 
 if(isset($_POST['submit']))
@@ -12,7 +12,7 @@ if(isset($_POST['submit']))
     $status = $_POST['active'];
 
     $sql = "UPDATE staff SET name = '$name', dob = '$dob', contact = '$phone', email = '$email', active = '$status' WHERE staffid = '$id'";
-    if($user->updatetable($sql))
+    if($user->updatetabl($sql))
     {
         header("Location: ../index.php?staff=edited");
     }else {

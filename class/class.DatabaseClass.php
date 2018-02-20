@@ -127,7 +127,7 @@
   {
     $stmt = $this->pdo->prepare($sql);
     if ($stmt->execute())
-        return 'OK';
+        return true;
   }
   
   public function howmanyin($table, $condition, $conditionvalue)

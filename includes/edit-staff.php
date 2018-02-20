@@ -22,13 +22,13 @@ $row = $user->showone('staff','staffid',$id);
                                                         <div class="form-group">
                                                             <label class="col-sm-1 control-label">Name: </label>
                                                             <div class="col-sm-12">
-                                                            <input type="text" class="form-control" name="name" placeholder="name" value="<?php echo $row['name'] ?>"/>
+                                                            <input type="text" class="form-control" name="name" id="alltext" placeholder="name" value="<?php echo $row['name'] ?>"/>
                                                             </div>
                                                             </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-2 ">Date of Birth: </label>
                                                             <div class='col-sm-12' id='datetimepicker10'>
-                                                            <input type='date' value="<?php echo $row['dob']?>" class="form-control" />
+                                                            <input type='date' value="<?php echo $row['dob']?>" class="form-control" name="dob"/>
                                                         </div>
                                                         </div>
                                                         <div class="form-group">
@@ -81,6 +81,8 @@ $row = $user->showone('staff','staffid',$id);
  <script>
  $(document).ready(function () {
      $("#status").val('<?php echo $row['active']?>');
+
+
  })
                                                            
   </script>
@@ -91,6 +93,8 @@ $row = $user->showone('staff','staffid',$id);
                 format: 'MM/YYYY'
             });
         });
+
+
     </script>
 
 
