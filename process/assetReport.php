@@ -6,17 +6,39 @@
  * Time: 2:20 PM
  */
 
-if (isset($_POST['getreport']))
+include "../includes/config.php";
+if (isset($_POST['asset']))
 {
-    $startDate = $_POST['startDate'];
-    $date = DateTime::createFromFormat('m/d/Y',$startDate);
-    $start_date = $date->format("Y-m-d");
+
+    $asset = $_POST['asset'];
+    $staff = $_POST['staff'];
 
 
-    $endDate = $_POST['endDate'];
-    $format = DateTime::createFromFormat('m/d/Y',$endDate);
-    $end_date = $format->format("Y-m-d");
+    $startDate = $_POST['start'];
+    $date = strtotime($startDate);
+    $start_date = date('Y-m-d H-s-s', $date);
+    echo $start_date;
+
+
+    $endDate = $_POST['end'];
+    $date = strtotime($endDate);
+    $end_date = date('Y-m-d H-s-s', $date);
+    echo $end_date;
 
 
 
+    $data = array();
+
+
+    $sql = "SELECT * FROM schedule WHERE assetid = ':asset' BETWEEN ':start_date' AND ':end_date'";
+    $param = [':asset' => $asset, ':start_date' => $start_date, ':end_date' => $end_date];
+    $all = $user->select($sql, $param);
+    foreach ($all as $row){
+        $data = [
+            'assetid' => $row['assetid'],
+            'staffid' => $row['staffid'],
+            'start_date' => $row['startdate']
+        ];
+    }
+    echo json_encode($data);
 }

@@ -33,7 +33,7 @@
                             <div class="form-group col-sm-6">
                                 <label for="startDate" class="col-sm-2 control-label">Staff Assigned</label>
                                 <div class="col-sm-10">
-                                    <select class="form-control" id="" name="asset" >
+                                    <select class="form-control" id="staff" name="staff" >
                                         <option value="0">Select One</option>
                                         <?php $all = $user->populatewith('staff', 'isdeleted', '0');
                                         foreach ($all as $row){ ?>
@@ -45,13 +45,13 @@
                             <div class="form-group col-sm-6">
                                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="startDate" name="startDate" placeholder="Start Date">
+                                    <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start Date">
                                 </div>
                             </div>
                             <div class="form-group col-sm-6">
                                 <label for="endDate" class="col-sm-2 control-label">End Date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="endDate" name="endDate" placeholder="End Date">
+                                    <input type="date" class="form-control" id="endDate" name="endDate" placeholder="End Date">
                                 </div>
                             </div>
                             <div class="form-group ">
@@ -95,16 +95,58 @@
 
 <script>
     $(document).ready(function () {
-        $('#generateReportBtn').click(function () {
+        $( "form" ).on( "submit", function( event ) {
+            event.preventDefault();
             let assetname = $('#asset').val();
-            alert(assetname);
+            let staff = $('#staff').val();
+            let start = $("#startDate").val();
+            let end = $("#endDate").val();
+            let data = [];
             if (assetname=='0')
             {
                 alert('Please select an asset');
             }
             else {
 
+                if (staff==='0'){
+                    if (start===''){
+                        if (end===''){
+                            data = {"asset":assetname};
+                        }
+                        else {
+                            data = {"asset": assetname, "end": end};
+                        }
+                    }
+                    else {
+                        if (end===''){
+                            data = {"asset":assetname, "start": start};
+                        }
+                        else {
+                            data = {"asset": assetname,"start":start, "end": end};
+                        }
+                    }
+                }
+                else {
+                    if (start===''){
+                        if (end===''){
+                            data = {"asset":assetname, "staff": staff};
+                        }
+                        else {
+                            data = {"asset": assetname,"staff":staff, "end": end};
+                        }
+                    }
+                    else {
+                        if (end===''){
+                            data = {"asset":assetname,"staff":staff, "start": start};
+                        }
+                        else {
+                            data = {"asset": assetname,"staff":staff, "start":start, "end": end};
+                        }
+                    }
+                }
+                console.log(data);
+                $.post('./process/assetReport.php', data);
             }
-        })
+        });
     })
 </script>
