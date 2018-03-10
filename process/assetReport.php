@@ -7,38 +7,97 @@
  */
 
 include "../includes/config.php";
+$useData = array();
+$all = null;
+
 if (isset($_POST['asset']))
 {
 
     $asset = $_POST['asset'];
-    $staff = $_POST['staff'];
+    if(!isset($_POST['staff']))
+    {
 
+        if (!isset($_POST['start']))
+        {
+            if (!isset($_POST['end']))
+            {
+                $useData = [
+                    ':asset' => $asset
+                ];
+                $sql = "SELECT * FROM schedule WHERE assetid = ".$asset;
+                $all = $user->select($sql, $useData);
 
-    $startDate = $_POST['start'];
-    $date = strtotime($startDate);
-    $start_date = date('Y-m-d H-s-s', $date);
-    echo $start_date;
-
-
-    $endDate = $_POST['end'];
-    $date = strtotime($endDate);
-    $end_date = date('Y-m-d H-s-s', $date);
-    echo $end_date;
-
-
-
-    $data = array();
-
-
-    $sql = "SELECT * FROM schedule WHERE assetid = ':asset' BETWEEN ':start_date' AND ':end_date'";
-    $param = [':asset' => $asset, ':start_date' => $start_date, ':end_date' => $end_date];
-    $all = $user->select($sql, $param);
-    foreach ($all as $row){
-        $data = [
-            'assetid' => $row['assetid'],
-            'staffid' => $row['staffid'],
-            'start_date' => $row['startdate']
-        ];
+            }else {
+                $end = $_POST['end'];
+                $useData = [
+                    'asset' => $asset,
+                    'end' => $end
+                ];
+            }
+        }else {
+            $start = $_POST['start'];
+            if (!isset($_POST['end']))
+            {
+                $useData = [
+                    'asset' => $asset,
+                    'start' => $start
+                ];
+            }else {
+                $end = $_POST['end'];
+                $useData = [
+                    'asset' => $asset,
+                    'start' => $start,
+                    'end' => $end
+                ];
+            }
+        }
+    }else {
+        $staff = $_POST['staff'];
+        if (!isset($_POST['start']))
+        {
+            if (!isset($_POST['end']))
+            {
+                $useData = [
+                    'asset' => $asset,
+                    'staff' => $staff
+                ];
+            }else {
+                $end = $_POST['end'];
+                $useData = [
+                    'asset' => $asset,
+                    'staff' => $staff,
+                    'end' => $end
+                ];
+            }
+        }else {
+            $start = $_POST['start'];
+            if (!isset($_POST['end']))
+            {
+                $useData = [
+                    'asset' => $asset,
+                    'staff' => $staff,
+                    'start' => $start
+                ];
+            }else {
+                $end = $_POST['end'];
+                $useData = [
+                    'asset' => $asset,
+                    'staff' => $staff,
+                    'start' => $start,
+                    'end' => $end
+                ];
+            }
+        }
     }
-    echo json_encode($data);
+
+
+    foreach ($all as $item) {
+        $useData = [
+            'asset' => $item['assetid'],
+            'staff' => $item['staffid'],
+            'cost' => $item['cost']
+        ];
+        echo json_encode($useData);
+    }
 }
+
