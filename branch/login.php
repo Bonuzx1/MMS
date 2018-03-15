@@ -35,20 +35,21 @@
     <link href="../assets/lib/css/bootstrap.min.css" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
     <link href="../assets/lib/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="../assets/css/style.css" rel="stylesheet" />
     <!-- GOOGLE FONTS-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+<!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />-->
 
 </head>
-<body style="background-color: #4f606c; ">
+<body class="" style="background-color: ; background-image: url('../img/bg/main.jpg');">
     <div class="container">
-        <div class="row text-center " style="padding-top:100px;">
+        <div class="row text-center " style="padding-top:60px;">
             <div class="col-md-12">
-               <h3 style="color: white">MAINTENANCE MANAGEMENT SYSTEM </h3>
+               <h1 style="color: white; font-family: 'Arial Rounded MT Bold'">MAINTENANCE MANAGEMENT SYSTEM </h1>
             </div>
       
         </div>
    
-         <div class="row ">
+         <div class="row " style="padding-top: 20px ">
                
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
                            

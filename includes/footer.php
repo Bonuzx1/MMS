@@ -37,7 +37,7 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
                }else{
                    Notification.requestPermission(function(e) {
                        if (e==='denied') {
-                           alert("you denied the request. Goto your notification settings in the browser to enable it!");
+                           alert("you denied the request. Go to your notification settings in the browser to enable it!");
                        }else{
                            $.get("process/assetstatus.php", function(data) {
                                frmdb = JSON.parse(data);

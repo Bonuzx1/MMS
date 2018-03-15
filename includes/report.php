@@ -70,7 +70,7 @@
                     </div>
                     <!-- /panel-heading -->
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table" id="reportTable">
                             <thead>
                                 <tr>
                                     <th>Asset Name</th>
@@ -82,7 +82,7 @@
 
                             </tbody>
                             <tfoot>
-                                <tr><td><button type="button" class="btn btn-success"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
+                                <tr><td><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
                             </tfoot>
                         </table>
                     </div>
@@ -114,10 +114,13 @@
                             data = {"asset":assetname};
                         }
                         else {
+                            alert('An end date should have a starting date');
+                            return;
                             data = {"asset": assetname, "end": end};
                         }
                     }
                     else {
+
                         if (end===''){
                             data = {"asset":assetname, "start": start};
                         }
@@ -132,6 +135,8 @@
                             data = {"asset":assetname, "staff": staff};
                         }
                         else {
+                            alert('An start date should have a ending date');
+                            return;
                             data = {"asset": assetname,"staff":staff, "end": end};
                         }
                     }
@@ -144,9 +149,17 @@
                         }
                     }
                 }
-                console.log(data);
-                $.post('./process/assetReport.php', data);
+                $.post( './process/assetReport.php', data, function (data) {
+                        $("#report").html(data);
+                    });
             }
         });
+        $("#printReport").click(function () {
+            var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
+            mywindow.document.write('<html><head><title>Print Report</title>');
+            mywindow.document.write('</head><body>');
+            mywindow.document.write("I will print!");
+            mywindow.document.write('</body></html>');
+        })
     })
 </script>

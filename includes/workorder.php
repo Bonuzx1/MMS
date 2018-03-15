@@ -383,7 +383,7 @@
                     }
                 }
             });
-        };
+        }
         function del(value) {
             Event = [];
             Event[0] = value;

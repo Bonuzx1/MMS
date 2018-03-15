@@ -4,6 +4,9 @@ $sho = "";
    if(!$user->isloggedin() == 1){
     header("Location: branch/login.php");
    };
+   if ($_GET == null) {
+       header('Location: index.php?dashboard');
+   }
    ?>
 
 <!DOCTYPE html>
@@ -121,12 +124,12 @@ $sho = "";
                         </li>
                             <li>
                             <a href="index.php?staff">
-                                <span class="icon fa fa-users"></span><span class="title">Staffs</span>
+                                <span class="icon fa fa-user"></span><span class="title">Staff</span>
                             </a>
                         </li>
                             <li>
                             <a href="index.php?customer">
-                                <span class="icon fa fa-thumbs-o-up"></span><span class="title">Customers</span>
+                                <span class="icon fa fa-users"></span><span class="title">Customers</span>
                             </a>
                         </li>
                             <li>

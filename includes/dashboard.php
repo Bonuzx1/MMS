@@ -41,7 +41,7 @@
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
+                            <a href="index.php?order">
                                 <div class="card dark blue summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-tags fa-4x"></i>
@@ -55,7 +55,7 @@
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
+                            <a href="index.php?asset">
                                 <div class="card dark blue summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-cubes fa-4x"></i>
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="card-body">
                                     <?php  
-                                    $sql = "SELECT * FROM schedule ORDER BY prioritytype,enddate asc";
+                                    $sql = "SELECT * FROM schedule WHERE iscanceled = '0' ORDER BY prioritytype,enddate asc";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );
@@ -101,7 +101,7 @@
                      <div class="card card-success">
                                 <div class="card-header">
                                     <div class="title">
-                                        <p class="text-center">Work Orders Due</p>
+                                        <p class="text-center">Maintenance Total Cost</p>
                                     </div>
                                     <div class="pull-right card-action">
                                         <div class="btn-group" role="group">

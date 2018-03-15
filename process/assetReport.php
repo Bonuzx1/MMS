@@ -9,6 +9,8 @@
 include "../includes/config.php";
 $useData = array();
 $all = null;
+$format = 'Y-m-d';
+$today = date('Y-m-d');
 
 if (isset($_POST['asset']))
 {
@@ -24,7 +26,7 @@ if (isset($_POST['asset']))
                 $useData = [
                     ':asset' => $asset
                 ];
-                $sql = "SELECT * FROM schedule WHERE assetid = ".$asset;
+                $sql = "SELECT assetid, staffid, cost FROM schedule WHERE assetid = ".$asset;
                 $all = $user->select($sql, $useData);
 
             }else {
@@ -42,6 +44,8 @@ if (isset($_POST['asset']))
                     'asset' => $asset,
                     'start' => $start
                 ];
+                $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND startdate >= '$start'";
+                $all = $user->select($sql, $useData);
             }else {
                 $end = $_POST['end'];
                 $useData = [
@@ -49,6 +53,8 @@ if (isset($_POST['asset']))
                     'start' => $start,
                     'end' => $end
                 ];
+                $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND startdate >= '$start' AND enddate <= '$end'";
+                $all = $user->select($sql, $useData);
             }
         }
     }else {
@@ -61,6 +67,8 @@ if (isset($_POST['asset']))
                     'asset' => $asset,
                     'staff' => $staff
                 ];
+                $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND staffid = '$staff'";
+                $all = $user->select($sql, $useData);
             }else {
                 $end = $_POST['end'];
                 $useData = [
@@ -78,6 +86,8 @@ if (isset($_POST['asset']))
                     'staff' => $staff,
                     'start' => $start
                 ];
+                $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND staffid = '$staff' AND startdate >= '$start'";
+                $all = $user->select($sql, $useData);
             }else {
                 $end = $_POST['end'];
                 $useData = [
@@ -86,18 +96,16 @@ if (isset($_POST['asset']))
                     'start' => $start,
                     'end' => $end
                 ];
+                $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND staffid = '$staff' AND startdate >= '$start' AND enddate <= '$end'";
+                $all = $user->select($sql, $useData);
             }
         }
     }
 
-
+//print_r($all); exit;
     foreach ($all as $item) {
-        $useData = [
-            'asset' => $item['assetid'],
-            'staff' => $item['staffid'],
-            'cost' => $item['cost']
-        ];
-        echo json_encode($useData);
+        $useData = "<tr><td>".$item['assetid']."</td><td>".$item['staffid']."</td><td>".$item['cost']."</td></tr>";
+        echo $useData;
     }
-}
 
+}
