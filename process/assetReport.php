@@ -56,6 +56,7 @@ if (isset($_POST['asset']))
                 $sql = "SELECT * FROM schedule WHERE assetid = '$asset' AND startdate >= '$start' AND enddate <= '$end'";
                 $all = $user->select($sql, $useData);
             }
+
         }
     }else {
         $staff = $_POST['staff'];
@@ -103,9 +104,40 @@ if (isset($_POST['asset']))
     }
 
 //print_r($all); exit;
+    /*
+
+    $totalCost = null;
+
+    $row2 = $user->showone('assets', 'assetid', $_POST['asset']);
+    $useData = $row2['name'];
+    echo $useData;
     foreach ($all as $item) {
-        $useData = "<tr><td>".$item['assetid']."</td><td>".$item['staffid']."</td><td>".$item['cost']."</td></tr>";
+
+        $assetid = $item['assetid'];
+        $staffid = $item['staffid'];
+        $row2 = $user->showone('assets', 'assetid', $assetid);
+        $row3 = $user->showone('staff', 'staffid', $staffid);
+        $useData = "<tr><td>".$row2['name']."</td><td>".$row3['name']."</td><td>".$item['cost']."</td></tr>";
+        $totalCost += $item['cost'];
         echo $useData;
     }
+    $useData .= "<tr><td colspan='2'><h4>TOTAL COST</h4></td><td><h3>".$totalCost."</h3></td>";
+    echo $useData; */
+
+
+//    echo array_count_values($all);
+    foreach ($all as $item) {
+        $assetid = $item['assetid'];
+        $staffid = $item['staffid'];
+        $row2 = $user->showone('assets', 'assetid', $assetid);
+        $row3 = $user->showone('staff', 'staffid', $staffid);
+        $useData[] = array(
+            'asset' => $row2['name'],
+            'staff' => $row3['name'],
+            'cost' => $item['cost']
+        );
+    }
+    echo json_encode($useData);
+
 
 }

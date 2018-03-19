@@ -95,6 +95,7 @@
 
 <script>
     $(document).ready(function () {
+        let genData = null;
         $( "form" ).on( "submit", function( event ) {
             event.preventDefault();
             let assetname = $('#asset').val();
@@ -150,16 +151,31 @@
                     }
                 }
                 $.post( './process/assetReport.php', data, function (data) {
-                        $("#report").html(data);
+                    genData = JSON.parse(data);
+                    $("#report").html('');
+                    var $row = $("<tr><td></td><td></td><td></td></tr>"); //the row template
+                    var $tr;
+                    $.each(genData, function(i, item) {
+                        $tr = $row.clone(); //create a blank row
+                        $tr.find("td:nth-child(1)").text(item.asset); //fill the row
+                        $tr.find("td:nth-child(2)").text(item.staff);
+                        $tr.find("td:nth-child(3)").text(item.cost);
+                        $("#report").append($tr); //append the row
                     });
+                });
             }
         });
         $("#printReport").click(function () {
+            alert(genData);
             var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
             mywindow.document.write('<html><head><title>Print Report</title>');
-            mywindow.document.write('</head><body>');
-            mywindow.document.write("I will print!");
+            mywindow.document.write('</head><body><table class="table"><thead>');
+            mywindow.document.write('<th>Asset Name</th><th>Assigned to</th><th>Cost</th></thead>');
+            mywindow.document.write('<tbody>');
+            mywindow.document.write(genData);
+            mywindow.document.write('</tbody></table>');
             mywindow.document.write('</body></html>');
+            mywindow.print();
         })
     })
 </script>
