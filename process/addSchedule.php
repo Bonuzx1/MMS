@@ -135,7 +135,7 @@ if (isset($_POST['staff'])) {
             ':end' => $end,
             ':color' => $color);
         if(!$user->insert($sql, $param))
-            echo "No";
+            echo "Nope";
         else
             header('Location: '.$_SERVER['HTTP_REFERER']);
 

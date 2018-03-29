@@ -6,7 +6,7 @@
  * Time: 5:43 PM
  */
 ?>
-<?php if($_GET['request']==''||($_GET['request']=="deleted")||($_GET['request']=="notdeleted")){ ?>
+<?php if($_GET['request']==''||($_GET['request']=="approved")||($_GET['request']=="notapproved")){ ?>
     <div class="container-fluid">
         <div class="side-body padding-top">
             <div class="row">
@@ -15,8 +15,8 @@
                     <div class="panel panel-primary">
                         <!-- Default panel contents -->
                         <div class="panel-heading">
-                            <div class="panel-title"> Request <?php if ($_GET['request']=="deleted") {
-                                    echo "Deleted Succesfully";
+                            <div class="panel-title"> Request <?php if ($_GET['request']=="approved") {
+                                    echo "Approved Succesfully";
                                 } ?></div>
                         </div>
 
@@ -35,6 +35,7 @@
                                 <?php
                                 $count = $user->howmanyinone('request');
                                 $fetch = $user->populatewith('request', 'isactive', '1');
+                                $curid = '';
                                 if($count>0){
                                     foreach($fetch as $row) {
                                         $cusid = $row['customerid'];
@@ -48,8 +49,8 @@
                                             <td><?=$row['datecreated']?></td>
                                             <td><?=$row['datedue']?></td>
 
-                                            <td><a href="index.php?request=edit&id=<?php echo $row['requestid']?>">
-                                                    <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row['name'];?>')">
+                                            <td><a href="javascript:approve('<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>')">
+                                                    <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row3['name'];?>')">
                                                     <button class="btn-danger">Delete</button></a>
                                             </td>
                                         </tr>
@@ -57,13 +58,8 @@
                                     <?php } } else { ?>
                                     <td>No request yet</td>
                                 <?php } ?>
-
-
                                 </tbody>
                             </table>
-
-
-
                         </div><!--body-->
 
                         <div class="panel-footer">
@@ -77,9 +73,106 @@
             </div>
         </div>
     </div>
-<?php } elseif ($_GET['request']=='new' || $_GET['request']=='edit') {
-    include 'newasset.php';
-} ?>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" method="POST" action="process/addSchedule.php">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" name="req" hidden>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Assign name</label>
+                            <div class="col-sm-10">
+                                <select name="staff" class="form-control" id="staff">
+                                    <option value="">Choose</option>
+                                    <?php
+                                    $all = $user->populatewith('staff', 'active', '1');
+                                    foreach ($all as $item) { ?>
+                                        <option value="<?php echo $item['staffid']?>"><?php echo $item['name']?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                                <select name="assetname"  id="assetid" hidden>
+                                    <option value="">Choose</option>
+                                    <?php
+                                    $all = $user->populatewith('assets', 'status', '0');
+                                    foreach ($all as $item) { ?>
+                                        <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
+                                    <?php } ?>
+                                </select>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Priority</label>
+                            <div class="col-sm-10">
+                                <select name="priority" class="form-control" id="priority">
+                                    <option value="">Choose</option>
+                                    <option style="color:#FF0000;" value="1">High</option>
+                                    <option style="color:#FFD700;" value="2">Medium</option>
+                                    <option style="color:#008000;" value="3">Low</option>
+                                </select>
+                            </div>
+                        </div>
+
+                                <select name="ftype"  id="freq" hidden>
+                                    <option value="">Choose</option>
+                                    <option value="0">Once</option>
+                                    <option value="1">Daily</option>
+                                    <option value="2">Weekly</option>
+                                    <option value="3">Monthly</option>
+                                </select>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Maintenance Type</label>
+                            <div class="col-sm-10">
+                                <select name="mtype" class="form-control" id="color">
+                                    <option value="">Choose</option>
+                                    <option value="1">Preventive</option>
+                                    <option value="2">Corrective</option>
+                                    <option value="3">Damage</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="color" class="col-sm-2 control-label">Maintenance Cost</label>
+                            <div class="col-sm-10">
+                                <input type="number" name="cost" id="cost"  class="form-control" min="0" step="any"  placeholder="0.00">
+                            </div>
+                        </div>
+
+                                <input type="text" name="start"  id="datecreated" hidden>
+
+                                <input type="text" name="end"  id="end" hidden>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- thats all for adding -->
+
+<?php }elseif ($_GET["request"]=='added'&&(isset($_GET['id']))) {
+
+//
+//
+    $stmt = 'UPDATE request SET isactive = :one WHERE requestid = :requestid';
+    $param = array(':one' => '0', ':requestid' => $_GET['id']);
+    $user->update($stmt, $param);
+        header('Location: index.php?request=approved');
+        exit;
+
+}?>
 
 <script type="text/javascript">
     function delset(id, title)
@@ -89,28 +182,16 @@
             window.location.href = 'index.php?request=del&id=' + id;
         }
     }
-</script>
-<?php
-
-if (($_GET["request"]=='del')&&(isset($_GET['id']))) {
-
-
-    $user->updateone('schedule', 'iscanceled', '1', 'requestid', $_GET['id']);
-
-
-    $stmt = 'UPDATE request SET isactive = :one WHERE requestid = :requestid';
-    $param = array(':one' => '0', ':requestid' => $_GET['id']);
-    if ($user->update($stmt, $param)) {
-        header('Location: index.php?request=deleted');
-        exit;
-    } else {
-        header('Location: index.php?request=notdeleted');
+    function approve(id, date, due) {
+        console.log(id, date, due);
+        $('#ModalAdd #assetid').val(id);
+        $('#ModalAdd #freq').val('0');
+        $('#ModalAdd #datecreated').val(date);
+        $('#ModalAdd #datedue').val(due);
+        $('#ModalAdd').modal('show');
     }
-}
+</script>
 
-
-
-?>
 <script type="text/javascript">
     $(document).ready(function(){
     });
