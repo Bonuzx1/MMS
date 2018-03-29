@@ -27,10 +27,10 @@
                                         
 
                                         ?>
-                                        <tr>
+                                        <tr id="list_group">
                                             <td><?php echo $row['supplyid']?></td><td><?php echo $row['name']; ?></td>
                                             <td><?php echo ($row['status'] == 1) ? "Available" : "Not Available"; ?></td>
-                                            <td><a href="index.php?asset=new&id=<?php echo $row['supplyid']?>&from=supply"><button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['supplyid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger">Delete</button></a></td>
+                                            <td><a href="index.php?supply=edit&id=<?php echo $row['supplyid']?>"><button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['supplyid'];?>','<?php echo $row['name'];?>')"><button class="btn-danger">Delete</button></a></td>
                                         </tr>
 
                                     <?php } } else { ?>
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-<?php } elseif ($_GET['supply']=='new') {
+<?php } elseif ($_GET['supply']=='new'|| $_GET['supply']=='edit') {
     include 'newasset.php';
 } ?>
 <script type="text/javascript">

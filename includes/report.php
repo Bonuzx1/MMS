@@ -64,16 +64,16 @@
                     </div>
                     <!-- /panel-body -->
                 </div>
-                <div class="panel panel-default">
+                <div id="reportPanel" class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="glyphicon glyphicon-check"></i>	Report
+                        <i class="glyphicon glyphicon-"></i> <h4><span id="pTitle"></span></h4>
                     </div>
                     <!-- /panel-heading -->
                     <div class="panel-body">
                         <table class="table" id="reportTable">
                             <thead>
                                 <tr>
-                                    <th>Asset Name</th>
+                                    <th>Schedule Date</th>
                                     <th>Assigned To</th>
                                     <th>Cost</th>
                                 </tr>
@@ -92,6 +92,9 @@
         </div>
     </div>
 </div>
+
+
+<?php include "includes/print-header.php";?>
 
 <script>
     $(document).ready(function () {
@@ -155,25 +158,29 @@
                     $("#report").html('');
                     var $row = $("<tr><td></td><td></td><td></td></tr>"); //the row template
                     var $tr;
+                    var totcost = 0;
                     $.each(genData, function(i, item) {
+                        $('#pTitle').html(item.asset);
                         $tr = $row.clone(); //create a blank row
-                        $tr.find("td:nth-child(1)").text(item.asset); //fill the row
+                        $tr.find("td:nth-child(1)").text(item.date); //fill the row
                         $tr.find("td:nth-child(2)").text(item.staff);
                         $tr.find("td:nth-child(3)").text(item.cost);
                         $("#report").append($tr); //append the row
+                        totcost += Number(item.cost);
                     });
+                    lr = $row.clone();
+                    lr.find("td:nth-child(1)").html("<h4>TOTAL COST "+totcost+"</h4>");
+                    $("#report").append(lr); //append the row
                 });
             }
         });
         $("#printReport").click(function () {
-            alert(genData);
             var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
             mywindow.document.write('<html><head><title>Print Report</title>');
-            mywindow.document.write('</head><body><table class="table"><thead>');
-            mywindow.document.write('<th>Asset Name</th><th>Assigned to</th><th>Cost</th></thead>');
-            mywindow.document.write('<tbody>');
-            mywindow.document.write(genData);
-            mywindow.document.write('</tbody></table>');
+            mywindow.document.write('</head><body>');
+            mywindow.document.write($('#printHeader').html());
+            mywindow.document.write($('#reportPanel').html());
+//            mywindow.document.write(genData);
             mywindow.document.write('</body></html>');
             mywindow.print();
         })

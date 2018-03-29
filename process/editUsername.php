@@ -8,7 +8,7 @@ if(isset($_POST['changename']))
     
 
     $sql = "UPDATE user SET username = '$name' WHERE id = '$id'";
-    if($user->updatetable($sql))
+    if($user->updatetabl($sql))
     {
         
         $_SESSION['username'] = $name;
@@ -29,8 +29,12 @@ elseif (isset($_POST['changepass']))
         $name1 = $_POST['cpassword'];
         if($name == $name1)
         {
-            $sql = "UPDATE user SET password = ".$name."WHERE id = ".$id;
-            if($user->updatetable($sql))
+            $sql = "UPDATE user SET password = '".md5($name)."' WHERE id = ".$id;
+            $data = [
+
+            ];
+
+            if($user->insert($sql, $data))
             {
                 header("location: ../index.php?setting=edited");
                 //echo '<script> window.location.href="../setting.php?edited";</script>';

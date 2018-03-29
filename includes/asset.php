@@ -28,11 +28,11 @@
                                             $row2 = $user->showone('department','departmentid', $depid); 
                                             $row3 = $user->showone('location','locationid', $row['locationid']); 
                                               ?>
-              <tr>
+              <tr id="list_group">
                   <td><?php echo $row['assetid']?></td><td><?php echo $row['name']; ?></td>
                   <td><?php echo ($row['status'] == 1) ? "Available" : "Not Available"; ?></td>
                   <td><?php echo $row2['departmentname'] ?></td><td><?php echo $row3['locationname'] ?></td>
-                  <td><a href="index.php?asset=new&id=<?php echo $row['assetid']?>&from=asset">
+                  <td><a href="index.php?asset=edit&id=<?php echo $row['assetid']?>">
                   <button class="btn-primary">Edit</button></a> | <a href="javascript:delset('<?php echo $row['assetid'];?>','<?php echo $row['name'];?>')">
                   <button class="btn-danger">Delete</button></a></td>
 </tr> 
@@ -69,9 +69,10 @@
     </div>
     </div>
     </div>
-    <?php } elseif ($_GET['asset']=='new') {
+    <?php } elseif ($_GET['asset']=='new' || $_GET['asset']=='edit') {
       include 'newasset.php';
     } ?>
+
     <script type="text/javascript">
       function delset(id, title)
   {

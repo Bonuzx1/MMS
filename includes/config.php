@@ -12,7 +12,7 @@ session_start();
 
 $dbname = 'project';
 $dbhost = 'localhost';
-$pass = '';
+$pass = 'pop9090';
 $dbuser = 'root';
 
 

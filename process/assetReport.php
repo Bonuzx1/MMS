@@ -26,7 +26,7 @@ if (isset($_POST['asset']))
                 $useData = [
                     ':asset' => $asset
                 ];
-                $sql = "SELECT assetid, staffid, cost FROM schedule WHERE assetid = ".$asset;
+                $sql = "SELECT * FROM schedule WHERE assetid = ".$asset;
                 $all = $user->select($sql, $useData);
 
             }else {
@@ -132,6 +132,7 @@ if (isset($_POST['asset']))
         $row2 = $user->showone('assets', 'assetid', $assetid);
         $row3 = $user->showone('staff', 'staffid', $staffid);
         $useData[] = array(
+            'date' => date($format, strtotime($item['startdate'])),
             'asset' => $row2['name'],
             'staff' => $row3['name'],
             'cost' => $item['cost']

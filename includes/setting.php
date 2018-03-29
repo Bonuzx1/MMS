@@ -3,7 +3,7 @@ $user_id = "1";
 $user_id = $_SESSION['id'];
 
 $row = $user->showone('user','id',$user_id);
-if (($_GET['setting'])==edited) {?>
+if (($_GET['setting'])=='edited') {?>
 <script type="text/javascript">alert("successfully edited");</script>
 <?php
 	

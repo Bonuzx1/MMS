@@ -63,7 +63,7 @@ if (isset($_POST['Save'])) {
                     $fetch = $user->populatewith('department', 'isfunctional', '1');
                     if($count>1){
                                             foreach($fetch as $row) { ?>
-              <tr>
+              <tr id="list_group">
                   <td><?php echo $row['departmentid']?></td><td><?php echo $row['departmentname']; ?></td>
                   <td><a href="index.php?dept=new&id=<?php echo $row['departmentid']?>"><button class="btn-primary" >Edit</button></a> | <a href="javascript:delset('<?php echo $row['departmentid'];?>','<?php echo $row['departmentname'];?>')"><button class="btn-danger">Delete</button></a></td>
 </tr> 

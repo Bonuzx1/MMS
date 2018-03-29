@@ -91,6 +91,8 @@ elseif (isset($_GET['asset'])) {
     include 'includes/workorder.php';
 }elseif (isset($_GET['report'])) {
     include 'includes/report.php';
+}elseif (isset($_GET['request'])) {
+    include "includes/request.php";
 }
                    
 include('includes/footer.php');

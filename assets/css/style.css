@@ -10,6 +10,8 @@
             font-size: 13px;
            
         }
+        #list_group{ background: white}
+        #list_group:nth-child(odd) {background: lightgrey;}
         
         * {
             outline: none;

@@ -4,12 +4,19 @@ $msg = "";
 
 // save changes
 if (isset($_POST['submit'])) {
+    $target_dir = "img/profile/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = ".jpg";
+//    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
     $name = $_POST["name"];
     $dob = $_POST['dob'];
     $gender = $_POST['gender'];
     $sectionid = $_POST['sectionid'];
     $contact = $_POST['contact'];
     $email = $_POST['email'];
+
     $sql = "INSERT INTO staff(name, dob, gender, departmentid, contact, email)
         VALUES (:name, :dob, :gender, :sectionid, :contact, :email )";
     $params = array(
@@ -20,12 +27,18 @@ if (isset($_POST['submit'])) {
         ':contact' => $contact, 
         ':email' => $email );
         
-        if($user->insert($sql, $params))
+        if($newID = $user->insert($sql, $params))
         {
-            $msg = "Staff added successfully";
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $newID . $imageFileType)) {
+                echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
+                $msg = "Staff added successfully";
+            } else {
+                echo "Sorry, there was an error uploading your file.";
+            }
         }else {
         $msg = "Could not add staff";
     }
+
 }
 ?>
 <div class="container-fluid">
@@ -43,7 +56,11 @@ if (isset($_POST['submit'])) {
                    
                          <div class="card">
                                 <div class="card-body">
-                             <form method="post" action="">
+                           <form method="POST" ENCTYPE="multipart/form-data" action="">
+                                 <div class="form-group">
+                                     <label>Picture</label>
+                                     <input type="file" accept="image/*" class="form-control"  name="image" required>
+                                 </div>
                                         <div class="form-group">
                                             <label>Name</label>
                                             <input type="text" class="form-control"  name="name" required>

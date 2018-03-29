@@ -91,7 +91,8 @@
   // Execute the statement
   if ($stmt->execute($data)) {
   // Return the number of rows affected
-  return $stmt->rowCount();
+      echo $this->pdo->lastInsertId();
+  return $this->pdo->lastInsertId();
   }
   else {
   return false;

@@ -70,7 +70,7 @@ if (isset($_POST['Save'])) {
                     $fetch = $user->populatewith('customer', 'status', '1');
                     if($count>=1){
                                             foreach($fetch as $row) { ?>
-              <tr>
+              <tr id="list_group">
                   <td><?php echo $row['customerid']?></td>
                   <td><?php echo $row['customername']; ?></td>
                   <td><?php echo $row['locationid']; ?></td>

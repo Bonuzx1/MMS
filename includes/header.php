@@ -45,7 +45,7 @@ $sho = "";
 
 </head>
 
-<body class="flat-blue" onload="checkinput()">
+<body class="flat-blue" onload="checkinput()" style="background-image: url('img/back.jpg'); background-repeat: ">
 <script>
     function checkinput() {
         $( "input[type=text]" ).keypress(function(e) {

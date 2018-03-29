@@ -4,6 +4,7 @@
               $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
               $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
               $num_rows4 = $user->howmanyin('request', 'isapproved','1');
+              $today = date('Y-m-d');
 
           
               ?>
@@ -13,7 +14,7 @@
                     <div class="row">
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <a href="index.php?staff">
-                                <div class="card dark blue summary-inline">
+                                <div class="card blue summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-user fa-4x"></i>
                                         <div class="content">
@@ -28,7 +29,7 @@
                        
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <a href="#">
-                                <div class="card dark blue summary-inline">
+                                <div class="card blue dark summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-comments fa-4x"></i>
                                         <div class="content">
@@ -42,7 +43,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <a href="index.php?order">
-                                <div class="card dark blue summary-inline">
+                                <div class="card blue summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-tags fa-4x"></i>
                                         <div class="content">
@@ -56,7 +57,7 @@
                         </div>
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
                             <a href="index.php?asset">
-                                <div class="card dark blue summary-inline">
+                                <div class="card blue dark summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-cubes fa-4x"></i>
                                         <div class="content">
@@ -72,8 +73,8 @@
                     <div class="col-lg-6">
                      <div class="card card-success">
                                 <div class="card-header">
-                                    <div class="title">
-                                        <p class="text-center">Work Orders Due</p>
+                                    <div class="card-title">
+                                        <div class="title" style="font-family: 'Courier New'">Work Orders Due</div>
                                     </div>
                                     <div class="pull-right card-action">
                                         <div class="btn-group" role="group">
@@ -83,7 +84,7 @@
                                 </div>
                                 <div class="card-body">
                                     <?php  
-                                    $sql = "SELECT * FROM schedule WHERE iscanceled = '0' ORDER BY prioritytype,enddate asc";
+                                    $sql = "SELECT * FROM schedule WHERE iscanceled = '0' AND startdate >= ".$today." ORDER BY prioritytype,enddate asc";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );
@@ -91,7 +92,7 @@
                                     foreach ($all as $row ) { 
                                         $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                         ?>
-                                    <li class="list-group-item"><?php echo $row2['name']?></li>
+                                    <li class="list-group-item" id="list_group" ><?php echo $row2['name']?></li>
                                     <?php } ?>
                                      
                                  </div>
@@ -100,8 +101,8 @@
                     <div class="col-lg-6">
                      <div class="card card-success">
                                 <div class="card-header">
-                                    <div class="title">
-                                        <p class="text-center">Maintenance Total Cost</p>
+                                    <div class="card-title">
+                                        <div class="title" style="font-family: 'Courier New'">Maintenance Total Cost</div>
                                     </div>
                                     <div class="pull-right card-action">
                                         <div class="btn-group" role="group">
@@ -127,8 +128,10 @@
                                         
                                         
                                         ?>
-                                    <li class="list-group-item"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. $price ?> </li>
+                                    <li class="list-group-item" id="list_group"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase at Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. $price ?> </li>
                                     <?php } ?>
+
+
                                      
                                  </div>
                          <div class="modal fade" id="showstatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

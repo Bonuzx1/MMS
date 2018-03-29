@@ -17,7 +17,7 @@
       <div class="panel-body">
           <table class="table datatable">
                                         <thead>
-                                            <tr>
+                                            <tr >
                                                 <th>StaffID</th>
                                                 <th>Name</th>
                                                 <th>DoB</th>
@@ -25,6 +25,7 @@
                                                 <th>departmentid</th>
                                                 <th>Contact</th>
                                                 <th>Email</th>
+                                                <th>Picture</th>
                                                 <th>Status</th>
                                                 <th>Options</th>
                                             </tr>
@@ -38,7 +39,7 @@
                                                     $row2 = $user->showone('department', 'departmentid', $row['departmentid']);
                                                     $deptname = $row2['departmentname'];
                                                 ?>
-                                                <tr>
+                                                <tr id="list_group">
                                                 <td><?php echo $row['staffid']; ?></td>
                                             <td><?php echo $row['name']; ?></td>
                                             <td><?php echo $row['dob']; ?></td>
@@ -46,6 +47,7 @@
                                            <td><?php echo $deptname; ?></td> 
                                             <td><?php echo $row['contact']; ?></td>
                                             <td><?php echo $row['email']; ?></td>
+                                            <td><img class="img-thumbnail" src="img/profile/<?=$row['staffid'].'.jpg'?>" style="width: 50px;" alt=""></td>
                                             <td><?php echo ($row['active'] == 1) ? "ACTIVE" : "NOT ACTIVE"; ?></td>
                                             <td>
                                                 <a href="index.php?edit-staff=<?php echo $row['staffid']; ?>" class="btn btn-primary btn-xs">Edit</a>

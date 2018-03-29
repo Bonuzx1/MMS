@@ -22,7 +22,7 @@
                                             foreach($fetch as $row) { 
                                               
                                            ?>
-              <tr>
+              <tr id="list_group">
                   <td><?php echo $row['locationid']?></td><td><?php echo $row['locationname']; ?></td>
                   <td><?php echo ($row['isinuse'] == 1) ? "used" : "Not Used"; ?><td><a href="index.php?location=new&id=<?php echo $row['locationid']?>"><button class="btn-primary">Edit</button> | <a href="javascript:delset('<?php echo $row['locationid'];?>','<?php echo $row['locationname'];?>')"><button class="btn-danger">Delete</button></a></td>
 </tr> 

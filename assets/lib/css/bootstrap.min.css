@@ -4312,7 +4312,8 @@ a.list-group-item-danger.active,a.list-group-item-danger.active:hover,a.list-gro
  margin-top:0;
  margin-bottom:0;
  font-size:16px;
- color:inherit
+ color:black;
+ font-weight: bold;
 }
 .panel-title>a {
  color:inherit
@@ -4452,8 +4453,8 @@ a.list-group-item-danger.active,a.list-group-item-danger.active:hover,a.list-gro
 }
 .panel-primary>.panel-heading {
  color:#fff;
- background-color:#337ab7;
- border-color:#337ab7
+ background-color:#f0f0f0;
+ border-color: darkgrey
 }
 .panel-primary>.panel-heading+.panel-collapse>.panel-body {
  border-top-color:#337ab7

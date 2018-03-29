@@ -7,7 +7,7 @@
       // username and password sent from form 
       
       $myusername =$_POST['username'];
-      $mypassword =$_POST['password']; 
+      $mypassword =md5($_POST['password']);
       
       
 	if($user->login($myusername, $mypassword)){
@@ -40,7 +40,7 @@
 <!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />-->
 
 </head>
-<body class="" style="background-color: ; background-image: url('../img/bg/main22.jpg');">
+<body class="" style="background-color: ; background-image: url('../img/bg/main.jpg');">
     <div class="container">
         <div class="row text-center " style="padding-top:60px;">
             <div class="col-md-12">
