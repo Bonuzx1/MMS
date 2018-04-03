@@ -128,7 +128,7 @@
                                         
                                         
                                         ?>
-                                    <li class="list-group-item" id="list_group"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase at Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. $price ?> </li>
+                                    <li class="list-group-item" id="list_group"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase at Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. round($price,2)?> </li>
                                     <?php } ?>
 
 

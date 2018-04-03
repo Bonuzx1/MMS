@@ -126,6 +126,7 @@ if (isset($_POST['asset']))
 
 
 //    echo array_count_values($all);
+    $totalCost = null;
     foreach ($all as $item) {
         $assetid = $item['assetid'];
         $staffid = $item['staffid'];
@@ -136,8 +137,11 @@ if (isset($_POST['asset']))
             'asset' => $row2['name'],
             'staff' => $row3['name'],
             'cost' => $item['cost']
+
         );
+        $totalCost += $item['cost'];
     }
+    $useData['total'] = $totalCost;
     echo json_encode($useData);
 
 

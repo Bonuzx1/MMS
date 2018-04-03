@@ -20,7 +20,7 @@
 
 
        }else {
-         echo "<script>alert('Wrong');</script>";
+         echo "<script>alert('Please enter valid username or password');</script>";
       }
    }
 ?>
@@ -40,6 +40,7 @@
 <!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />-->
 
 </head>
+
 <body class="" style="background-color: ; background-image: url('../img/bg/main.jpg');">
     <div class="container">
         <div class="row text-center " style="padding-top:60px;">
@@ -64,11 +65,12 @@
                                        </p>
                                      <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                                            <input type="" name="username" class="form-control" maxlength="20" placeholder="Your Username " required/>
+                                            <input type="text" name="username" id="username" class="form-control"  maxlength="15" minlength="4" placeholder="Your Username" pattern="[a-zA-Z]*" title='Username should contain only letters'  required />
+
                                         </div>
                                                                               <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                                            <input type="password" name="password" class="form-control" maxlength="20" placeholder="Your Password" required />
+                                            <input type="password" name="password" class="form-control" maxlength="20" minlength="4" placeholder="Your Password" required />
                                         </div>
                                 
                                 </br>
@@ -85,4 +87,6 @@
     </div>
 
 </body>
+
 </html>
+

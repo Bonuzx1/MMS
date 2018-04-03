@@ -147,6 +147,24 @@ $sho = "";
                                     <span class="icon fa fa-bar-chart"></span><span class="title">Reports</span>
                                 </a>
                             </li>
+                            <li class="panel panel-default dropdown">
+                                <a data-toggle="collapse" href="#dropdown-table" class="collapsed" aria-expanded="false">
+                                    <span class="icon fa fa-table"></span><span class="title">Reports</span>
+                                </a>
+                                <!-- Dropdown level 1 -->
+                                <div id="dropdown-table" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav">
+                                            <li><a href="?areport">Assets</a>
+                                            </li>
+                                            <li><a href="?creport">Customers</a>
+                                            </li>
+                                            <li><a href="?sreport">Staffs</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     </nav>

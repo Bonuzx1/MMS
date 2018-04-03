@@ -29,6 +29,8 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
        <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
        <script type="text/javascript" src="assets/js/Chart.min.js"></script>
        <script type="text/javascript" src="assets/js/Chart.js"></script>
+       <script type="text/javascript" src="assets/plugins/datatables/buttons.print.min.js"></script>
+       <script type="text/javascript" src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
             <!-- Javascript -->
             <script type="text/javascript" src="assets/js/app.js"></script>
             <!-- <script type="text/javascript" src="js/index.js"></script>-->

@@ -98,6 +98,7 @@
 
 <script>
     $(document).ready(function () {
+        let done = false;
         let genData = null;
         $( "form" ).on( "submit", function( event ) {
             event.preventDefault();
@@ -165,12 +166,28 @@
                         $tr.find("td:nth-child(1)").text(item.date); //fill the row
                         $tr.find("td:nth-child(2)").text(item.staff);
                         $tr.find("td:nth-child(3)").text(item.cost);
-                        $("#report").append($tr); //append the row
-                        totcost += Number(item.cost);
+                        $("#report").append($tr);
                     });
                     lr = $row.clone();
-                    lr.find("td:nth-child(1)").html("<h4>TOTAL COST "+totcost+"</h4>");
+                    lr.find("td:nth-child(1)").html("<h4>TOTAL COST GHC"+genData.total+"</h4>");
                     $("#report").append(lr); //append the row
+
+                    ("#reportTable").DataTable({
+                        "processing": true,
+                        "ordering": false,
+                        searching:false,
+                        "bLengthChange": false,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            {
+                                extend: 'print',
+                                title:($('#printHeader').html()),
+                                messageTop: '',
+                                header: false,
+                                footer:false
+                            }
+                        ]
+                    });
                 });
             }
         });
