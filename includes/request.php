@@ -49,7 +49,7 @@
                                             <td><?=$row['datecreated']?></td>
                                             <td><?=$row['datedue']?></td>
 
-                                            <td><a href="javascript:approve('<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>')">
+                                            <td><a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>')">
                                                     <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row3['name'];?>')">
                                                     <button class="btn-danger">Delete</button></a>
                                             </td>
@@ -79,7 +79,7 @@
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="process/addSchedule.php">
+                <form class="form-horizontal" id="modalForm" method="POST" action="process/addSchedule.php">
 
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -88,7 +88,7 @@
                         <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
                     </div>
                     <div class="modal-body">
-                        <input type="text" name="req" hidden>
+                        <input type="hidden" id="request-id" name="req">
                         <div class="form-group">
                             <label for="color" class="col-sm-2 control-label">Assign name</label>
                             <div class="col-sm-10">
@@ -102,14 +102,7 @@
                                 </select>
                             </div>
                         </div>
-                                <select name="assetname"  id="assetid" hidden>
-                                    <option value="">Choose</option>
-                                    <?php
-                                    $all = $user->populatewith('assets', 'status', '0');
-                                    foreach ($all as $item) { ?>
-                                        <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
-                                    <?php } ?>
-                                </select>
+
                         <div class="form-group">
                             <label for="color" class="col-sm-2 control-label">Priority</label>
                             <div class="col-sm-10">
@@ -122,13 +115,12 @@
                             </div>
                         </div>
 
-                                <select name="ftype"  id="freq" hidden>
-                                    <option value="">Choose</option>
-                                    <option value="0">Once</option>
-                                    <option value="1">Daily</option>
-                                    <option value="2">Weekly</option>
-                                    <option value="3">Monthly</option>
-                                </select>
+                        <input type="hidden" id="modalAdd-assetname" name="assetname">
+                        <input type="hidden" id="modalAdd-freq" name="ftype">
+                        <input type="hidden" id="modalAdd-datecreated" name="start">
+                        <input type="hidden" id="modalAdd-end" name="customend">
+
+
                         <div class="form-group">
                             <label for="color" class="col-sm-2 control-label">Maintenance Type</label>
                             <div class="col-sm-10">
@@ -147,9 +139,6 @@
                             </div>
                         </div>
 
-                                <input type="text" name="start"  id="datecreated" hidden>
-
-                                <input type="text" name="end"  id="end" hidden>
 
                     </div>
                     <div class="modal-footer">
@@ -162,17 +151,15 @@
     </div>
     <!-- thats all for adding -->
 
-<?php }elseif ($_GET["request"]=='added'&&(isset($_GET['id']))) {
-
-//
-//
+<?php }
+if (isset($_GET['del'])&&isset($_GET['id'])){
     $stmt = 'UPDATE request SET isactive = :one WHERE requestid = :requestid';
     $param = array(':one' => '0', ':requestid' => $_GET['id']);
     $user->update($stmt, $param);
-        header('Location: index.php?request=approved');
-        exit;
-
-}?>
+    header('Location: index.php?request=approved');
+    exit;
+}
+?>
 
 <script type="text/javascript">
     function delset(id, title)
@@ -182,18 +169,20 @@
             window.location.href = 'index.php?request=del&id=' + id;
         }
     }
-    function approve(id, date, due) {
-        console.log(id, date, due);
-        $('#ModalAdd #assetid').val(id);
-        $('#ModalAdd #freq').val('0');
-        $('#ModalAdd #datecreated').val(date);
-        $('#ModalAdd #datedue').val(due);
+    function approve(reqid, id, date, due) {
+
+        $('#modalAdd-assetname').val(id);
+        $('#request-id').val(reqid);
+        $('#modalAdd-freq').val('0');
+        $('#modalAdd-datecreated').val(date);
+        $('#modalAdd-end').val(due);
         $('#ModalAdd').modal('show');
     }
 </script>
 
 <script type="text/javascript">
     $(document).ready(function(){
+
     });
 
 </script>

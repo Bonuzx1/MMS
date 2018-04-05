@@ -5,6 +5,8 @@
  * Date: 08/01/2018
  * Time: 12:06 PM
  */
+
+$_SESSION['done'] = false;
 include '../includes/config.php';
 if (isset($_POST['staff'])) {
 
@@ -137,6 +139,13 @@ if (isset($_POST['staff'])) {
         if(!$user->insert($sql, $param))
             echo "Nope";
         else
+            if (isset($_POST['req']) && $_POST['req'] != ''){
+                $stmt = 'UPDATE request SET isactive = :one WHERE requestid = :requestid';
+                $param = array(':one' => '0', ':requestid' => $_POST['req']);
+                $user->update($stmt, $param);
+                header('Location: ../index.php?request=approved');
+                exit;
+            }
             header('Location: '.$_SERVER['HTTP_REFERER']);
 
 
