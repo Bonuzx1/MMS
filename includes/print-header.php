@@ -8,7 +8,7 @@
 ?>
 
 <div id="printHeader" style="display: none; ">
-    <table id="" style="width: 100%;">
+    <table id="" border="3" style="width: 100%;">
         <tr>
             <td style="width: 7%" rowspan="3"><h2>LOGO</h2></td>
             <td>

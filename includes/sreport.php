@@ -17,7 +17,7 @@
                     <!-- /panel-heading -->
                     <div class="panel-body">
 
-                        <form class="form-horizontal" action="" method="post" id="sreport">
+                        <form class="form-horizontal" action="process/staffReport.php" method="post" id="sreport">
 
                             <div class="form-group col-sm-4">
                                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group ">
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success" id="generateReportBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
+                                    <button type="button" name="action" class="btn btn-success" id="generateReportBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
                                 </div>
                             </div>
                         </form>
@@ -41,33 +41,34 @@
                     </div>
                     <!-- /panel-body -->
                 </div>
+
                 <div id="reportPanel" class="panel panel-default">
                     <div class="panel-heading">
                         <i class="glyphicon glyphicon-"></i> <h4><span id="pTitle"></span></h4>
                     </div>
                     <!-- /panel-heading -->
                     <div class="panel-body">
-                        <table class="table" id="reportTable">
+                        <table border="1" style="width: 100%;" class="table" id="reportTable">
                             <thead>
                                 <tr>
                                     <th>Name</th>
                                     <th>Date of Birth</th>
                                     <th>Gender</th>
                                     <th>Contact</th>
-                                    <th>Email</th>
-                                    <th>Status</th>
+                                    <th>Date Registered</th>
                                 </tr>
                             </thead>
                             <tbody id="report">
 
                             </tbody>
                             <tfoot>
-                                <tr><td><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
+                                <tr><td colspan="5"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
                             </tfoot>
                         </table>
                     </div>
                     <!-- /panel-body -->
                 </div>
+
             </div>
         </div>
     </div>
@@ -78,18 +79,26 @@
 
 <script>
     $(document).ready(function () {
-        $("form").submit(function () {
-            $('#reportTable').dataTable({
-                serverSide:true,
-                "ajax": {
-                    "url": "./process/staffReport.php",
-                    "type": "POST",
-                    "data": function (d) {
-                        d.form = $("#sreport").serializeArray();
-                    }
-                }
+        $("#generateReportBtn").click(function () {
+            console.log($("#sreport").serialize());
+            genData = [];
+            $.post('./process/staffReport.php', $("#sreport").serialize(), function (data) {
+                genData = data;
+                $("#report").html(genData);
             });
-        })
 
         });
+
+        $("#printReport").click(function () {
+            var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
+            mywindow.document.write('<html><head><title>Print Report</title>');
+            mywindow.document.write('</head><body>');
+            mywindow.document.write($('#printHeader').html());
+            mywindow.document.write($('#reportPanel').html());
+//            mywindow.document.write(genData);
+            mywindow.document.write('</body></html>');
+            mywindow.print();
+        })
+
+    });
 </script>

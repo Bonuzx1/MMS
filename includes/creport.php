@@ -19,18 +19,6 @@
 
                         <form class="form-horizontal" action="" method="post" id="">
                             <div class="form-group col-sm-4">
-                                <label for="startDate" class="col-sm-4 control-label ">Customer</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" id="asset" name="asset" >
-                                        <option value="0">Select One</option>
-                                        <?php $all = $user->populatewith('assets', 'isdeleted', '0');
-                                        foreach ($all as $row){ ?>
-                                        <option value="<?php echo $row['assetid'] ?>"><?php echo $row['name'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-4">
                                 <label for="startDate" class="col-sm-2 control-label">Start Date</label>
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="startDate" name="startDate" placeholder="Start Date">
