@@ -49,7 +49,7 @@
                                             <td><?=$row['datecreated']?></td>
                                             <td><?=$row['datedue']?></td>
 
-                                            <td><a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>')">
+                                            <td><a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>', '<?=$cusid?>')">
                                                     <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row3['name'];?>')">
                                                     <button class="btn-danger">Delete</button></a>
                                             </td>
@@ -119,6 +119,7 @@
                         <input type="hidden" id="modalAdd-freq" name="ftype">
                         <input type="hidden" id="modalAdd-datecreated" name="start">
                         <input type="hidden" id="modalAdd-end" name="customend">
+                        <input type="hidden" id="modalAdd-cus" name="customer">
 
 
                         <div class="form-group">
@@ -169,9 +170,10 @@ if (isset($_GET['del'])&&isset($_GET['id'])){
             window.location.href = 'index.php?request=del&id=' + id;
         }
     }
-    function approve(reqid, id, date, due) {
+    function approve(reqid, id, date, due, cus) {
 
         $('#modalAdd-assetname').val(id);
+        $('#modalAdd-cus').val(cus);
         $('#request-id').val(reqid);
         $('#modalAdd-freq').val('0');
         $('#modalAdd-datecreated').val(date);
