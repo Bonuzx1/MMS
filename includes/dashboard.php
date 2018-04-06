@@ -28,7 +28,7 @@
                         </div>
                        
                         <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                            <a href="#">
+                            <a href="index.php?request">
                                 <div class="card blue dark summary-inline">
                                     <div class="card-body">
                                         <i class="icon fa fa-comments fa-4x"></i>
@@ -92,7 +92,7 @@
                                     foreach ($all as $row ) { 
                                         $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                         ?>
-                                    <li class="list-group-item" id="list_group" ><?php echo $row2['name']?></li>
+                                    <li class="list-group-item" id="list_group" ><?php echo $row2['name'].''.str_repeat("&nbsp;", 60).''. $row['enddate']; ?></li>
                                     <?php } ?>
                                      
                                  </div>

@@ -142,16 +142,12 @@ $sho = "";
                                 <span class="icon fa fa-map-marker"></span><span class="title">Location</span>
                             </a>
                         </li>
-                            <li>
-                                <a href="index.php?report">
-                                    <span class="icon fa fa-bar-chart"></span><span class="title">Reports</span>
-                                </a>
-                            </li>
                             <li class="panel panel-default dropdown">
                                 <a data-toggle="collapse" href="#dropdown-table" class="collapsed" aria-expanded="false">
-                                    <span class="icon fa fa-table"></span><span class="title">Reports</span>
+                                    <span class="icon fa fa-bar-chart"></span><span class="title">Reports</span>
                                 </a>
                                 <!-- Dropdown level 1 -->
+
                                 <div id="dropdown-table" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                     <div class="panel-body">
                                         <ul class="nav navbar-nav">

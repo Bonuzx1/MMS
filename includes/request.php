@@ -16,7 +16,7 @@
                         <!-- Default panel contents -->
                         <div class="panel-heading">
                             <div class="panel-title"> Request <?php if ($_GET['request']=="approved") {
-                                    echo "Approved Succesfully";
+                                    echo "Approved Successfully";
                                 } ?></div>
                         </div>
 
