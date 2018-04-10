@@ -50,7 +50,7 @@
                                             <td><?=$row['datedue']?></td>
 
                                             <td><a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>', '<?=$cusid?>')">
-                                                    <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row3['name'];?>')">
+                                                    <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row['customerid'];?>')">
                                                     <button class="btn-danger">Delete</button></a>
                                             </td>
                                         </tr>
@@ -165,9 +165,9 @@ if (isset($_GET['del'])&&isset($_GET['id'])){
 <script type="text/javascript">
     function delset(id, title)
     {
-        if (confirm("Are you sure you want to delete '" + title + "'"))
+        if (confirm("Are you sure you want to delete this request?"))
         {
-            window.location.href = 'index.php?request=del&id=' + id;
+            window.location.href = 'process/deleteRequest.php?id=' + id+'&cusid='+title;
         }
     }
     function approve(reqid, id, date, due, cus) {

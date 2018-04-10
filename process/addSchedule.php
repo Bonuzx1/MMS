@@ -143,7 +143,7 @@ if (isset($_POST['staff'])) {
                 $stmt = 'UPDATE request SET isactive = :one, isapproved = :yes WHERE requestid = :requestid';
                 $param = array(':one' => '0', ':requestid' => $_POST['req'], ':yes' => '1');
                 $user->update($stmt, $param);
-                header('Location: sendSms.php?customer='.$_POST['customer']);
+                header('Location: sendApproveSms.php?customer='.$_POST['customer']);
                 exit;
             }
             header('Location: '.$_SERVER['HTTP_REFERER']);

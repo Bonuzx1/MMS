@@ -46,7 +46,9 @@ if (isset($_POST['startDate']) && $_POST['endDate']=='' && $_POST['startDate']!=
                     <td>".$one['dateadded']."</td>
                     </tr>";
     }
+    if ($table == '')
+        echo "<tr><td colspan='4'>No Records</td></tr>";
     echo $table;
 }else{
-    echo "No Records Found";
+    echo "<tr><td colspan='4'>Select Some Date</td></tr>";
 }

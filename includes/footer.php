@@ -65,6 +65,16 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
                        }
                    })
                }
+               newdata = null;
+               $.post('./process/completeSchedule.php', function (data) {
+                   newdata = JSON.parse(data);
+                   dataarr = null;
+                   for (let i = 0; i< newdata.length; i++)
+                   {
+                       dataarr = newdata[i];
+                       console.log(dataarr)
+                   }
+               })
            });
 
 

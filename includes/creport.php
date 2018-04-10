@@ -32,7 +32,7 @@
                             </div>
                             <div class="form-group ">
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-success" id="generateReportBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
+                                        <button type="button" class="btn btn-success" id="generateReportBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
                                 </div>
                             </div>
                         </form>
@@ -59,7 +59,7 @@
 
                             </tbody>
                             <tfoot>
-                                <tr><td td colspan="5"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
+                                <tr><td td colspan="4"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
                             </tfoot>
                         </table>
                     </div>
@@ -80,7 +80,7 @@
             genData = [];
             $.post('./process/customerReport.php', $("#creport").serialize(), function (data) {
                 genData = data;
-                $("#creport").html(genData);
+                $("#report").html(genData);
             });
 
         });

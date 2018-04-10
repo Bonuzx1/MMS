@@ -83,20 +83,37 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <?php  
+                                    <table class="table">
+                                        <thead>
+                                        <tr >
+                                            <th>Name</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                    <?php
                                     $sql = "SELECT * FROM schedule WHERE iscanceled = '0' AND startdate >= ".$today." ORDER BY prioritytype,enddate asc";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );
                                     $all = $user->select($sql, $param);
-                                    foreach ($all as $row ) { 
+                                    foreach ($all as $row ) {
                                         $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                         ?>
-                                    <li class="list-group-item" id="list_group" ><?php echo $row2['name'].''.str_repeat("&nbsp;", 60).''. $row['enddate']; ?></li>
+
+
+                                            <tr>
+                                                <td><?php echo $row2['name'] ?></td>
+                                                <td><?php echo $row['enddate']?></td>
+                                            </tr>
                                     <?php } ?>
-                                     
-                                 </div>
+
+                                        </tbody>
+                                    </table>
+
+
                                     </div>
+                     </div>
                     </div>
                     <div class="col-lg-6">
                      <div class="card card-success">
@@ -111,6 +128,15 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
+                                    <table class="table">
+                                        <thead>
+                                        <tr >
+                                            <th>Asset</th>
+                                            <th>Purchase Price</th>
+                                            <th>Maintenance Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
                                     <?php  
                                     $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) FROM schedule GROUP BY assetid";
                                     $param = array(
@@ -122,16 +148,17 @@
                                         $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
                                         $price = ($row['SUM(cost)']);
                                         $totp = NULL;
-
-
-                                        
-                                        
-                                        
                                         ?>
-                                    <li class="list-group-item" id="list_group"><label class="control-label">Asset: </label><?php echo ' '.$row2['name'] .' '?><label class="control-label">Purchase at Price: </label><?php echo ' GH¢ '.$row2['purchaseprice'].'::::Cost Used: '. round($price,2)?> </li>
+                                        <tr>
+                                            <td><?=$row2['name'] ?></td>
+                                            <td><?=' GH¢ '.$row2['purchaseprice'] ?></td>
+                                            <td><?=' GH¢ '.round($price,2) ?></td>
+                                        </tr>
+
                                     <?php } ?>
 
-
+                                    </tbody>
+                                    </table>
                                      
                                  </div>
                          <div class="modal fade" id="showstatus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -139,7 +166,8 @@
 
                              </div>
                          </div>
-                                    </div>
+
+                    </div>
                     </div>
 <!--after notification-->
                     <div class="modal fade" id="endmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -161,5 +189,4 @@
                             </div>
                         </div>
                     </div>
-                                    </div>
-                                </div>
+                </div>      </div>
