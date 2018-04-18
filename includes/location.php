@@ -18,7 +18,7 @@
             <?php
             $count = $user->howmanyinone('location');
                     $fetch = $user->populatewith('location', 'isavailable', '1');
-                    if($count>1){
+                    if($count>=1){
                                             foreach($fetch as $row) { 
                                               
                                            ?>
@@ -28,7 +28,7 @@
 </tr> 
 
                                     <?php } } else { ?>
-                                        <td>No asset yet</td>
+                                        <td>No location yet</td>
                                         <?php } ?>
                 
           </tbody>

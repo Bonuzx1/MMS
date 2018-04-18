@@ -88,6 +88,7 @@
   try {
   // Prepare the SQL statement
   $stmt = $this->pdo->prepare($sql);
+
   // Execute the statement
   if ($stmt->execute($data)) {
   // Return the number of rows affected
@@ -99,7 +100,7 @@
   }
   }
   catch (Exception $e) {
-  return false;
+  return $e->getMessage();
   }
   }
   // Perform an UPDATE query
@@ -129,6 +130,7 @@
     $stmt = $this->pdo->prepare($sql);
     if ($stmt->execute())
         return true;
+    return false;
   }
   
   public function howmanyin($table, $condition, $conditionvalue)

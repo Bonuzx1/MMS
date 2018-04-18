@@ -22,7 +22,7 @@
                                 <?php
                                 $count = $user->howmanyinone('supply');
                                 $fetch = $user->populatewith('supply', 'status', '1');
-                                if($count>1){
+                                if($count>=1){
                                     foreach($fetch as $row) {
                                         
 

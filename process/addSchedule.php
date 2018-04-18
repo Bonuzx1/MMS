@@ -140,8 +140,8 @@ if (isset($_POST['staff'])) {
             echo "Nope";
         else
             if (isset($_POST['req']) && $_POST['req'] != ''){
-                $stmt = 'UPDATE request SET isactive = :one, isapproved = :yes WHERE requestid = :requestid';
-                $param = array(':one' => '0', ':requestid' => $_POST['req'], ':yes' => '1');
+                $stmt = 'UPDATE request SET isapproved = :yes WHERE requestid = :requestid';
+                $param = array(':requestid' => $_POST['req'], ':yes' => '1');
                 $user->update($stmt, $param);
                 header('Location: sendApproveSms.php?customer='.$_POST['customer']);
                 exit;

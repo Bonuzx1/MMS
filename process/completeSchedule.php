@@ -12,7 +12,7 @@ include "../includes/config.php";
 
 $today = date('Y-m-d');
 
-$sql = "SELECT * FROM request WHERE datedue >= ".$today;
+$sql = "SELECT * FROM request WHERE datedue >= ".$today." AND isactive = '1'";
 $param = array(
     ':startdate' => 'startdate'
 );

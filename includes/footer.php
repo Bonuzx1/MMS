@@ -1,6 +1,6 @@
        <footer class="app-footer" style="color:white">
-            <div class="wrapper" ><?php
-echo date("h:i:sa") . "  " . date("Y-m-d");
+            <div class="wrapper" >
+                <?= date("h:i:sa") . "  " . date("Y-m-d");
 ?>
                 <span class="pull-right"><a href="#"><i class="fa fa-long-arrow-up"></i></a></span> 
              <span style= "padding: 0 350px";>
@@ -25,17 +25,22 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
             <script type="text/javascript" src="assets/js/moment.min.js"></script>
             <script type="text/javascript" src="assets/js/fullcalendar.min.js"></script>
             <script type="text/javascript" src="assets/js/gcal.min.js"></script>
-       <script type="text/javascript" src="assets/lib/js/bootstrap.min.js"></script>
-       <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
-       <script type="text/javascript" src="assets/js/Chart.min.js"></script>
-       <script type="text/javascript" src="assets/js/Chart.js"></script>
-       <script type="text/javascript" src="assets/plugins/datatables/buttons.print.min.js"></script>
-       <script type="text/javascript" src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+             <script type="text/javascript" src="assets/lib/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="assets/js/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="assets/js/Chart.min.js"></script>
+<!--             <script type="text/javascript" src="assets/js/Chartjs.js"></script>    -->
+            <script type="text/javascript" src="assets/plugins/datatables/buttons.print.min.js"></script>
+            <script type="text/javascript" src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
+
             <!-- Javascript -->
             <script type="text/javascript" src="assets/js/app.js"></script>
             <!-- <script type="text/javascript" src="js/index.js"></script>-->
        <script>
            $(document).ready(function () {
+               $("table").addClass("datatable");
+               $("#calendar table").removeClass("datatable");
+               $("#calendar table").removeClass("datatable");
+               $(".datatable").DataTable();
                if (!window.Notification) {
                    alert("Not Supported");
                }else{
@@ -72,12 +77,58 @@ echo date("h:i:sa") . "  " . date("Y-m-d");
                    for (let i = 0; i< newdata.length; i++)
                    {
                        dataarr = newdata[i];
-                       console.log(dataarr)
+                       console.log(dataarr);
+                       $.get('./process/sendCompleteSms.php', dataarr, function (data) {
+                           console.log(data);
+                           if (data==true){
+                               alert("A customer has been alerted of finished maintenance");
+                           }
+                           else
+                           alert("An attempt to alert a customer of finished maintenance failed!");
+                       })
                    }
                })
            });
+       </script>
 
+           <?php
+            $monthData = [];
+            for($i=1; $i<=12; $i++) {
+                $temp = $user->select("SELECT COUNT(*) AS count FROM schedule WHERE YEAR(startdate) = YEAR(NOW()) AND MONTH(startdate) = $i");
+                $monthData[$i] = $temp[0]['count'];
+            }
 
+//            print_r($monthData); exit;
+           ?>
+       <script>
+
+           if ( ctx = document.getElementById("myChart"))
+           var myChart = new Chart(ctx, {
+               type: 'line',
+               data: {
+                   labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","July","Aug","Sep","Oct","Nov","Dec"],
+                   datasets: [{
+                       label: '# of Schedules',
+                       data: [ <?=implode(',', $monthData)?> ],
+                       backgroundColor: [
+                           'rgba(0, 26, 51, 0.6)'
+                       ],
+                       borderColor: [
+                           'rgba(0, 20, 51, 1)'
+                       ],
+                       borderWidth: 1
+                   }]
+               },
+               options: {
+                   scales: {
+                       yAxes: [{
+                           ticks: {
+                               beginAtZero:true
+                           }
+                       }]
+                   }
+               }
+           });
        </script>
 
 </body>

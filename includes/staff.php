@@ -1,6 +1,6 @@
 
 
-<?php if ($_GET['staff']==''||$_GET['staff']=='edited'||$_GET['staff']=="activated"||$_GET['staff']=="deleted"||$_GET['staff']=="removed") { ?>
+<?php if (isset($_GET['staff']) && $_GET['staff'] != 'new') { ?>
           <div class="container-fluid">
   <div class="side-body padding-top">
     <div class="row">
@@ -8,9 +8,7 @@
         <div class="panel panel-primary">
         
         <div class="panel-heading">
-           <div class="panel-title"> Staff <?php if ($_GET['staff']=="deleted") {
-              echo "Deleted Succesfully";
-            } ?></div>
+           <div class="panel-title"> Staff (<?=$_GET['staff']?>) </div>
            </div>
        
 
@@ -34,7 +32,7 @@
                                         <?php
 										$count = $user->howmanyinone('staff');
 										$fetch = $user->populatewith('staff', 'isdeleted', '0');
-										if($count>0){
+										if($count>=0){
                                             foreach($fetch as $row) {
                                                     $row2 = $user->showone('department', 'departmentid', $row['departmentid']);
                                                     $deptname = $row2['departmentname'];
@@ -47,7 +45,7 @@
                                            <td><?php echo $deptname; ?></td> 
                                             <td><?php echo $row['contact']; ?></td>
                                             <td><?php echo $row['email']; ?></td>
-                                            <td><img class="img-thumbnail" src="img/profile/<?=$row['staffid'].'.jpg'?>" style="width: 50px;" alt=""></td>
+                                            <td><img class="img-thumbnail" src="img/profile/<?=$row['staffid'].'.jpg?random_string'?>" style="width: 50px;" alt=""></td>
                                             <td><?php echo ($row['active'] == 1) ? "ACTIVE" : "NOT ACTIVE"; ?></td>
                                             <td>
                                                 <a href="index.php?edit-staff=<?php echo $row['staffid']; ?>" class="btn btn-primary btn-xs">Edit</a>
@@ -99,4 +97,10 @@
                                     }
                                     
                                     ?>
-                                       
+                                       <script type="text/javascript">
+                                           $(document).ready(function () {
+
+
+
+                                           });
+                                       </script>

@@ -33,10 +33,10 @@ if (isset($_POST['submit'])) {
                 echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
                 $msg = "Staff added successfully";
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                $msg = "Inserted staff but could not upload image";
             }
         }else {
-        $msg = "Could not add staff";
+        $msg = $newID;
     }
 
 }
@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 <div class="container-fluid">
 <div class="side-body">
 		<div class="row">
-				<div class="col-xs-12">
+				<div class="col-xs-9">
 				<div class="card">
 								<div class="card-header">
 
@@ -57,9 +57,9 @@ if (isset($_POST['submit'])) {
                          <div class="card">
                                 <div class="card-body">
                            <form method="POST" ENCTYPE="multipart/form-data" action="">
-                                 <div class="form-group">
+                                 <div class="form-group" id="pic">
                                      <label>Picture</label>
-                                     <input type="file" accept="image/*" class="form-control"  name="image" required>
+                                     <input type="file" accept="image/*" class="form-control" id="FileUpload"  name="image" required>
                                  </div>
                                         <div class="form-group">
                                             <label>Name</label>
@@ -114,7 +114,36 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
             </div>
+            <div class="col-sm-3">
+                <div class="form-group" id="newpic">
+                    <div id="dvPreview" class="col-sm-12">
+                        <img src="" alt="" class="img-thumbnail" style="width: 100%; height: 100%">
+                    </div>
+                </div>
+            </div>
+
        
-        
-       
-    
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#FileUpload").change(function () {
+//                        $("#dvPreview").html("");
+                        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+                        if (regex.test($(this).val().toLowerCase())) {
+                                if (typeof (FileReader) != "undefined") {
+                                    $("#dvPreview").show();
+//                                    $("#dvPreview").append("<img />");
+                                    var reader = new FileReader();
+                                    reader.onload = function (e) {
+                                        $("#dvPreview img").attr("src", e.target.result);
+                                    }
+                                    reader.readAsDataURL($(this)[0].files[0]);
+                                } else {
+                                    alert("This browser does not support FileReader.");
+                                }
+
+                        } else {
+                            alert("Please upload a valid image file.");
+                        }
+                    });
+                })
+            </script>

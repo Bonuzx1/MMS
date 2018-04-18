@@ -12,7 +12,7 @@ include "../includes/config.php";
 
 
 
-$sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) FROM schedule WHERE notified = '0' GROUP BY assetid";
+$sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule WHERE notified = '0' AND iscanceled = '0' GROUP BY assetid";
 $param = array(
     ':startdate' => 'startdate'
 );
@@ -21,7 +21,7 @@ $data = array();
 foreach ($all as $row ) {
     $row2 = $user->showone('assets', 'assetid', $row['assetid']);
     $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
-    $price = ($row['SUM(cost)']);
+    $price = ($row['allcost']);
     $totp = NULL;
     if ($price >= $row2['purchaseprice']) {
         $data[] = $arrayName = array(

@@ -8,26 +8,43 @@
     $status = $row['status'];
 
     if (isset($_POST['saveedit'])) {
+        $imageFileType = ".jpg";
+        $tr =  unlink("img/profile/".$id.$imageFileType);
+        $target_dir = "img/profile/";
+        $target_file = $target_dir . basename($_FILES["image"]["name"]);
+        $uploadOk = 1;
+
     $name = $_POST['customername'];
-    $location = $_POST['locationid'];
+    $locationid = $_POST['locationid'];
     $phonenumber = $_POST['phonenumber'];
     $email=$_POST['email'];
-    $status = $_POST['status'];
  
-   $sql = "UPDATE customer SET customername = :name, locationid = :locationid, phonenumber = :phonenumber, email = :email, status = :available WHERE customerid = '$id' ";
-    $param = array(':customername' => $name, ':locationid' => $locationid,':phonenumber' => $phonenumber, ':email' => $email, ':status' => $status);
+   $sql = "UPDATE customer SET customername = '$name', locationid = :locationid, phonenumber = :phonenumber, email = :email WHERE customerid = '$id' ";
+    $param = array(':customername' => $name, ':locationid' => $locationid,':phonenumber' => $phonenumber, ':email' => $email);
    if($user->update($sql, $param))
         {
-            header("Location: index.php?customer=edited");
+            if ($tr = move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $id . $imageFileType)){
+                $msg = "customer updated successfully";
+                header("Location: index.php?customer=".$msg);
+            } else {
+                $msg = "Updated customer but could not upload image";
+                header("Location: index.php?customer=".$msg);
+
+            }
 
         }else {
-        $msg = "Could not add";
-    }
+        $msg = "Could not update customer details";
+       header("Location: index.php?customer=".$msg);
+   }
 }
     
     }
 $msg = "";
 if (isset($_POST['Save'])) {
+    $target_dir = "img/profile/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $uploadOk = 1;
+    $imageFileType = ".jpg";
     
     $customername = $_POST['customername'];
     $location = $_POST['locationid'];
@@ -36,11 +53,16 @@ if (isset($_POST['Save'])) {
 
     $sql = "INSERT INTO customer (customername, locationid,phonenumber,email) VALUES (:customername,:locationid, :phonenumber, :email)";
     $param = array(':customername' => $customername, ':locationid' => $location, ':phonenumber' => $phonenumber, ':email' => $email, );
-   if($user->insert($sql, $param))
+   if($newID = $user->insert($sql, $param))
         {
-            $msg = "Added successfully";
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $newID . $imageFileType)) {
+                echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
+                $msg = "Customer added successfully";
+            } else {
+                $msg = "Inserted customer but could not upload image";
+            }
         }else {
-        $msg = "Could not add";
+        $msg = "Could not add customer";
     }
 }
 
@@ -50,19 +72,18 @@ if (isset($_POST['Save'])) {
   <div class="side-body padding-top">
     <div class="row">
         <div class="col-lg-12">
-            <?php if($_GET['customer']==''||($_GET['customer']=="deleted")||($_GET['customer']=="not deleted")||($_GET['customer']=="edited")){ ?>
+            <?php if(isset($_GET['customer']) && $_GET['customer']!='new'){ ?>
 <div class="panel panel-primary">
         <!-- Default panel contents -->
         <div class="panel-heading">
-            <div class="panel-title"> Customer <?php echo $_GET['customer'];
-             ?></div>
+            <div class="panel-title"> Customer (<?=$_GET['customer']?>)</div>
         </div>
 
       <div class="panel-body">
         <!-- Table -->
         <table class="table datatable">
           <thead>
-              <th>customer No</th><th>Name</th><th>Location</th><th>Phone Number</th><th>Email</th><th>Option</th>
+              <th>customer No</th><th>Name</th><th>Location</th><th>Phone Number</th><th>Email</th><th>Image</th><th>Option</th>
           </thead>
           <tbody>
             <?php
@@ -76,6 +97,7 @@ if (isset($_POST['Save'])) {
                   <td><?php echo $row['locationid']; ?></td>
                   <td><?php echo $row['phonenumber']; ?></td>
                   <td><?php echo $row['email']; ?></td>
+                  <td><img class="img-thumbnail" src="img/profile/<?=$row['customerid'].'.jpg?random_string'?>" style="width: 50px;" /></td>
                   <td><a href="index.php?customer=new&id=<?php echo $row['customerid']?>">
                     <button class="btn-primary" >Edit</button>
                     </a> | <a href="javascript:delset('<?php echo $row['customerid'];?>','<?php echo $row['customername'];?>')">    <button class="btn-danger ">Delete</button>
@@ -111,7 +133,7 @@ if (isset($_POST['Save'])) {
         </div><!--well-->
         </div><!--panel-->
 <?php } elseif($_GET['customer']=="new") { ?>
-
+                <div class="col-xs-9">
         <div class="panel panel-primary">
         <div class="panel-heading">
             <h4 class="panel-title"><?php if (isset($_GET['id'])) echo "Edit "; else echo "New ";?>Customer</h4>
@@ -119,8 +141,13 @@ if (isset($_POST['Save'])) {
         </div>
         <div class="panel-body">
         <div class="row">
-            <form class="form-vertical" action="" method="post">
-
+            <form class="form-vertical" action="" enctype="multipart/form-data" method="post">
+                <div class="col-lg-12">
+                <div class="form-group" id="pic">
+                    <label>Picture</label>
+                    <input type="file" accept="image/*" class="form-control" id="FileUpload"  name="image" required>
+                </div>
+                </div>
             <div class="col-lg-12">
                 <div class="form-group">
                     <label for="" class="control-label">customer Name</label>
@@ -178,6 +205,14 @@ if (isset($_POST['Save'])) {
         </div>
     </div>
 </div> <!-- panel -->
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="newpic">
+                        <div id="dvPreview" class="col-sm-12">
+                            <img src="" alt="" class="img-thumbnail" style="width: 100%; height: 100%">
+                        </div>
+                    </div>
+                </div>
 <?php } ?>
 
 
@@ -196,6 +231,26 @@ if (isset($_POST['Save'])) {
   }
 $(document).ready(function () {
     $("#locationedit").val('<?php if (isset($_GET["id"])) echo $row["locationid"]?>');
+    $("#FileUpload").change(function () {
+//                        $("#dvPreview").html("");
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+        if (regex.test($(this).val().toLowerCase())) {
+            if (typeof (FileReader) != "undefined") {
+                $("#dvPreview").show();
+//                                    $("#dvPreview").append("<img />");
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#dvPreview img").attr("src", e.target.result);
+                }
+                reader.readAsDataURL($(this)[0].files[0]);
+            } else {
+                alert("This browser does not support FileReader.");
+            }
+
+        } else {
+            alert("Please upload a valid image file.");
+        }
+    });
 });
 
 

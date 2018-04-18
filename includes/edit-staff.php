@@ -1,12 +1,12 @@
 <?php 
 $id = $_GET['edit-staff'];
-$_SESSION['id'] = $id;
+$_SESSION['staff-id'] = $id;
 $row = $user->showone('staff','staffid',$id);
 ?>
 <div class="container-fluid">
 <div class="side-body">
 		<div class="row">
-				<div class="col-xs-10">
+				<div class="col-xs-9">
 				<div class="card">
 								<div class="card-header">
 
@@ -18,7 +18,13 @@ $row = $user->showone('staff','staffid',$id);
                                     
                                               <div class="card">
                                 <div class="card-body">
-                                                    <form action="process/editStaff.php" class="form-horizontal" method="post">
+                                                    <form action="../process/editStaff.php" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                                        <div class="form-group" id="pic">
+                                                            <label class="col-sm-1 control-label">Picture</label>
+                                                            <div class="col-sm-12">
+                                                            <input type="file" accept="image/*" class="form-control" id="FileUpload" name="imgupdate" >
+                                                            </div>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label class="col-sm-1 control-label">Name: </label>
                                                             <div class="col-sm-12">
@@ -65,6 +71,13 @@ $row = $user->showone('staff','staffid',$id);
                 </div>
             </div>
                        </div>
+            <div class="col-xs-3">
+                <div class="form-group" id="newpic">
+                    <div id="dvPrevie" class="col-sm-12">
+                        <img src="img/profile/<?=$row['staffid'].'.jpg'?>" alt="" class="img-thumbnail" style="width: 100%; height: 100%">
+                    </div>
+                </div>
+            </div>
                         </div>
                     </div>
                 </div>
@@ -80,6 +93,26 @@ $row = $user->showone('staff','staffid',$id);
                             
  <script>
  $(document).ready(function () {
+     $("#FileUpload").change(function () {
+//                        $("#dvPreview").html("");
+         var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+         if (regex.test($(this).val().toLowerCase())) {
+             if (typeof (FileReader) != "undefined") {
+                 $("#dvPrevie").show();
+//                                    $("#dvPreview").append("<img />");
+                 var reader = new FileReader();
+                 reader.onload = function (e) {
+                     $("#dvPrevie img").attr("src", e.target.result);
+                 }
+                 reader.readAsDataURL($(this)[0].files[0]);
+             } else {
+                 alert("This browser does not support FileReader.");
+             }
+
+         } else {
+             alert("Please upload a valid image file.");
+         }
+     });
      $("#status").val('<?php echo $row['active']?>');
 
 
@@ -88,6 +121,7 @@ $row = $user->showone('staff','staffid',$id);
   </script>
 <script type="text/javascript">
         $(function () {
+
             $('#datetimepicker10').datetimepicker({
                 viewMode: 'years',
                 format: 'MM/YYYY'

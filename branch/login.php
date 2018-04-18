@@ -41,7 +41,7 @@
 
 </head>
 
-<body class="" style="background-color: ; background-image: url('../img/bg/main.jpg');">
+<body class="" style="background-color: ; background-image: url('../img/bg/main2.jpg');">
     <div class="container">
         <div class="row text-center " style="padding-top:60px;">
             <div class="col-md-12">
@@ -85,7 +85,17 @@
                 
         </div>
     </div>
-
+    <script>
+        function checkinput() {
+            $( "input[type=text]" ).keypress(function(e) {
+                var val = $(this).val();
+                var key = e.keyCode;
+                if(val.length < 2 && (key >= 48 && key <= 57)) {
+                    e.preventDefault();
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>

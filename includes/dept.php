@@ -61,7 +61,7 @@ if (isset($_POST['Save'])) {
             <?php
             $count = $user->howmanyinone('department');
                     $fetch = $user->populatewith('department', 'isfunctional', '1');
-                    if($count>1){
+                    if($count>=1){
                                             foreach($fetch as $row) { ?>
               <tr id="list_group">
                   <td><?php echo $row['departmentid']?></td><td><?php echo $row['departmentname']; ?></td>

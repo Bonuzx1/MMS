@@ -70,7 +70,7 @@
                     </div>
                     <!-- /panel-heading -->
                     <div class="panel-body">
-                        <table class="table" id="reportTable">
+                        <table border="1" style="width: 100%;" class="table" id="reportTable">
                             <thead>
                                 <tr>
                                     <th>Schedule Date</th>
@@ -82,7 +82,7 @@
 
                             </tbody>
                             <tfoot>
-                                <tr><td><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
+                                <tr><td colspan="3"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
                             </tfoot>
                         </table>
                     </div>

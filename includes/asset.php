@@ -22,7 +22,7 @@
             <?php
             $count = $user->howmanyinone('assets');
                     $fetch = $user->populatewith('assets', 'isdeleted', '0');
-                    if($count>1){
+                    if($count>=1){
                                             foreach($fetch as $row) { 
                                               $depid = $row['departmentid'];
                                             $row2 = $user->showone('department','departmentid', $depid); 

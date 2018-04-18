@@ -26,11 +26,6 @@
         </div>
 
     </div>
-
-
-
-
-
     <!-- Modal -->
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -64,7 +59,7 @@
                                 <select name="assetname" class="form-control" id="color">
                                     <option value="">Choose</option>
                                     <?php
-                                    $all = $user->populatewith('assets', 'status', '0');
+                                    $all = $user->populatewith('assets', 'isdeleted', '0');
                                     foreach ($all as $item) { ?>
                                         <option value="<?php echo $item['assetid']?>"><?php echo $item['name']?></option>
                                     <?php } ?>
@@ -216,7 +211,7 @@
                         <div class="form-group">
                             <label for="color" class="col-sm-2 control-label">Maintenance Cost</label>
                             <div class="col-sm-10">
-                                <input type="number" name="cost" id="costedit"  class="form-control" min="0" step="any"  placeholder="0.00">
+                                <input type="number" name="cost" id="costdit"  class="form-control" min="0" step="any"  placeholder="0.00">
                             </div>
                         </div>
 <!--                        <div class="form-group">-->
@@ -276,7 +271,7 @@
                     $('#ModalEdit #titleedit').val(event.titleid);
                     $('#ModalEdit #mtypeedit').val(event.maintenance);
                     $('#ModalEdit #ftypeedit').val(event.frequency);
-                    $('#ModalEdit #costedit').val(event.cost);
+                    $('#ModalEdit #costdit').val(event.cost);
                     $('#ModalEdit #priorityedit').val(event.type);
                     $('#ModalEdit').modal('show');
                     // ended
@@ -307,7 +302,6 @@
             },
             select: function (start, end, allday) {
                 if(start < moment()) {
-                    $('#calendar').fullCalendar('select');
                     return false;
                 }
                 $('#ModalAdd #start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
@@ -336,7 +330,7 @@
             Event[2] = $("#priorityedit").val();
             Event[3] = $("#ftypeedit").val();
             Event[4] = $("#mtypeedit").val();
-            Event[6] = $("#costedit").val();
+            Event[6] = $("#costdit").val();
 
             //alert(Event);
             $.ajax({

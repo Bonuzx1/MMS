@@ -3,7 +3,7 @@
               $num_rows1 = $user->howmanyin('staff', 'isdeleted','0');
               $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
               $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
-              $num_rows4 = $user->howmanyin('request', 'isapproved','1');
+              $num_rows4 = $user->howmanyin('request', 'isapproved','0');
               $today = date('Y-m-d');
 
           
@@ -19,7 +19,7 @@
                                         <i class="icon fa fa-user fa-4x"></i>
                                         <div class="content">
                                             <div class="title"><?php echo $num_rows1;?></div>
-                                            <div class="sub-title">Staff</div>
+                                            <div class="sub-title">Staff(s)</div>
                                         </div>
                                         <div class="clear-both"></div>
                                     </div>
@@ -34,7 +34,7 @@
                                         <i class="icon fa fa-comments fa-4x"></i>
                                         <div class="content">
                                             <div class="title"><?php echo $num_rows4;?></div>
-                                            <div class="sub-title">Notifications</div>
+                                            <div class="sub-title">Request(s)</div>
                                         </div>
                                         <div class="clear-both"></div>
                                     </div>
@@ -48,7 +48,7 @@
                                         <i class="icon fa fa-tags fa-4x"></i>
                                         <div class="content">
                                             <div class="title"><?php echo $num_rows2;?></div>
-                                            <div class="sub-title">Work Orders</div>
+                                            <div class="sub-title">Work Schedule(s)</div>
                                         </div>
                                         <div class="clear-both"></div>
                                     </div>
@@ -62,7 +62,7 @@
                                         <i class="icon fa fa-cubes fa-4x"></i>
                                         <div class="content">
                                             <div class="title"><?php echo $num_rows3;?></div>
-                                            <div class="sub-title">Assests</div>
+                                            <div class="sub-title">Asset(s)</div>
                                         </div>
                                         <div class="clear-both"></div>
                                     </div>
@@ -70,6 +70,7 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row">
                     <div class="col-lg-6">
                      <div class="card card-success">
                                 <div class="card-header">
@@ -138,21 +139,24 @@
                                         </thead>
                                         <tbody>
                                     <?php  
-                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) FROM schedule GROUP BY assetid";
+                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule GROUP BY assetid";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );
+                                    $color ='';
                                     $all = $user->select($sql, $param);
                                     foreach ($all as $row ) { 
                                         $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                         $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
-                                        $price = ($row['SUM(cost)']);
-                                        $totp = NULL;
+                                        $price = ($row['allcost']);
+                                        if (intval($price) >  intval($row2['purchaseprice'])){
+                                            $color = 'red';
+                                        }
                                         ?>
                                         <tr>
                                             <td><?=$row2['name'] ?></td>
                                             <td><?=' GH¢ '.$row2['purchaseprice'] ?></td>
-                                            <td><?=' GH¢ '.round($price,2) ?></td>
+                                            <td style="color: <?=$color?>"><?=' GH¢ '.round($price,2) ?></td>
                                         </tr>
 
                                     <?php } ?>
@@ -167,8 +171,27 @@
                              </div>
                          </div>
 
+                                       </div>
+
                     </div>
+
+
+
+                    <div class="col-sm-6 col-xs-12">
+                        <div class="card card-success">
+                            <div class="card-header" >
+                                <div class="card-title">
+                                    <div class="title" style="font-family: 'Courier New'">Line Chart</div>
+                                </div>
+                            </div>
+                            <div class="card-body no-padding">
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+
 <!--after notification-->
                     <div class="modal fade" id="endmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -189,4 +212,7 @@
                             </div>
                         </div>
                     </div>
-                </div>      </div>
+                </div>
+                </div>
+
+

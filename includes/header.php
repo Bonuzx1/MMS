@@ -41,7 +41,15 @@ $sho = "";
     <link type="text/css" href="assets/css/jquery-ui.theme.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/css/bootstrap-switch.min.css">
 
-
+<style>
+    #dvPreview
+    {
+        filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);
+        min-height: 20px;
+        min-width: 20px;
+        display: none;
+    }
+</style>
 
 </head>
 
@@ -49,8 +57,9 @@ $sho = "";
 <script>
     function checkinput() {
         $( "input[type=text]" ).keypress(function(e) {
+            var val = $(this).val();
             var key = e.keyCode;
-            if (key >= 48 && key <= 57) {
+            if(val.length < 2 && (key >= 48 && key <= 57)) {
                 e.preventDefault();
             }
         });
@@ -93,9 +102,9 @@ $sho = "";
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="side-menu-container">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="#">
+                            <a class="navbar-brand" href="index.php">
                                 <div class="icon fa fa-paper-plane"></div>
-                                <div class="title">iMaintenance Panel <?php echo $sho;?></div>
+                                <div class="title">iMaintenance Panel</div>
                             </a>
                             <button type="button" class="navbar-expand-toggle pull-right visible-xs">
                                 <i class="fa fa-times icon"></i>
