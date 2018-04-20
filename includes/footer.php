@@ -40,6 +40,8 @@
                $("table").addClass("datatable");
                $("#calendar table").removeClass("datatable");
                $("#calendar table").removeClass("datatable");
+               $("#reportTable").removeClass("datatable");
+               $("#staff-schedule-no-datatable").removeClass("datatable");
                $(".datatable").DataTable();
                if (!window.Notification) {
                    alert("Not Supported");

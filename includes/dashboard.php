@@ -134,7 +134,7 @@
                                         <tr >
                                             <th>Asset</th>
                                             <th>Purchase Price</th>
-                                            <th>Maintenance Total</th>
+                                            <th>Maintenance Tot. Cost</th>
                                         </tr>
                                         </thead>
                                         <tbody>

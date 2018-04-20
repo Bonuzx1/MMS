@@ -40,12 +40,14 @@
                     </div>
                     <!-- /panel-body -->
                 </div>
-                <div id="reportPanel" class="panel panel-default">
+                <div  class="panel panel-default">
                     <div class="panel-heading">
                         <i class="glyphicon glyphicon-"></i> <h4><span id="pTitle"></span></h4>
                     </div>
                     <!-- /panel-heading -->
-                    <div class="panel-body">
+
+                    <div class="panel-body" id="reportPanel">
+
                         <table border="1" style="width: 100%;" class="table" id="reportTable">
                             <thead>
                                 <tr>
@@ -58,10 +60,11 @@
                             <tbody id="report">
 
                             </tbody>
-                            <tfoot>
-                                <tr><td td colspan="4"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
-                            </tfoot>
                         </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button" class="btn btn-success" id="printReport" ><i class="glyphicon glyphicon-print"></i> Print</button>
                     </div>
                     <!-- /panel-body -->
                 </div>
@@ -72,7 +75,7 @@
 
 
 <?php include "includes/print-header.php";?>
-
+<?php include "includes/print-footer.php";?>
 <script>
     $(document).ready(function () {
         $("#generateReportBtn").click(function () {
@@ -86,14 +89,17 @@
         });
 
         $("#printReport").click(function () {
-            var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
-            mywindow.document.write('<html><head><title>Print Report</title>');
+            var mywindow = window.open('','self');
+            mywindow.document.write('<html><head><title>Customer Report</title>');
             mywindow.document.write('</head><body>');
             mywindow.document.write($('#printHeader').html());
             mywindow.document.write($('#reportPanel').html());
+            mywindow.document.write($('#printfooter').html());
 //            mywindow.document.write(genData);
-            mywindow.document.write('</body></html>');
+            //          mywindow.document.write('</body></html>');
             mywindow.print();
+            mywindow.close();
+
         })
 
     });

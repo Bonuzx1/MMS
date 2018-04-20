@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="project1@localhost" uuid="6e8b5816-0821-4139-9ee3-b885e134fc95">
+    <data-source source="LOCAL" name="calendar@localhost" uuid="f5d14558-909c-4062-b5e5-97b62e1d8aaf">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/project</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/calendar</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
@@ -15,11 +15,11 @@
         <property name="yearIsDateType" value="false" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="calendar@localhost" uuid="f5d14558-909c-4062-b5e5-97b62e1d8aaf">
+    <data-source source="LOCAL" name="project_copy@localhost" uuid="2a7ca8dd-e4a3-4cfb-ac8c-e6a4c411a8b0">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/calendar</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/project_copy</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

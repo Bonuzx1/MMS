@@ -18,7 +18,7 @@ $row = $user->showone('staff','staffid',$id);
                                     
                                               <div class="card">
                                 <div class="card-body">
-                                                    <form action="../process/editStaff.php" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                                    <form action="process/editStaff.php" class="form-horizontal" method="post" enctype="multipart/form-data">
                                                         <div class="form-group" id="pic">
                                                             <label class="col-sm-1 control-label">Picture</label>
                                                             <div class="col-sm-12">

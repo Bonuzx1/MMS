@@ -111,6 +111,21 @@ $sho = "";
                             </button>
                         </div>
                         <ul class="nav navbar-nav">
+                        <?php if (!$user->isUserAdmin()){?>
+
+                            <li class="">
+                            <li class="active">
+                                <a href="index.php?assignment">
+                                    <span class="icon fa fa-tasks"></span><span class="title">Assignments</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="index.php?profile">
+                                    <span class="icon fa fa-cog"></span><span class="title">Profile Settings</span>
+                                </a>
+                            </li>
+                        <?php }else{?>
+
                             <li class="active">
                                 <a href="index.php?dashboard">
                                     <span class="icon fa fa-tachometer"></span><span class="title">Dashboard</span>
@@ -118,7 +133,7 @@ $sho = "";
                             </li>
                             <li>
                             <a href="index.php?order">
-                                <span class="icon fa fa-tags"></span><span class="title">Work Orders</span>
+                                <span class="icon fa fa-tags"></span><span class="title">Work Orders (Calendar)</span>
                             </a>
                         </li>
                             <li>
@@ -133,12 +148,12 @@ $sho = "";
                         </li>
                             <li>
                             <a href="index.php?staff">
-                                <span class="icon fa fa-user"></span><span class="title">Staff</span>
+                                <span class="icon fa fa-user"></span><span class="title">Staffs</span>
                             </a>
                         </li>
                             <li>
                             <a href="index.php?customer">
-                                <span class="icon fa fa-users"></span><span class="title">Customers</span>
+                                <span class="icon fa fa-users"></span><span class="title">Customers(Assets users)</span>
                             </a>
                         </li>
                             <li>
@@ -170,7 +185,9 @@ $sho = "";
                                     </div>
                                 </div>
                             </li>
+                            <?php }?>
                         </ul>
+
                     </div>
                     </nav>
             </div>

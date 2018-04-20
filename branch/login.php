@@ -3,7 +3,7 @@
    $db = $user->getconn();
 
    $error=""; 
-   if($_SERVER["REQUEST_METHOD"] == "POST") {
+   if(isset($_POST['aSubmit'])) {
       // username and password sent from form 
       
       $myusername =$_POST['username'];
@@ -22,6 +22,26 @@
        }else {
          echo "<script>alert('Please enter valid username or password');</script>";
       }
+   }elseif (isset($_POST['wSubmit']))
+   {
+       // username and password sent from form
+
+       $myusername =$_POST['username'];
+       $mypassword =md5($_POST['password']);
+
+
+       if($user->wlogin($myusername, $mypassword)){
+
+           ob_start();
+           header("location: ../index.php?assignment");
+
+           // echo '<script> window.location.href="" </script>';
+           exit;
+
+
+       }else {
+           echo "<script>alert('Please enter valid username or password');</script>";
+       }
    }
 ?>
 <!DOCTYPE html>
@@ -55,9 +75,35 @@
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
                            
                             <div class="panel-body">
-                                <form role="form" action="" method="post">
+                                <form role="form" action="" method="post" id="worker-login-tab">
                                     <hr />
-                                    <h5 style="color: white">Enter Details to Login</h5>
+                                    <h5 style="color: white">Enter Details to Login <b>(Worker)</b></h5>
+                                       <br />
+                                       <p style="color:red">
+	                                       <?php echo $error;
+		                                       ?>
+                                       </p>
+                                     <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
+                                            <input type="email" name="username" id="username" class="form-control"  maxlength="50" minlength="4" placeholder="Your Username" title='Enter Email'  required />
+
+                                        </div>
+                                                                              <div class="form-group input-group">
+                                            <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
+                                            <input type="password" name="password" class="form-control" maxlength="20" minlength="4" placeholder="Your Password" required />
+                                        </div>
+                                
+                                </br>
+                                    <div class="form-group">
+                                     <button class="btn btn-primary" type="submit" name="wSubmit">Login</button>
+                                    <button type="button" class="btn btn-info right float-right" id="admin-login" >Admin? Login Here</button>
+                                    </div>
+                                    <hr />
+                                    
+                                    </form>
+<form role="form" action="" method="post" id="admin-login-tab" class="hidden">
+                                    <hr />
+                                    <h5 style="color: white">Enter Details to Login <b>(Admin)</b></h5>
                                        <br />
                                        <p style="color:red">
 	                                       <?php echo $error;
@@ -72,11 +118,12 @@
                                             <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
                                             <input type="password" name="password" class="form-control" maxlength="20" minlength="4" placeholder="Your Password" required />
                                         </div>
-                                
+
                                 </br>
-                                     <button class="btn btn-primary" type="submit">Login</button>
-                                    <hr />
-                                    
+                                     <button class="btn btn-primary" name="aSubmit" type="submit">Login</button>
+    <button type="button" class="btn btn-info right float-right" id="worker-login" >Worker? Login Here</button>
+    <hr />
+
                                     </form>
                             </div>
                            
@@ -85,7 +132,9 @@
                 
         </div>
     </div>
+    <script type="text/javascript" rel="script" src="../assets/js/jquery.min.js"></script>
     <script>
+        $(document).ready(function () {
         function checkinput() {
             $( "input[type=text]" ).keypress(function(e) {
                 var val = $(this).val();
@@ -95,6 +144,18 @@
                 }
             });
         }
+
+
+
+        $("#admin-login").on("click", function () {
+            $("#admin-login-tab").removeClass("hidden");
+            $("#worker-login-tab").addClass("hidden");
+        })
+        $("#worker-login").on("click", function () {
+                    $("#admin-login-tab").addClass("hidden");
+                    $("#worker-login-tab").removeClass("hidden");
+                })
+        });
     </script>
 </body>
 

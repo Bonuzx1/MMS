@@ -11,6 +11,7 @@ include '../smstest/SMSClass.php';
 include "../includes/config.php";
 
 $sms = new SMS();
+exit;
 
 $customer = $user->showone('customer', 'customerid', $_GET['customerid']);
 $asset = $user->showone('assets', 'assetid', $_GET['assetid']);
@@ -30,7 +31,7 @@ $sender = "iCMMS"; // should not be more than 11 characters... should not includ
 $recipient = $customer['phonenumber'];
 $message = "Hello ".$customer['customername'].'. '.$_GET['description'];
 
-echo true; exit;
+echo true;
 
 if ($sms->send($message, $recipient, $sender)){
     $stmt = 'UPDATE request SET isactive = :yes WHERE requestid = :requestid';

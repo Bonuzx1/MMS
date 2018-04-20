@@ -224,11 +224,27 @@ public function selectsearch($sql)
 		} catch(PDOException $e) {
 		    echo '<p class="error">'.$e->getMessage().'</p>';
 		}
+		return $e->getMessage();
 	}
+      private function get_worker_hash($username){
+
+          try {
+
+              $stmt = $this->pdo->prepare('SELECT staffid, name, email, password FROM staff WHERE email = :username');
+              $stmt->execute(array('username' => $username));
+
+              return $stmt->fetch();
+
+          } catch(PDOException $e) {
+              echo '<p class="error">'.$e->getMessage().'</p>';
+          }
+          return $e->getMessage();
+      }
   
   public function checkpass($pass, $hashed){
 	  if($pass==$hashed)
 	  return true;
+	  return false;
 	    
   }
   
@@ -241,15 +257,37 @@ public function selectsearch($sql)
 		    $_SESSION['loggedin'] = true;
 		    $_SESSION['id'] = $user['id'];
 		    $_SESSION['username'] = $user['username'];
+            $_SESSION['admin'] = true;
 		    return true;
 		}
+		return false;
 	}
+    public function wlogin($username,$password){
+
+            $user = $this->get_worker_hash($username);
+            if($this->checkpass($password,$user['password'])){
+
+                $_SESSION['loggedin'] = true;
+                $_SESSION['id'] = $user['staffid'];
+                $_SESSION['username'] = $user['name'];
+                $_SESSION['admin'] = false;
+                return true;
+            }
+            return false;
+        }
 
   public function isloggedin()
   {
     if (isset($_SESSION['loggedin'])) {
       return true;
     }
+    return false;
+  }
+  public function isUserAdmin()
+  {
+      if ($_SESSION['admin'])
+          return true;
+      return false;
   }
 
   function search($searchtable, $searchvalue)

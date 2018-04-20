@@ -12,11 +12,13 @@ include "../includes/config.php";
 
 $today = date('Y-m-d');
 
-$sql = "SELECT * FROM request WHERE datedue >= ".$today." AND isactive = '1'";
+$sql = "SELECT * FROM request WHERE date(datedue) >= ".$today." AND isactive = '1'";
+print_r($sql);
 $param = array(
     ':startdate' => 'startdate'
 );
 $all = $user->select($sql, $param);
+print_r($all);
 $data = array();
 foreach ($all as $row ) {
     $row2 = $user->showone('assets', 'assetid', $row['assetid']);

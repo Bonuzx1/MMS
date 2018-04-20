@@ -7,25 +7,46 @@
  */
 
 ?>
-<div class="container">
     <div class="side-body   padding-top">
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-sm-9">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <span>
-                <h4 class="panel-title">Add/Edit Maintenance Schedule</span>
+                    <h4 class="panel-title">Add/Edit Maintenance Schedule</h4></span>
 
             </div>
             <div class="panel-body">
 
                 <div id="calendar"></div>
             </div>
-
         </div>
         </div>
+            <div class="col-sm-3">
 
-    </div>
+                <div class="panel panel-primary" style="background-color:white">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading" style="background-color: #0075b0">
+                        <div class="panel-title" style="color: white"> View Schedules(tabular form) </div>
+                    </div>
+
+
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <a href="index.php?order-tbl">
+                                    <button class="btn btn-primary" type="button" style="padding: 20px 30px;">Click</button>
+                                </a>
+                            </div>
+
+                        </div>
+                    </div><!--well-->
+
+                </div><!--panel-->
+
+            </div><!--col-10-->
+
+
     <!-- Modal -->
     <div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -242,7 +263,6 @@
     <!-- thats all for editing -->
 
     </div>
-    </div>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -381,13 +401,12 @@
         function del(value) {
             Event = [];
             Event[0] = value;
-            console.log(Event);
             $.ajax({
                 url: 'process/deleteSchedule.php',
                 type: 'POST',
                 data: {Event:Event},
                 success: function (data) {
-                    if ($.trim(data))
+                    if ($.trim(data) == 1)
                     {
                         alert('Deleted Suceesfully');
                         $("#calendar").fullCalendar('refetchEvents');
