@@ -54,6 +54,10 @@ if ($_GET == null) {
         min-width: 20px;
         display: none;
     }
+    #404{
+        width: 100px;
+        float: right;
+    }
 </style>
 
 </head>
