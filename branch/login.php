@@ -75,7 +75,7 @@
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
                            
                             <div class="panel-body">
-                                <form role="form" action="" method="post" id="worker-login-tab">
+                                <form role="form" action="" method="post" id="worker-login-tab" style="background-color: #2c3e50bd; padding: 30px; border-radius: 9px">
                                     <hr />
                                     <h5 style="color: white">Enter Details to Login <b>(Worker)</b></h5>
                                        <br />
@@ -101,7 +101,7 @@
                                     <hr />
                                     
                                     </form>
-<form role="form" action="" method="post" id="admin-login-tab" class="hidden">
+<form role="form" action="" method="post" id="admin-login-tab" class="hidden" style="background-color: #2c3e7991; padding: 30px; border-radius: 9px">
                                     <hr />
                                     <h5 style="color: white">Enter Details to Login <b>(Admin)</b></h5>
                                        <br />

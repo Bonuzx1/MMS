@@ -81,15 +81,13 @@
                        dataarr = newdata[i];
                        console.log(dataarr);
                        $.get('./process/sendCompleteSms.php', dataarr, function (data) {
-                           console.log(data);
-                           if (data==true){
-                               alert("A customer has been alerted of finished maintenance");
-                           }
-                           else
-                           alert("An attempt to alert a customer of finished maintenance failed!");
-                       })
+                           alert("A customer has been alerted of finished maintenance");
+                        }).fail(function() {
+                                alert( "An attempt to notify customer of finished maintenance failed" );
+                            });
                    }
-               })
+               });
+
            });
        </script>
 

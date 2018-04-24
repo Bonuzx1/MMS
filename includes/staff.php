@@ -20,7 +20,7 @@
                                                 <th>Name</th>
                                                 <th>DoB</th>
                                                 <th>Gender</th>
-                                                <th>departmentid</th>
+                                                <th>Department</th>
                                                 <th>Contact</th>
                                                 <th>Email</th>
                                                 <th>Picture</th>
@@ -56,7 +56,7 @@
                                                  } else { ?>
                                                 <a href="index.php?activate-staff=<?php echo $row['staffid']; ?>" class="btn btn-success btn-xs">Activate</a>
                                                 <?php } ?>
-                                                        <a href="index.php?delete-staff=<?php echo $row['staffid']; ?>" class="btn btn-danger btn-xs">Delete</a>
+                                                        <a href="javascript:delset(<?=$row['staffid']?>, '<?=$row['name']?>')" class="btn btn-danger btn-xs">Delete</a>
                                                     </td>
                                                 </tr>
                                                 <?php
@@ -97,10 +97,16 @@
                                     }
                                     
                                     ?>
-                                       <script type="text/javascript">
-                                           $(document).ready(function () {
-
-
-
-                                           });
-                                       </script>
+<script type="text/javascript">
+function delset(id, name) {
+    if (confirm("Are you sure you want to delete staff '"+name+"'?")) {
+        window.location.href="?delete-staff="+id;
+    }
+}
+    $(document).ready(function () {
+        if(window.location.href.match("deleted") || window.location.href.match("removed") 
+        || window.location.href.match("activated") || window.location.href.match(/Updated/g) || window.location.href.match(/added/g)) {
+            setTimeout("location.href = '?staff'", 1);
+        }
+    });
+</script>

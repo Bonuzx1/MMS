@@ -37,7 +37,11 @@
                                 $fetch = $user->populatewith('request', 'isactive', '1');
                                 $curid = '';
                                 if($count>0){
-                                    foreach($fetch as $row) {
+
+                                    foreach($fetch as $row) {$approve = false;
+                                        if ($row['isapproved' ]== '1'){
+                                            $approve = true;
+                                        }
                                         $cusid = $row['customerid'];
                                         $row2 = $user->showone('customer','customerid', $cusid);
                                         $row3 = $user->showone('assets','assetid', $row['assetid']);
@@ -49,9 +53,18 @@
                                             <td><?=$row['datecreated']?></td>
                                             <td><?=$row['datedue']?></td>
 
-                                            <td><a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>', '<?=$cusid?>')">
-                                                    <button class="btn-primary">Approve</button></a> | <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row['customerid'];?>')">
-                                                    <button class="btn-danger">Delete</button></a>
+                                            <td>
+                                                <?php if ($approve == true){ ?>
+                                            <button class="disabled btn-info">Approved</button>
+                                            <?php }else {?>
+
+                                                    <a href="javascript:approve('<?= $row['requestid']?>', '<?= $row['assetid']?>', '<?=$row['datecreated']?>','<?=$row['datedue']?>', '<?=$cusid?>')">
+
+                                                    <button class="btn-primary">Approve</button></a>
+                                                <?php } ?>|
+                                                <a href="javascript:delset('<?php echo $row['requestid'];?>','<?php echo $row['customerid'];?>')">
+                                                    <button class="btn-danger">Delete</button>
+                                                </a>
                                             </td>
                                         </tr>
 
@@ -118,7 +131,7 @@
                         <input type="hidden" id="modalAdd-assetname" name="assetname">
                         <input type="hidden" id="modalAdd-freq" name="ftype">
                         <input type="hidden" id="modalAdd-datecreated" name="start">
-                        <input type="hidden" id="modalAdd-end" name="customend">
+                        <input type="hidden" id="modalAdd-end" name="end">
                         <input type="hidden" id="modalAdd-cus" name="customer">
 
 

@@ -139,7 +139,7 @@
                                         </thead>
                                         <tbody>
                                     <?php  
-                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule GROUP BY assetid";
+                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule Where iscanceled=0 GROUP BY assetid";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );

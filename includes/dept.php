@@ -43,7 +43,7 @@ if (isset($_POST['Save'])) {
   <div class="side-body padding-top">
     <div class="row">
         <div class="col-lg-12">
-            <?php if($_GET['dept']==''||($_GET['dept']=="deleted")||($_GET['dept']=="not deleted")||($_GET['dept']=="edited")){ ?>
+            <?php if($_GET['dept']!='new'){ ?>
 <div class="panel panel-primary">
         <!-- Default panel contents -->
         <div class="panel-heading">
@@ -162,6 +162,9 @@ if (isset($_POST['Save'])) {
 <script type="text/javascript">
     $(document).ready(function () {
         $("#avail").val('<?php if (isset($_GET["id"])) echo $row["isfunctional"]?>');
+        if(window.location.href.indexOf("=") > -1) {
+            setTimeout("location.href = '?dept'", 5000);
+        });
     });
       function delset(id, title)
   {

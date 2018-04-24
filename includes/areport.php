@@ -81,10 +81,15 @@
                             <tbody id="report">
 
                             </tbody>
-                            <tfoot>
-                                <tr><td colspan="3"><button type="button" class="btn btn-success" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
-                            </tfoot>
+
+
+
                         </table>
+
+                    </div>
+                </div>
+                    <div class="panel-footer">
+                        <tr><td colspan="3"><button type="button" class="btn btn-success print-hide" id="printReport"><i class="glyphicon glyphicon-print"></i> Print</button></td></tr>
                     </div>
                     <!-- /panel-body -->
                 </div>
@@ -94,7 +99,9 @@
 </div>
 
 
-<?php include "includes/print-header.php";?>
+<?php include "includes/print-header.php";
+include "includes/print-footer.php";
+?>
 
 <script>
     $(document).ready(function () {
@@ -193,13 +200,15 @@
         });
         $("#printReport").click(function () {
             var mywindow = window.open('', 'Maintenance Management System', 'height=400,width=600');
-            mywindow.document.write('<html><head><title>Print Report</title>');
+            mywindow.document.write('<html><head><title>Asset Report</title>');
             mywindow.document.write('</head><body>');
             mywindow.document.write($('#printHeader').html());
             mywindow.document.write($('#reportPanel').html());
+            mywindow.document.write($('#printfooter').html());
 //            mywindow.document.write(genData);
             mywindow.document.write('</body></html>');
             mywindow.print();
+            mywindow.close();
         })
     })
 </script>

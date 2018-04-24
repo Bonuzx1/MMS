@@ -96,6 +96,11 @@ if (!$user->isUserAdmin())
     } elseif (isset($_GET['request'])) {
         include "includes/request.php";
     }
+
+    else
+    {
+        include "includes/404.php";
+    }
 }
 include('includes/footer.php');
 

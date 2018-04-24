@@ -9,8 +9,9 @@
 
     if (isset($_POST['saveedit'])) {
         $imageFileType = ".jpg";
-        $tr =  unlink("img/profile/".$id.$imageFileType);
-        $target_dir = "img/profile/";
+        $tr =  unlink("img/customer/".$id.$imageFileType);
+
+        $target_dir = "img/customer/";
         $target_file = $target_dir . basename($_FILES["image"]["name"]);
         $uploadOk = 1;
 
@@ -19,9 +20,9 @@
     $phonenumber = $_POST['phonenumber'];
     $email=$_POST['email'];
  
-   $sql = "UPDATE customer SET customername = '$name', locationid = :locationid, phonenumber = :phonenumber, email = :email WHERE customerid = '$id' ";
-    $param = array(':customername' => $name, ':locationid' => $locationid,':phonenumber' => $phonenumber, ':email' => $email);
-   if($user->update($sql, $param))
+   $sql = "UPDATE customer SET customername = '$name', locationid = '$locationid', phonenumber = '$phonenumber', email = '$email' WHERE customerid = '$id' ";
+    //$param = array(':customername' => $name, ':locationid' => $locationid,':phonenumber' => $phonenumber, ':email' => $email);
+        if($user->updatetabl($sql))
         {
             if ($tr = move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $id . $imageFileType)){
                 $msg = "customer updated successfully";
@@ -41,7 +42,7 @@
     }
 $msg = "";
 if (isset($_POST['Save'])) {
-    $target_dir = "img/profile/";
+    $target_dir = "img/customer/";
     $target_file = $target_dir . basename($_FILES["image"]["name"]);
     $uploadOk = 1;
     $imageFileType = ".jpg";
@@ -97,7 +98,7 @@ if (isset($_POST['Save'])) {
                   <td><?php echo $row['locationid']; ?></td>
                   <td><?php echo $row['phonenumber']; ?></td>
                   <td><?php echo $row['email']; ?></td>
-                  <td><img class="img-thumbnail" src="img/profile/<?=$row['customerid'].'.jpg?random_string'?>" style="width: 50px;" /></td>
+                  <td><img class="img-thumbnail" src="img/customer/<?=$row['customerid'].'.jpg?random_string'?>" style="width: 50px;" /></td>
                   <td><a href="index.php?customer=new&id=<?php echo $row['customerid']?>">
                     <button class="btn-primary" >Edit</button>
                     </a> | <a href="javascript:delset('<?php echo $row['customerid'];?>','<?php echo $row['customername'];?>')">    <button class="btn-danger ">Delete</button>
@@ -145,12 +146,12 @@ if (isset($_POST['Save'])) {
                 <div class="col-lg-12">
                 <div class="form-group" id="pic">
                     <label>Picture</label>
-                    <input type="file" accept="image/*" class="form-control" id="FileUpload"  name="image" required>
+                    <input type="file" accept="image/*" class="form-control" id="FileUpload"  name="image">
                 </div>
                 </div>
             <div class="col-lg-12">
                 <div class="form-group">
-                    <label for="" class="control-label">customer Name</label>
+                    <label for="" class="control-label">Customer Name</label>
                     <input type="text" value="<?php if(isset($_GET['id'])) echo($customername) ?>" name="customername" id="" class="form-control col-md-5" placeholder="customer Name">
                 </div>
             </div>
@@ -168,7 +169,7 @@ if (isset($_POST['Save'])) {
             <div class="col-lg-12">
                 <div class="form-group">
                 <label>Location</label>
-                <select required name="locationid" id="locationedit" class="form-control">
+                <select name="locationid" id="locationedit" class="form-control">
                     <option value=""></option>
                     <?php
                     $fullrow = $user->populatewith('location', 'isavailable', '1');
@@ -266,6 +267,7 @@ $(document).ready(function () {
               exit;
           }else{
             header('Location: index.php?customer=not deleted');
+
           }
           
     }

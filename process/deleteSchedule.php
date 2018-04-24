@@ -14,10 +14,10 @@ if (isset($_POST['Event'][0])){
     $sql = "UPDATE schedule SET iscanceled = '1'  WHERE scheduleid = ".$id;
     if ($user->updatetabl($sql))
     {
-        echo true;
-        header('Location: '.$_SERVER['HTTP_REFERER']);
+        return true;
+
     }else {
-        echo false;
+        return false;
     }
 
 }

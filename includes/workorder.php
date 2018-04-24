@@ -26,7 +26,7 @@
                 <div class="panel panel-primary" style="background-color:white">
                     <!-- Default panel contents -->
                     <div class="panel-heading" style="background-color: #0075b0">
-                        <div class="panel-title" style="color: white"> View Schedules(tabular form) </div>
+                        <div class="panel-title" style="color: white"> Schedules(tabular form) </div>
                     </div>
 
 
@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <a href="index.php?order-tbl">
-                                    <button class="btn btn-primary" type="button" style="padding: 20px 30px;">Click</button>
+                                    <button class="btn btn-primary" type="button" style="padding: 20px 30px;">View</button>
                                 </a>
                             </div>
 
@@ -60,7 +60,6 @@
                         <h4 class="modal-title" id="myModalLabel">Add Schedule</h4>
                     </div>
                     <div class="modal-body">
-
                         <div class="form-group">
                             <label for="color" class="col-sm-2 control-label">Assign name</label>
                             <div class="col-sm-10">
@@ -266,6 +265,11 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var g = false;
+        g = '<?php echo($_GET['order']!='') ? true : false ; ?>';
+        if (g==1) {
+            openEdit();
+        }
         $("#customend").change(function () {
             $("#end").val("");
         });
@@ -297,7 +301,7 @@
                     // ended
                 });
                 element.on('contextmenu', function () {
-                    if(confirm('do you want delete?'+event.id+", "+event.titleid)){
+                    if(confirm('do you want delete?')){
                         del(event.id);
                     }
                 })
@@ -352,19 +356,14 @@
             Event[4] = $("#mtypeedit").val();
             Event[6] = $("#costdit").val();
 
-            //alert(Event);
+            alert("Saved Successfully");
             $.ajax({
                 url: 'process/editSchedule.php',
                 type: 'POST',
                 data: {Event:Event},
                 success: function (data) {
-                    if ($.trim(data))
-                    {
-                        alert('saved sucessfully');
-                        $("#calendar").fullCalendar('refetchEvents');
-                    }else {
-                        alert('not saved');
-                    }
+                        // alert('saved sucessfully');
+                        window.location.href = "?order";
                 }
             });
         });
@@ -388,13 +387,10 @@
                 type: "POST",
                 data: {vent:vent},
                 success: function(data) {
-                    if ($.trim(data))
-                    {
+                    
                         alert('Saved Sucessfully');
                         $("#calendar").fullCalendar('refetchEvents');
-                    }else {
-                        alert('not saved');
-                    }
+                    
                 }
             });
         }
@@ -406,18 +402,46 @@
                 type: 'POST',
                 data: {Event:Event},
                 success: function (data) {
-                    if ($.trim(data) == 1)
-                    {
+
                         alert('Deleted Suceesfully');
                         $("#calendar").fullCalendar('refetchEvents');
-                    }else {
-                        alert('not deleted');
-                    }
+
                 },
                 error: function (data) {
                     alert("Error "+data);
                 }
             });
         }
+
+        
     });
 </script>
+
+<?php
+if ($_GET['order']!=''){
+$schedule = $user->showone('schedule', 'scheduleid', $_GET['order']);
+$id = $schedule['scheduleid'];
+$staff = $schedule['staffid'];
+$asset = $schedule['assetid'];
+$freq = $schedule['frequencytype'];
+$maintain = $schedule['maintenancetype'];
+$cost = $schedule['cost'];
+$priority = $schedule['prioritytype'];
+
+?>
+<script type="text/javascript">
+    function openEdit() {
+        $('#ModalEdit #staffedit').val(<?=$staff?>);
+        $('#ModalEdit #id').val(<?=$id?>);
+        $('#ModalEdit #titleedit').val(<?=$asset?>);
+        $('#ModalEdit #mtypeedit').val(<?=$maintain?>);
+        $('#ModalEdit #ftypeedit').val(<?=$freq?>);
+        $('#ModalEdit #costdit').val(<?=$cost?>);
+        $('#ModalEdit #priorityedit').val(<?=$priority?>);
+        $('#ModalEdit').modal('show');
+    }
+    $(document).ready(function() {
+        
+    })
+</script>
+<?php }?>

@@ -50,12 +50,11 @@ if (isset($_POST['Event'][0]))
     $end = $_POST['vent'][2];
 
     $sql = "UPDATE schedule SET  startdate = '$start', enddate = '$end' WHERE scheduleid = $id ";
-    if ($user->updatetabl($sql))
+    if ($up = $user->updatetabl($sql))
     {
-        echo "yes";
-        header('Location: '.$_SERVER['HTTP_REFERER']);
+        echo json_encode($up);
     }else {
-        echo 'no';
+        echo json_encode($up);
     }
 
 }

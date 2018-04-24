@@ -2,7 +2,7 @@
 $user_id = "1";
 $user_id = $_SESSION['id'];
 
-$row = $user->showone('user','id',$user_id);
+$row = $user->showone('staff','staffid',$user_id);
 if (($_GET['setting'])=='edited') {?>
 <script type="text/javascript">alert("successfully edited");</script>
 <?php
@@ -26,29 +26,29 @@ if (($_GET['setting'])=='edited') {?>
 
 				
 
-				<form action="process/editUsername.php" method="post" class="form-horizontal" id="changeUsernameForm">
+				<form action="process/editWorkerUsername.php" method="post" class="form-horizontal" id="changeUsernameForm">
 					<fieldset>
-						<legend>Change Username</legend>
+						<legend>Change Email</legend>
 
 						<div class="changeUsenrameMessages"></div>			
 
 						<div class="form-group">
-					    <label for="username" class="col-sm-2 control-label">Username</label>
+					    <label for="username" class="col-sm-2 control-label">Email</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="username" name="username" value="<?php echo $row['username'] ?>" />
+					      <input type="text" class="form-control" id="username" name="username" value="<?php echo $row['email'] ?>" />
 					    </div>
 					  </div>
 
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					    	<input type="hidden" name="userid" id="user_id" value="<?php echo $row['id'] ?>" /> 
+					    	<input type="hidden" name="userid" id="user_id" value="<?php echo $row['staffid'] ?>" /> 
 					      <button type="submit" name="changename" class="btn btn-success" data-loading-text="Loading..." id="changeUsernameBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes </button>
 					    </div>
 					  </div>
 					</fieldset>
 				</form>
 
-				<form action="process/editUsername.php" method="post" class="form-horizontal" id="changePasswordForm">
+				<form action="process/editWorkerUsername.php" method="post" class="form-horizontal" id="changePasswordForm">
 					<fieldset>
 						<legend>Change Password</legend>
 
@@ -77,7 +77,7 @@ if (($_GET['setting'])=='edited') {?>
 
 					  <div class="form-group">
 					    <div class="col-sm-offset-2 col-sm-10">
-					    	<input type="hidden" name="userid" id="user_id" value="<?php echo $row['id'] ?>" /> 
+					    	<input type="hidden" name="userid" id="user_id" value="<?php echo $row['staffid'] ?>" /> 
 					      <button type="submit" name="changepass" class="btn btn-primary"> <i class="glyphicon glyphicon-ok-sign"></i> Save Changes </button>
 					      
 					    </div>

@@ -42,6 +42,9 @@
                 </div>
                 <div  class="panel panel-default">
                     <div class="panel-heading">
+                        <div class="panel-title">
+                            Customer Report
+                        </div>
                         <i class="glyphicon glyphicon-"></i> <h4><span id="pTitle"></span></h4>
                     </div>
                     <!-- /panel-heading -->

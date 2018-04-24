@@ -12,7 +12,7 @@ session_start();
 
 $dbname = 'project_copy';
 $dbhost = 'localhost';
-$pass = 'pop9090';
+$pass = '';
 $dbuser = 'root';
 
 

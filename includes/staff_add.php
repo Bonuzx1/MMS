@@ -16,28 +16,34 @@ if (isset($_POST['submit'])) {
     $sectionid = $_POST['sectionid'];
     $contact = $_POST['contact'];
     $email = $_POST['email'];
+    $password =md5($_POST['password']);
 
-    $sql = "INSERT INTO staff(name, dob, gender, departmentid, contact, email)
-        VALUES (:name, :dob, :gender, :sectionid, :contact, :email )";
+
+    $sql = "INSERT INTO staff(name, dob, gender, departmentid, contact, email, password)
+        VALUES (:name, :dob, :gender, :sectionid, :contact, :email , :password)";
     $params = array(
         ':name' => $name, 
         ':dob' => $dob, 
         ':gender' => $gender, 
         ':sectionid' => $sectionid, 
         ':contact' => $contact, 
-        ':email' => $email );
+        ':email' => $email, 
+        ':password'=> $password
+    );
         
         if($newID = $user->insert($sql, $params))
         {
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $newID . $imageFileType)) {
-                echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
-                $msg = "Staff added successfully";
+            print_r($_FILES);
+            if ($img = move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir . $newID . $imageFileType)) {
+                $msg = "added successfully";
             } else {
-                $msg = "Inserted staff but could not upload image";
+                // $msg = "Inserted staff but could not upload image";
+                $msg = $img;
             }
         }else {
-        $msg = $newID;
+        $msg = "could not be inserted";
     }
+    header("Location: ?staff=".$msg);
 
 }
 ?>
@@ -83,12 +89,12 @@ if (isset($_POST['submit'])) {
 
                                         <div class="form-group">
                                         <label>Sectionid</label>
-                                        <select required name="sectionid" class="form-control">
-                                            <option value="1">B001</option>
-                                            <option value="2">E001</option>
-                                            <option value="3">P001</option>
-                                            <option value="4">RA01</option>
-                                            <option value="5">RC01</option>
+                                        <select name="sectionid" class="form-control">
+                                            <option value="0">Select one</option>
+                                            <?php $dept = $user->populatewith('department', 'isfunctional', '1');
+                                            foreach ($dept as $key ) {?>
+                                            <option value="<?=$key['departmentid']?>"><?=$key['departmentname']?></option>
+                                            <?php }?>
                                         </select>
                                     </div>
             
@@ -103,10 +109,16 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" type="email" name="email" required>
                                         </div>
                 
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control"  name="password" required>
+                                        </div>
+                
                                        <div class="panel-footer">
                                         <button type="submit" name="submit" class="btn btn-success">Submit</button>
                                         <a href="index.php?staff" class="btn btn-info">Cancel</a>
                                        </div>
+                                       
                                     </form>
                                 </div>
                             </div>

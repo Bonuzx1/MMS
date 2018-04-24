@@ -92,7 +92,7 @@
   // Execute the statement
   if ($stmt->execute($data)) {
   // Return the number of rows affected
-      echo $this->pdo->lastInsertId();
+//      echo $this->pdo->lastInsertId();
   return $this->pdo->lastInsertId();
   }
   else {
@@ -105,7 +105,16 @@
   }
   // Perform an UPDATE query
   public function update($sql, $data = array()) {
-  return $this->insert($sql, $data);
+      try {
+          // Prepare the SQL statement
+          $stmt = $this->pdo->prepare($sql);
+
+          // Execute the statement
+          return (bool) $stmt->execute($data);
+      }
+      catch (Exception $e) {
+          return $e->getMessage();
+      }
   }
   // Perform a REPLACE query
   public function replace($sql, $data = array()) {
@@ -120,112 +129,116 @@
   return $this->pdo->lastInsertId();
   }
 
-      /**
-       * @param $sql
-       * @param array $data
-       * @return int
-       */
-      public function updatetabl($sql)
-  {
-    $stmt = $this->pdo->prepare($sql);
-    if ($stmt->execute())
-        return true;
-    return false;
-  }
-  
-  public function howmanyin($table, $condition, $conditionvalue)
-  {
-	  $sql = "SELECT count(*) As total FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
-	  $res = $this->pdo->query($sql);
-	  $rowcount = $res->fetchColumn();
-	  return $rowcount;
-  }
-   public function howmanyinone($table)
-  {
-    $sql = "SELECT count(*) As total FROM ".$table;
-    $res = $this->pdo->query($sql);
-    $rowcount = $res->fetchColumn();
-    return $rowcount;
-  }
-  
-  public function populatewith($table, $condition, $conditionvalue)
-  {
-	  try{
-	  $sql = "SELECT * FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
-	  //$sql = "SELECT * FROM :table WHERE :condition = :conditionvalue";
-	  //$param = array('table' => $table, 'condition' => $condition, 'conditionvalue' => $conditionvalue);
-	  //return $this->select($sql, $param);
-	  $stmt = $this->pdo->prepare($sql);
-	  $stmt->execute();
-	  return $stmt->fetchAll();
-	  }catch(PDOExeception $e){
-		  return $e->getMessage();
-	  }
-  }
-
-
-public function selectsearch($sql)
-  {
-    try{
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }catch(PDOExeception $e){
-      return $e->getMessage();
+        /**
+         * @param $sql
+         * @param array $data
+         * @return int
+         */
+        public function updatetabl($sql)
+    {
+        $stmt = $this->pdo->prepare($sql);
+        try{
+            $stmt->execute();
+            return true;
+        }catch (Exception $ex)
+        {
+            return $ex->getMessage();
+        }
     }
-  }
-
-
+    
+    public function howmanyin($table, $condition, $conditionvalue)
+    {
+        $sql = "SELECT count(*) As total FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
+        $res = $this->pdo->query($sql);
+        $rowcount = $res->fetchColumn();
+        return $rowcount;
+    }
+     public function howmanyinone($table)
+    {
+      $sql = "SELECT count(*) As total FROM ".$table;
+      $res = $this->pdo->query($sql);
+      $rowcount = $res->fetchColumn();
+      return $rowcount;
+    }
+    
+    public function populatewith($table, $condition, $conditionvalue)
+    {
+        try{
+        $sql = "SELECT * FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
+        //$sql = "SELECT * FROM :table WHERE :condition = :conditionvalue";
+        //$param = array('table' => $table, 'condition' => $condition, 'conditionvalue' => $conditionvalue);
+        //return $this->select($sql, $param);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+        }catch(PDOExeception $e){
+            return $e->getMessage();
+        }
+    }
   
-  public function showone($table, $condition, $conditionvalue)
-  {
-	  
-	  try{
-	  $sql = "SELECT * FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
-	  //$sql = "SELECT * FROM :table WHERE :condition = :conditionvalue";
-	  //$param = array('table' => $table, 'condition' => $condition, 'conditionvalue' => $conditionvalue);
-	  //return $this->select($sql, $param);
-	  $stmt = $this->pdo->prepare($sql);
-	  $stmt->execute();
-	  return $stmt->fetch();
-	  }catch(PDOExeception $e){
-		  return $e->getMessage();
-	  }
-  }
   
-  public function updateone($table, $column, $data, $condition, $conditionvalue)
-  {
-	  $sql = "UPDATE ".$table." SET ".$column." = ".$data." WHERE ".$condition." = ".$conditionvalue;
-	  $stmt = $this->pdo->prepare($sql);
-	  $stmt->execute();
-	  return $stmt->rowCount();
-  }
+  public function selectsearch($sql)
+    {
+      try{
+      $stmt = $this->pdo->prepare($sql);
+      $stmt->execute();
+      return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }catch(PDOExeception $e){
+        return $e->getMessage();
+      }
+    }
   
   
-  public function register($username, $password){
-	  //$arr = array();
-	  //$arr = ("pass" => $password);
-	  $hashedpassword = $this->password_hash($password, PASSWORD_DEFAULT);
-	  $sql = 'INSERT INTO user (username,password) VALUES (:username, :password)';
-	  $data = array( 'username' => $username, 'password' => $password);
-	//print_r($hashedpassword);print_r($username);exit;
-	  return $this->insert($sql, $data);
-  }
+    
+    public function showone($table, $condition, $conditionvalue)
+    {
+        
+        try{
+        $sql = "SELECT * FROM ".$table." WHERE ".$condition." = ".$conditionvalue;
+        //$sql = "SELECT * FROM :table WHERE :condition = :conditionvalue";
+        //$param = array('table' => $table, 'condition' => $condition, 'conditionvalue' => $conditionvalue);
+        //return $this->select($sql, $param);
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetch();
+        }catch(PDOExeception $e){
+            return $e->getMessage();
+        }
+    }
+    
+    public function updateone($table, $column, $data, $condition, $conditionvalue)
+    {
+        $sql = "UPDATE ".$table." SET ".$column." = ".$data." WHERE ".$condition." = ".$conditionvalue;
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+    
+    
+    public function register($username, $password){
+        //$arr = array();
+        //$arr = ("pass" => $password);
+        $hashedpassword = $this->password_hash($password, PASSWORD_DEFAULT);
+        $sql = 'INSERT INTO user (username,password) VALUES (:username, :password)';
+        $data = array( 'username' => $username, 'password' => $password);
+      //print_r($hashedpassword);print_r($username);exit;
+        return $this->insert($sql, $data);
+    }
+    
+    private function get_user_hash($username){
   
-  private function get_user_hash($username){
-
-		try {
-
-			$stmt = $this->pdo->prepare('SELECT id, username, password FROM user WHERE username = :username');
-			$stmt->execute(array('username' => $username));
-
-			return $stmt->fetch();
-
-		} catch(PDOException $e) {
-		    echo '<p class="error">'.$e->getMessage().'</p>';
-		}
+          try {
+  
+              $stmt = $this->pdo->prepare('SELECT id, username, password FROM user WHERE username = :username');
+              $stmt->execute(array('username' => $username));
+  
+              return $stmt->fetch();
+  
+          } catch(PDOException $e) {
+              echo '<p class="error">'.$e->getMessage().'</p>';
+          }
 		return $e->getMessage();
-	}
+    }
       private function get_worker_hash($username){
 
           try {
@@ -240,86 +253,125 @@ public function selectsearch($sql)
           }
           return $e->getMessage();
       }
+    
+    
+          private function get_staff_hash($username){
   
-  public function checkpass($pass, $hashed){
-	  if($pass==$hashed)
-	  return true;
-	  return false;
-	    
-  }
+            try {
   
-  public function login($username,$password){
-
-		$user = $this->get_user_hash($username);
-
-		if($this->checkpass($password,$user['password'])){
-
-		    $_SESSION['loggedin'] = true;
-		    $_SESSION['id'] = $user['id'];
-		    $_SESSION['username'] = $user['username'];
-            $_SESSION['admin'] = true;
-		    return true;
-		}
-		return false;
-	}
-    public function wlogin($username,$password){
-
-            $user = $this->get_worker_hash($username);
-            if($this->checkpass($password,$user['password'])){
-
-                $_SESSION['loggedin'] = true;
-                $_SESSION['id'] = $user['staffid'];
-                $_SESSION['username'] = $user['name'];
-                $_SESSION['admin'] = false;
-                return true;
+              $stmt = $this->pdo->prepare('SELECT * FROM staff WHERE email = :email');
+              $stmt->execute(array('email' => $username));
+        // print_r($stmt); exit;
+              return $stmt->fetch();
+  
+            } catch(PDOException $e) {
+                return false;
             }
-            return false;
+          }
+          
+          
+          private function get_customer_hash($username){
+  
+            try {
+  
+              $stmt = $this->pdo->prepare('SELECT * FROM customer WHERE email = :email');
+              $stmt->execute(array('email' => $username));
+        // print_r($stmt); exit;
+              return $stmt->fetch();
+  
+            } catch(PDOException $e) {
+                return false;
+            }
+          }
+    
+      
+    public function checkpass($pass, $hashed){
+        if($pass==$hashed)
+        return true;
+          
+    }
+    
+    public function login($username,$password){
+  
+          $user = $this->get_user_hash($username);
+  
+          if($this->checkpass($password,$user['password'])){
+  
+              $_SESSION['loggedin'] = true;
+              $_SESSION['id'] = $user['id'];
+              $_SESSION['username'] = $user['username'];
+              $_SESSION['admin'] = true;
+              return true;
+          }
+          return false;
         }
-
-  public function isloggedin()
-  {
-    if (isset($_SESSION['loggedin'])) {
-      return true;
-    }
-    return false;
-  }
-  public function isUserAdmin()
-  {
-      if ($_SESSION['admin'])
-          return true;
-      return false;
-  }
-
-  function search($searchtable, $searchvalue)
-{
-
+        public function wlogin($username,$password){
     
-    $sql = "SELECT * FROM ".$searchtable." WHERE name LIKE concat('%':searchvalue'%')";
-    $param = array(':searchvalue' => $searchvalue );
-    $stmt = $this->pdo->prepare($sql);
-    if($stmt->execute($param)){
-      return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }else{
-      return false;
+                $user = $this->get_worker_hash($username);
+                if($this->checkpass($password,$user['password'])){
+    
+                    $_SESSION['loggedin'] = true;
+                    $_SESSION['id'] = $user['staffid'];
+                    $_SESSION['username'] = $user['name'];
+                    $_SESSION['admin'] = false;
+                    return true;
+                }
+                return false;
+            }
+    
+    public function login_staff($email, $mobile){
+          $user = $this->get_customer_hash($email);
+          return ($mobile == $user['phonenumber']);
     }
     
-}
-
-      /**
-       * @return PDO
-       */
-      public function getPdo ()
-      {
-          return $this->pdo;
+    public function detail_staff($email, $mobile){
+          return $this->get_customer_hash($email);
+    }
+  
+    public function isloggedin()
+    {
+      if (isset($_SESSION['loggedin'])) {
+        return true;
       }
-
-      /**
-       * @param PDO $pdo
-       */
-      public function setPdo(PDO $pdo)
-      {
-          $this->pdo = $pdo;
+      return false;
+    }
+    public function isUserAdmin()
+    {
+        if ($_SESSION['admin'])
+            return true;
+        return false;
+    }
+  
+    function search($searchtable, $searchvalue)
+  {
+  
+      
+      $sql = "SELECT * FROM ".$searchtable." WHERE name LIKE concat('%':searchvalue'%')";
+      $param = array(':searchvalue' => $searchvalue );
+      $stmt = $this->pdo->prepare($sql);
+      if($stmt->execute($param)){
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }else{
+        return false;
       }
-
-  } 
-  ?>
+      
+  }
+  
+        /**
+         * @return PDO
+         */
+        public function getPdo ()
+        {
+            return $this->pdo;
+        }
+  
+        /**
+         * @param PDO $pdo
+         */
+        public function setPdo(PDO $pdo)
+        {
+            $this->pdo = $pdo;
+        }
+  
+    } 
+    ?>

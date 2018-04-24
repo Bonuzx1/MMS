@@ -7,6 +7,13 @@
  */
 ?>
 
+<style>
+    @media print {
+        .print-hide {
+            display: none;
+        }
+    }
+</style>
 
 <div id="printHeader" style="display: none; ">
 <div id="page-wrapper">
@@ -18,17 +25,17 @@
                     </div>
                 </div>
                 <div class="row">
-      <div class="row pad-top-botm ">
+      <div class="row pad-top-bot ">
          <div class="col-lg-6  ">
-            <img src="img/logo.png"  align='left' style="padding:0px 30px 0px 30px;" /> 
+            <img src="img/icmms.png"  align='left' style="padding:0px 30px 0px 30px;" />
          </div>
           <div class="col-lg-6 ">
             
-               <strong>   OxyRed  Technologies  LLC.</strong>
+               <strong>  KNUST Maintenance Department</strong>
               <br />
                   <i>Address :</i> Accra Road, Kumasi
               <br />
-                  Forth Street , Deumark,
+                  Commercial Area,
               <br />
                   Ghana.
               
@@ -41,11 +48,11 @@
              <hr />
              <span>
              &emsp;
-                 <strong>Email : </strong>  info@yourdomain.com 
+                 <strong>Email : </strong>maintenance@knust.edu.gh
            &emsp;&emsp;
-                 <strong>Call : </strong>  +95 - 890- 789- 9087 
-                 &emsp;&emsp;
-                 <strong>Fax : </strong>  +012340-908- 890 
+                 <strong>Call : </strong>+233 -3220- 60301
+                 &emsp;&nbsp;
+                 <strong>Fax : </strong>+233-3220- 60122
              </span>
              <hr />
         

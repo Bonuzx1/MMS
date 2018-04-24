@@ -11,7 +11,6 @@ include '../smstest/SMSClass.php';
 include "../includes/config.php";
 
 $sms = new SMS();
-exit;
 
 $customer = $user->showone('customer', 'customerid', $_GET['customerid']);
 $asset = $user->showone('assets', 'assetid', $_GET['assetid']);
@@ -29,14 +28,12 @@ $sms->password = "BYFifsZPgo";
 // to send a message
 $sender = "iCMMS"; // should not be more than 11 characters... should not include copyrighted names [ like MobileMoney :( ]
 $recipient = $customer['phonenumber'];
-$message = "Hello ".$customer['customername'].'. '.$_GET['description'];
-
-echo true;
+$message = "Hello ".$customer['customername'].'. The maintenance on asset "'.$asset['name'].'" has been completed.'.PHP_EOL.
+                                                                                                'Thank you for using iCMMS';
 
 if ($sms->send($message, $recipient, $sender)){
-    $stmt = 'UPDATE request SET isactive = :yes WHERE requestid = :requestid';
-    $param = array(':requestid' => $_GET['requestid'], ':yes' => '0');
-    if ($user->update($stmt, $param))
+    $stmt = "UPDATE request SET isactive = '0' WHERE requestid = ".$_GET['requestid'];
+    if ($user->updatetabl($stmt))
         echo true;
     echo false;
 }

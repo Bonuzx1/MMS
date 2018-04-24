@@ -12,15 +12,19 @@ include "../includes/config.php";
 
 $today = date('Y-m-d');
 
-$sql = "SELECT * FROM request WHERE date(datedue) >= ".$today." AND isactive = '1'";
-print_r($sql);
+$sql = "SELECT * FROM request WHERE isactive = '1'";
+// print_r($sql);
 $param = array(
     ':startdate' => 'startdate'
 );
 $all = $user->select($sql, $param);
-print_r($all);
+// print_r($all);
 $data = array();
 foreach ($all as $row ) {
+    if ($row['datedue'] <= $today)
+    {
+        
+    
     $row2 = $user->showone('assets', 'assetid', $row['assetid']);
 //    $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
     $totp = NULL;
@@ -28,9 +32,9 @@ foreach ($all as $row ) {
         $data[] = $arrayName = array(
             'requestid' => $row['requestid'],
             'assetid' => $row['assetid'],
-            'customerid' => $row['customerid'],
-            'description' => 'The maintenance for the asset "'.$row2['name'].'" is completed');
-
+            'customerid' => $row['customerid']
+        );
+    }
 }
 echo json_encode($data);
 

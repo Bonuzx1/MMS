@@ -4,9 +4,14 @@ $sho = "";
    if(!$user->isloggedin() == 1){
     header("Location: branch/login.php");
    };
+   if ($user->isUserAdmin()){
    if ($_GET == null) {
        header('Location: index.php?dashboard');
    }
+}else 
+if ($_GET == null) {
+    header('Location: index.php?assignment');
+}
    ?>
 
 <!DOCTYPE html>
@@ -88,7 +93,11 @@ $sho = "";
                                     <div class="profile-info">
                                      
                                         <div role="group">
+                                            <?php if (!$user->isUserAdmin()){?>
+                                            <a href="index.php?profile" class="btn btn-default"><i class="fa fa-user"></i> Settings</a>
+                                            <?php }else {?>
                                             <a href="index.php?setting" class="btn btn-default"><i class="fa fa-user"></i> Settings</a>
+                                            <?php }?>
                                             <a href="branch/logout.php" class="btn btn-default"><i class="fa fa-sign-out"></i> Logout</a>
                                         </div>
                                     </div>
@@ -102,7 +111,7 @@ $sho = "";
                 <nav class="navbar navbar-default" role="navigation">
                     <div class="side-menu-container">
                         <div class="navbar-header">
-                            <a class="navbar-brand" href="index.php">
+                            <a class="navbar-brand" href="index.php?dashboard">
                                 <div class="icon fa fa-paper-plane"></div>
                                 <div class="title">iMaintenance Panel</div>
                             </a>
@@ -112,7 +121,6 @@ $sho = "";
                         </div>
                         <ul class="nav navbar-nav">
                         <?php if (!$user->isUserAdmin()){?>
-
                             <li class="">
                             <li class="active">
                                 <a href="index.php?assignment">

@@ -7,3 +7,12 @@
  */
 ?>
 
+
+<div id="printfooter" style="display: none; ">
+
+            <br/><br/>
+<p style="float:right">....................</p>
+    <br/><br/><br/>
+            <p style="float:right">Signature</p>
+        </div>
+        <!-- /. PAGE INNER  -->

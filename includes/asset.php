@@ -105,6 +105,9 @@
     ?>
     <script type="text/javascript">
     $(document).ready(function(){
+      if(window.location.href.indexOf("=") > -1) {
+            setTimeout("location.href = '?asset'", 10);
+        });
 
 
 
