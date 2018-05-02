@@ -2,16 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: sandra
- * Date: 05/04/2018
- * Time: 7:22 PM
+ * Date: 14/04/2018
+ * Time: 2:10 PM
  */
+
 
 include '../smstest/SMSClass.php';
 include "../includes/config.php";
 
 $sms = new SMS();
 
-$customer = $user->showone('customer', 'customerid', $_GET['customer']);
+$customer = $user->showone('customer', 'customerid', $_GET['customerid']);
+$asset = $user->showone('assets', 'assetid', $_GET['assetid']);
 
 // display debug data? TRUE/FALSE
 $sms->debugMode = true;
@@ -26,10 +28,15 @@ $sms->password = "BYFifsZPgo";
 // to send a message
 $sender = "iCMMS"; // should not be more than 11 characters... should not include copyrighted names [ like MobileMoney :( ]
 $recipient = $customer['phonenumber'];
-$message = "Hello ".$customer['customername'].". Your maintenance request has been received and will be attend to. Thanks for using iCMMS";
+$message = "Hello ".$customer['customername'].'. The maintenance on asset "'.$asset['name'].'" has started. 
+                                           You will be notified on completion'.PHP_EOL.
+                                            'Thank you for using iCMMS';
 
 if ($sms->send($message, $recipient, $sender)){
-    header("Location: ../index.php?request&msg=approved");
+    $stmt = "UPDATE request SET isactive = '0' WHERE requestid = ".$_GET['requestid'];
+    if ($user->updatetabl($stmt))
+        echo true;
+    echo false;
 }
 
 // -------------------------------------------------

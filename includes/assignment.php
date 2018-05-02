@@ -86,7 +86,8 @@ $id = $_SESSION['id'];
                                         <td><?php echo $row3['locationname'] ?></td>
                                         <td><?php echo $row['startdate'] ?></td>
                                         <td><?php echo $row['enddate'] ?></td>
-                                        <td><a href="process/staffCompleteSchedule.php?id=<?php echo $row['scheduleid']?>">
+                                        <td><a href="process/staffStartSchedule.php?sch=<?php echo $row['scheduleid']?>"><button class="btn-info">Started</button></a> |
+                                            <a href="process/staffCompleteSchedule.php?id=<?php echo $row['scheduleid']?>">
                                                 <button class="btn-primary">I'm Done</button></a> | <a href="javascript:cannot('<?php echo $row['scheduleid'];?>','<?php echo $row['staffid'];?>')">
                                                 <button class="btn-danger">I Can't</button></a></td>
                                     </tr>
@@ -100,6 +101,7 @@ $id = $_SESSION['id'];
                             <tbody id="table2">
 
                             </tbody>
+
                         </table>
 
 

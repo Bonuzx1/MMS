@@ -62,8 +62,33 @@
                         </form>
 
                     </div>
-                    <!-- /panel-body -->
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                       <i class="glyphicon glyphicon-tasks"> </i> Asset By Department
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group col-sm-6">
+                            <label for="depat" class="col-sm-2 control-label">Department</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" name="dept" id="depat">
+                                    <option value="0">Select One</option>
+                                    <?php $departments = $user->populatewith('department', 'isfunctional', '1');
+                                    foreach ($departments as $department) {?>
+                                    <option value="<?= $department['departmentid'] ?>"><?=$department['departmentname']?></option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class=" col-sm-4">
+                                <button type="submit" class="btn btn-success" id="generateDeptBtn"> <i class="glyphicon glyphicon-ok-sign"></i> Generate Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <!-- /panel-body -->
+
                 <div id="reportPanel" class="panel panel-default">
                     <div class="panel-heading">
                         <i class="glyphicon glyphicon-"></i> <h4><span id="pTitle"></span></h4>
@@ -71,7 +96,7 @@
                     <!-- /panel-heading -->
                     <div class="panel-body">
                         <table border="1" style="width: 100%;" class="table" id="reportTable">
-                            <thead>
+                            <thead id="reportHeader">
                                 <tr>
                                     <th>Schedule Date</th>
                                     <th>Assigned To</th>
@@ -105,6 +130,27 @@ include "includes/print-footer.php";
 
 <script>
     $(document).ready(function () {
+        $("#generateDeptBtn").on("click", function () {
+            let d = $("#depat").val();
+            $.post("./process/assetReport.php", {dept:d}, function (data) {
+                genData = JSON.parse(data);
+                var head = $("<tr><th>Asset</th><th>Price</th></tr>");
+                $("#reportHeader").html("");
+                $("#reportHeader").html(head);
+                $("#report").html('');
+                $('#pTitle').html('');
+                $('#pTitle').html(genData.title);
+                var $row = $("<tr><td></td><td></td></tr>"); //the row template
+                var $tr;
+                var totcost = 0;
+                $.each(genData, function(i, item) {
+                    $tr = $row.clone(); //create a blank row
+                    $tr.find("td:nth-child(1)").text(item.asset); //fill the row
+                    $tr.find("td:nth-child(2)").text(item.price);
+                    $("#report").append($tr);
+                });
+            });
+        });
         let done = false;
         let genData = null;
         $( "form" ).on( "submit", function( event ) {
@@ -163,7 +209,14 @@ include "includes/print-footer.php";
                 }
                 $.post( './process/assetReport.php', data, function (data) {
                     genData = JSON.parse(data);
+                    $("#reportHeader").html("");
+                    var head = "<tr>" +
+                        "<th>Schedule Date</th>" +
+                        "<th>Assigned To</th>" +
+                        "<th>Cost</th>" +
+                        "</tr>";
                     $("#report").html('');
+                    $("#reportHeader").html(head);
                     var $row = $("<tr><td></td><td></td><td></td></tr>"); //the row template
                     var $tr;
                     var totcost = 0;

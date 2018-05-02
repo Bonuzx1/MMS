@@ -3,7 +3,7 @@
               $num_rows1 = $user->howmanyin('staff', 'isdeleted','0');
               $num_rows2 = $user->howmanyin('schedule', 'iscanceled','0');
               $num_rows3 = $user->howmanyin('assets', 'isdeleted','0');
-              $num_rows4 = $user->howmanyin('request', 'isapproved','0');
+              $num_rows4 = $user->howmanyin('request', 'isactive','1');
               $today = date('Y-m-d');
 
           
@@ -139,7 +139,7 @@
                                         </thead>
                                         <tbody>
                                     <?php  
-                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule Where iscanceled=0 GROUP BY assetid";
+                                    $sql = "SELECT assetid, scheduleid, cost, prioritytype, enddate, SUM(cost) as allcost FROM schedule Where iscanceled= '0' GROUP BY assetid";
                                     $param = array(
                                         ':startdate' => 'startdate'
                                     );
@@ -149,9 +149,7 @@
                                         $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                         $num = $user->howmanyin('schedule', 'assetid', $row['assetid']);
                                         $price = ($row['allcost']);
-                                        if (intval($price) >  intval($row2['purchaseprice'])){
-                                            $color = 'red';
-                                        }
+                                        $color = ($price > $row2['purchaseprice'])? "red":'';
                                         ?>
                                         <tr>
                                             <td><?=$row2['name'] ?></td>

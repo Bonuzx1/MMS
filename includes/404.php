@@ -8,7 +8,7 @@
 ?>
 <div class="side-body padding-top">
     <div class="row">
-        <div class="col-lg-5" id="404">
+        <div class="col-lg-12" id="404">
             <div class="wrapper-page" id="404">
 
                 <div class="card" id="404">
@@ -18,8 +18,8 @@
                             <h1 class="">404!</h1>
                             <h3 class="">Sorry, page not found</h3><br>
 
-                            <a class="btn btn-info mb-5 waves-effect waves-light" href="index.php">Back to Dashboard</a>
-                            <a class="btn btn-info mb-5 waves-effect waves-light" href="<?php header('Location:'.$_SERVER['HTTP_REFERRER'])?>">Back to Last Page</a>
+                            <a class="btn btn-info mb-5 waves-effect waves-light" href="index.php?dashboard">Back to Dashboard</a>
+                            <a class="btn btn-info mb-5 waves-effect waves-light" href="javascript:history.go(-1)">Back to Last Page</a>
                         </div>
 
                     </div>

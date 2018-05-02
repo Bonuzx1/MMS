@@ -30,7 +30,7 @@ $message = "Hello ".$customer['customername'].". Your maintenance request has be
 some other time. Sorry for any inconvenience caused.";
 
 if ($sms->send($message, $recipient, $sender)){
-    header("Location: ../index.php?request=approved");
+    header("Location: ../index.php?request&msg=Deleted");
 }
 
 // -------------------------------------------------

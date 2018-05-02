@@ -71,6 +71,8 @@ $no_button = "";
                                         $state = 'pending';
                                     }elseif ($row['staffid'] != '0' && $row['isdone'] == '1') {
                                         $state = 'done';
+                                    }elseif ($row['isdone']=='2'){
+                                        $state = 'started';
                                     }
                                     $row2 = $user->showone('assets', 'assetid', $row['assetid']);
                                     $row3 = $user->showone('staff', 'staffid', $row['staffid'])
@@ -80,7 +82,7 @@ $no_button = "";
                                         <td><?php echo $row3['name'] ?></td>
                                         <td><?php echo $row['startdate'] ?></td>
                                         <td><?php echo $row['enddate'] ?></td>
-                                        <td><?=$state=='not-done'? 'Not Done':($state == 'pending'? 'Pending': "Done") ?><?=$state=='not-done'? $button:$no_button ?></td>
+                                        <td><?=$state=='not-done'? 'Not Done':($state == 'pending'? 'Pending': ($state == 'started'? 'In Progress':'Done')) ?><?=$state=='not-done'? $button:$no_button ?></td>
                                         <td><a href="index.php?order=<?php echo $row['scheduleid']?>">
                                                 <button class="btn-primary">Edit</button></a> | <a href="javascript:delsch('<?php echo $row['scheduleid'];?>','<?php echo $row2['name'];?>')">
                                                 <button class="btn-danger">Delete</button></a></td>
@@ -95,12 +97,22 @@ $no_button = "";
                             <tbody id="table2">
 
                             </tbody>
+
                         </table>
 
 
 
                     </div><!--body-->
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <a href="index.php?order">
+                                    <button class="btn btn-primary" type="submit">Back</button>
+                                </a>
+                            </div>
 
+                        </div>
+                    </div>
                 </div><!--panel-->
 
             </div><!--col-10-->

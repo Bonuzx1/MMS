@@ -145,4 +145,24 @@ if (isset($_POST['asset']))
     echo json_encode($useData);
 
 
+}elseif (isset($_POST['dept']))
+{
+    $useData = [
+        ':asset' => $_POST['dept']
+    ];
+    $sql = "SELECT * FROM assets WHERE departmentid = ".$_POST['dept'];
+    $all = $user->select($sql, $useData);
+
+    foreach ($all as $item) {
+        $dept = $_POST['dept'];
+        $row2 = $user->showone('department', 'departmentid', $dept);
+        $useData[] = array(
+            'asset' => $item['name'],
+            'price' => $item['purchaseprice']
+        );
+        $useData['title'] = $row2['departmentname'];
+    }
+
+    echo json_encode($useData);
+
 }

@@ -5,8 +5,11 @@
  * Date: 29/03/2018
  * Time: 5:43 PM
  */
-?>
-<?php if($_GET['request']==''||($_GET['request']=="approved")||($_GET['request']=="notapproved")){ ?>
+$msg = '';
+ if($_GET['request']!='new'){ 
+    if (isset($_GET['msg']))
+    $msg = $_GET['msg'];
+    ?>
     <div class="container-fluid">
         <div class="side-body padding-top">
             <div class="row">
@@ -15,9 +18,7 @@
                     <div class="panel panel-primary">
                         <!-- Default panel contents -->
                         <div class="panel-heading">
-                            <div class="panel-title"> Request <?php if ($_GET['request']=="approved") {
-                                    echo "Approved Successfully";
-                                } ?></div>
+                            <div class="panel-title"> Request <?=$msg?></div>
                         </div>
 
                         <div class="panel-body">

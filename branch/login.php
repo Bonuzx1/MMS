@@ -4,13 +4,12 @@
 
    $error=""; 
    if(isset($_POST['aSubmit'])) {
-      // username and password sent from form 
+      // username and password sent   
+
+   $myusername =$_POST['username'];
+   $mypassword =md5($_POST['password']);
       
-      $myusername =$_POST['username'];
-      $mypassword =md5($_POST['password']);
-      
-      
-	if($user->login($myusername, $mypassword)){
+	if($user->login($myusername, $mypassword)) {
 
          ob_start();
          header("location: ../index.php?dashboard");
@@ -19,37 +18,26 @@
          exit;
 
 
-       }else {
-         echo "<script>alert('Please enter valid username or password');</script>";
-      }
-   }elseif (isset($_POST['wSubmit']))
-   {
-       // username and password sent from form
-
-       $myusername =$_POST['username'];
-       $mypassword =md5($_POST['password']);
-
-
+       } else {
+           
        if($user->wlogin($myusername, $mypassword)){
 
            ob_start();
            header("location: ../index.php?assignment");
-
-           // echo '<script> window.location.href="" </script>';
            exit;
-
 
        }else {
            echo "<script>alert('Please enter valid username or password');</script>";
        }
    }
+}
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>iMaintenance Management System</title>
+    <title>Scheduling and Maintenance System for Organisational Assets</title>
 
     <!-- BOOTSTRAP STYLES-->
     <link href="../assets/lib/css/bootstrap.min.css" rel="stylesheet" />
@@ -65,7 +53,7 @@
     <div class="container">
         <div class="row text-center " style="padding-top:60px;">
             <div class="col-md-12">
-               <h1 style="color: white; font-family: 'Arial Rounded MT Bold'">MAINTENANCE MANAGEMENT SYSTEM </h1>
+               <h1 style="color: white; font-family: 'Arial Rounded MT Bold'">Scheduling and Maintenance System for Org. Assets</h1>
             </div>
       
         </div>
@@ -75,9 +63,9 @@
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
                            
                             <div class="panel-body">
-                                <form role="form" action="" method="post" id="worker-login-tab" style="background-color: #2c3e50bd; padding: 30px; border-radius: 9px">
+<form role="form" action="" method="post" id="admin-login-tab" class="" style="background-color: #2c3e7991; padding: 30px; border-radius: 9px">
                                     <hr />
-                                    <h5 style="color: white">Enter Details to Login <b>(Worker)</b></h5>
+                                    <h5 style="color: white">Enter Details to Login</h5>
                                        <br />
                                        <p style="color:red">
 	                                       <?php echo $error;
@@ -85,33 +73,7 @@
                                        </p>
                                      <div class="form-group input-group">
                                             <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                                            <input type="email" name="username" id="username" class="form-control"  maxlength="50" minlength="4" placeholder="Your Username" title='Enter Email'  required />
-
-                                        </div>
-                                                                              <div class="form-group input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"  ></i></span>
-                                            <input type="password" name="password" class="form-control" maxlength="20" minlength="4" placeholder="Your Password" required />
-                                        </div>
-                                
-                                </br>
-                                    <div class="form-group">
-                                     <button class="btn btn-primary" type="submit" name="wSubmit">Login</button>
-                                    <button type="button" class="btn btn-info right float-right" id="admin-login" >Admin? Login Here</button>
-                                    </div>
-                                    <hr />
-                                    
-                                    </form>
-<form role="form" action="" method="post" id="admin-login-tab" class="hidden" style="background-color: #2c3e7991; padding: 30px; border-radius: 9px">
-                                    <hr />
-                                    <h5 style="color: white">Enter Details to Login <b>(Admin)</b></h5>
-                                       <br />
-                                       <p style="color:red">
-	                                       <?php echo $error;
-		                                       ?>
-                                       </p>
-                                     <div class="form-group input-group">
-                                            <span class="input-group-addon"><i class="fa fa-tag"  ></i></span>
-                                            <input type="text" name="username" id="username" class="form-control"  maxlength="15" minlength="4" placeholder="Your Username" pattern="[a-zA-Z]*" title='Username should contain only letters'  required />
+                                            <input type="text" name="username" id="username" class="form-control"  minlength="4" placeholder="Your Username" required />
 
                                         </div>
                                                                               <div class="form-group input-group">
@@ -121,7 +83,6 @@
 
                                 </br>
                                      <button class="btn btn-primary" name="aSubmit" type="submit">Login</button>
-    <button type="button" class="btn btn-info right float-right" id="worker-login" >Worker? Login Here</button>
     <hr />
 
                                     </form>
@@ -144,17 +105,6 @@
                 }
             });
         }
-
-
-
-        $("#admin-login").on("click", function () {
-            $("#admin-login-tab").removeClass("hidden");
-            $("#worker-login-tab").addClass("hidden");
-        })
-        $("#worker-login").on("click", function () {
-                    $("#admin-login-tab").addClass("hidden");
-                    $("#worker-login-tab").removeClass("hidden");
-                })
         });
     </script>
 </body>
